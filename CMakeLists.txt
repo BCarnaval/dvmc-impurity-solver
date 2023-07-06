@@ -1,3 +1,4 @@
+# Include guard
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -10,7 +11,7 @@ option(USE_SCALAPACK "Use Scalapack" OFF)
 
 add_definitions(-D_mVMC)
 if(CONFIG)
-  message(STATUS "Loading configration: "
+  message(STATUS "Loading configuration file: "
                  ${PROJECT_SOURCE_DIR}/config/${CONFIG}.cmake)
   include(${PROJECT_SOURCE_DIR}/config/${CONFIG}.cmake)
 endif(CONFIG)
@@ -86,12 +87,17 @@ if(MPI_FOUND)
   include_directories(${MPI_C_INCLUDE_PATH})
   add_definitions(-D_mpi_use)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MPI_C_LINK_FLAGS}")
+else()
+  message(FATAL_ERROR "MPI not found, please verify MPI installation PATH.")
 endif(MPI_FOUND)
 
 find_package(LAPACK)
 if(USE_SCALAPACK MATCHES OFF)
   if(LAPACK_FOUND)
     add_definitions(-D_lapack)
+  else()
+    message(
+      FATAL_ERROR "LAPACK not found, please verify LAPACK installation PATH.")
   endif(LAPACK_FOUND)
 endif()
 

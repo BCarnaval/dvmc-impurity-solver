@@ -1,5 +1,5 @@
-# include guard
-cmake_minimum_required(VERSION 2.8.0)
+# Include guard
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
 add_definitions(-D_mVMC)
 if(${CMAKE_PROJECT_NAME} STREQUAL "Project")

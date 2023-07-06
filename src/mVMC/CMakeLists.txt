@@ -1,11 +1,11 @@
-# include guard
-cmake_minimum_required(VERSION 2.8.0)
+# Include guard
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
 add_definitions(-D_mVMC)
 if(${CMAKE_PROJECT_NAME} STREQUAL "Project")
   message(
     FATAL_ERROR
-      "cmake should be executed not for 'src' subdirectory, but for the top directory of mVMC."
+      "CMake shouldn't be executed for 'src' subdirectory, but for the top directory of mVMC."
   )
 endif(${CMAKE_PROJECT_NAME} STREQUAL "Project")
 
