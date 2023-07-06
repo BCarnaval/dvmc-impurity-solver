@@ -1,0 +1,158 @@
+name: dvmc
+help: Command line tool to perform dynamical variationnal Monte Carlo
+  calculations
+version: 0.1.0
+
+environment_variables:
+  - name: dvmc_scripts_location
+    help: Sets the default directory in which dVMC tools are located
+    default: $HOME/.local/share/dvmc
+
+  - name: dvmc_mpi_proc
+    help: Sets the number of processors (CPUS) to use within the MPI call.
+    default: "1"
+
+commands:
+  # -------------------
+  # GROUNDSTATE COMMAND
+  # -------------------
+  - name: groundstate
+    alias: gs
+    help: Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC)
+
+    args:
+      - name: namelist
+        required: true
+        help: |
+          Specifies configurations files to dVMC binary
+
+          Basic parameters
+          - modpara.def       -> basic parameters for calculations
+          - locspn.def        -> locations of local spins
+
+          Hamiltonian
+          - trans.def         -> transfer integrals
+          - coulombintra.def  -> on-site Coulomb interactions (U_i)
+          - coulombinter.def  -> inter-site Coulomb interactions (V_{ij})
+          - hund.def          -> J_{ij}^{Hund} in H_H hamiltonian
+          - exchange.def      -> J_{ij}^{Ex} in H_E hamiltonian
+
+          Variationnal parameters
+          - gutzwilleridx.def -> gutzwiller correlation factors (g_i)
+          - jastrowidx.def    -> jastrow correlation factors (v_{ij})
+          - orbitalidx.def    -> anti-parallel Pfaffian wave functions
+          - qptransidx.def    -> momentum and point-group projections
+
+      - name: optimized
+        required: false
+        help: |
+          Specifies the path to 'zqp_opt.dat' file in which the binary finds optimized
+          dynamical parameters coefficients to proceed his calculations.
+
+    examples:
+      - dvmc groundstate ./namelist.def
+      - dvmc gs ./namelist.def
+
+  # ----------------
+  # GENERATE COMMAND
+  # ----------------
+  - name: generate
+    alias: gen
+    help: Generates all '.def' input files needed based on a global parameters input
+    args:
+      - name: parameters_file
+        required: true
+        help: |
+          Input parameters text file to be parsed defining system caracteristics.
+          The file must be formatted the following way
+
+                             [param_name_1] [param_value_1]
+                             [param_name_2] [param_value_2]
+                                           .
+                                           .
+                                           .
+      - name: hopping_option
+        required: false
+        help: |
+          Generating 'excitation.def' file using options (1, 2 or 3). The first option
+          calls 'makeExcitation.py', the second 'makeExcitation_from_hopping.py' and
+          the third 'makeExcitation_from_hopping_only_t.py'. Those are respectively # TODO Add description
+
+    examples:
+      - dvmc generate parameters.txt 1
+      - dvmc gen params 3
+
+  # -------------------
+  # EXCITATIONS COMMAND
+  # -------------------
+  - name: excitations
+    alias: excs
+    help: Proceeds to dynamical calculations using 'namelist_G.def'
+    args:
+      - name: namelist
+        required: true
+        help: |
+          Specifies the configuration files to dVMC dynamical binary.
+
+      - name: optimized
+        required: true
+        help: |
+          Specifies the path to 'zqp_opt.dat' file in which the binary finds optimized
+          dynamical parameters coefficients to proceed his calculations.
+
+    examples:
+      - dvmc excitations namelist_G.def output/zqp_opt.dat
+      - dvmc excs namelist_G.def output/zqp_opt.dat
+
+  # ----------------------
+  # PROCESS-OUTPUT COMMAND
+  # ----------------------
+  - name: process-output
+    help: Merge binary output files
+    args:
+      - name: prefix
+        required: true
+        help: |
+          Prefix of all the input files to be process and save in './output'
+          directory. The command uses this prefix to grep all of the prefix*bin
+          files and process them.
+
+    examples:
+      - dvmc process-output ./output/zvo_nCHAm_nAHCm_0*bin
+
+  # ---------------
+  # QMATRIX COMMAND
+  # ---------------
+  - name: qmatrix
+    help: Q-matrix calcultations
+    args:
+      - name: processing
+        help: |
+          Type of processing to do on the Q-matrix. Either 'cond',
+          'svd' or 'sqrt' or empty argument for basic processing
+        required: true
+
+      - name: tolerance
+        help: |
+          Specific tolerance that determines the number of states kept for the
+          calculations of the Q-matrix. The default value is 1e-10
+        required: true
+
+      - name: use_filter
+        help: |
+          If set, modifies the number of states kept for the Q-matrix calculations.
+        required: true
+
+      - name: addtl_filter
+        help: |
+          Modifies the default value for the filter, which is 0.9.
+        required: true
+
+      - name: k_tolerance
+        help: |
+          Modifies the Q-matrix calculations in the 'svd' processing case
+        required: false
+
+    examples:
+      - dvmc qmatrix sqrt 0.75 1 0.9
+      - dvmc qmatrix svd 0.75 1 0.9 0.8

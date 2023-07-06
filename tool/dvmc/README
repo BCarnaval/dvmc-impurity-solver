@@ -1,0 +1,101 @@
+## README
+
+Most of the program provided here are stand alone tools necessary to
+prepare the inputs or analyse the output of dvmc.out code. The most
+important are:
+
+preprocess_dVMC.sh           can be called before running dvmc.out
+postprocess_dVMC.sh          can be called after running dvmc.out
+
+They both contain all the other tool to be called in order to prepare
+and process the examples provided in samples/spectrum subdirectories.
+
+Some other tools are provided. Here is a small description for the most
+useful functions. (To use them, type the function and the default usage
+will be printed). Note that you must first do make to obtain all the
+necessary dependencies. The makefile is simple, but requires either
+lapack or mkl linking.
+
+######################
+in preprocess_dVMC.sh:
+######################
+makeExcitation.py
+  --> tool to generate excitation.def used by dvmc.out with NVMCCalMode == 3 (dVMC mode)
+
+
+#######################
+in postprocess_dVMC.sh:
+#######################
+mergeOutputBin.py
+  --> tool to merge different binary file with name zvo_nCHAm_nAHCm_***.bin and output a 4 python ready 4D array of size(N_exc,N_exc,W,L)
+
+dvmc_spectrum.py
+  --> main postprocessing tool to calculate the spectrum (Akw.dat, etc.)
+
+generate_template_gnuplot.py
+  --> copy and adapt the three template file to be used with gnuplot (some adaptation must be done, like inputing mu offset)
+
+dos_analysis.py
+  --> tool to calculate LHB and UHB.
+
+select_kPath.py spectrumpara.def
+  --> tool to select a subset of k points in the files Akw_all.dat
+
+
+#######################
+others
+#######################
+selectExcitation.py
+  --> tool to select a subset of excitation. This generate a string that can be inputed in spectrumpara.def
+
+gnupy
+  --> tool to make pretty figure from gnuplot and latex
+
+init_groundstate.py
+  --> tool to find a starting ground state in 2D lattice Hubbard model (useful for big clusters)
+
+makeDH4.py
+  --> tool created by Takafumi Suzuki to find the input file for DH4 files
+
+dvmc_gnuplot
+  --> tool to visualize interactivly in real time the Akw_all.dat file.
+      This file must be computed with dvmc_spectrum.py before.
+
+      call with:
+      dvmc_gnuplot Nx Ny Nw NFermi cbar_max
+      Nx = integer (number of points in x).
+      Ny = integer (number of points in y).
+      Nw = integer (number of frequency calculated, number of lines in Akw_all.dat).
+      NFermi = integer (frame to start on, frame closest to the Fermi level).
+      cbar_max = float (value of the maximum value in the intensity plot, colorbar).
+
+cluster.py
+  --> simple tool to create a square array of numbers.
+
+zvo_var_average.py
+  --> tool to average the last iterations (last N lines) of zvo_var_001.dat
+
+select_kPath_average.py
+  --> similar to select_kPath.py but average multiple paths togheter.
+
+selectExcitation.py
+  --> select excitations that are smaller than a threshold in the already calculated excitations (generate a string of number to be put in spectrumpara.dat)
+
+makeFullGreen.py
+  --> generate full green functions by defining full greenone.def and greentwo.def
+
+makeGreenOhgoe.py
+  --> generate green functions necessary to run averageOhgoe.py (in greenone.def and greentwo.def)
+
+averageOhgoe.py
+  --> function created by Takahiro Ohgoe and adapted to calculate various physical quantities like AFM order, density and superconducting fluidity.
+
+
+LICENSE:
+
+By default, the same license as the one in the root directory, unless otherwise specified.
+Indeed, a lot of source code here borrow some portion to already published code under the zlib
+license. So we need to repeat the zlib LICENSE in the header of these functions. However,
+this is compatible with the GNU license of the root directory since zlib is very permissive.
+
+
