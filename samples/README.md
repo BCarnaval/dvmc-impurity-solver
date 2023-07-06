@@ -1,5 +1,6 @@
 #########################
-# How to run the example:
+
+# How to run the example
 
 In any sub directories (except chain2_U8), generate all the input files using
 the command (inside the directories):
@@ -18,15 +19,14 @@ simply by typing:
 
 $ postprocess_dVMC.sh
 
-# Result:
+# Result
 
 If everything works, the figure "akw_all.pdf"
 shown if "expected_Akw" should be produced when typing the command:
 
 $ gnuplot plot_allAkw.gp
 
-
-# Details:
+# Details
 
 The two scripts preprocess_dVMC.sh and postprocess_dVMC.sh do a bunch of
 automatizations in order to make the examples contained in the "./samples/"
@@ -34,7 +34,7 @@ subdirectories easy to run. In general it can be used for other geometries
 and parameters, but at this point the user might want to know more about
 the details of the implementation. Here is a short description:
 
-# preprocess_dVMC.sh:
+# preprocess_dVMC.sh
 
 Generate all the input files for the Monte Carlo sampling procedure to run.
 The main task added to the already present dvmcdry.out is a function
@@ -43,14 +43,14 @@ python function takes the definitions in spectrumpara.def to define the
 neighbor charge positions. In "spectrumpara.def" this last file,
 the values "dr1_x, dr1_y, dr2_x, dr2_y", defines the
 difference in position of the charge excitation relatif to site "i" or
-"j" of the operator "c^dagger_i" or  "c_j" for the Green function
+"j" of the operator "c^dagger_i" or "c_j" for the Green function
 <n|c^dagger_i cj|m>. For example:
 
 "
-dr1_x       -1:2      # will generate array [-1,0,1,2]
-dr1_y       -1:2      # will generate array [-1,0,1,2]
-dr2_x       -1:2      # will generate array [-1,0,1,2]
-dr2_y       -1:2      # will generate array [-1,0,1,2]
+dr1_x -1:2 # will generate array [-1,0,1,2]
+dr1_y -1:2 # will generate array [-1,0,1,2]
+dr2_x -1:2 # will generate array [-1,0,1,2]
+dr2_y -1:2 # will generate array [-1,0,1,2]
 "
 
 will generate all the allowed combination of the four vector described.
@@ -61,7 +61,6 @@ this script will also need to be adapted. The number on the far left
 is the type of excitation. It is directly related to the types defined
 in "src/mVMC/calgrn.c" file. Each type (with position differences)
 define a commutation relation with c^dagger and c. To
-
 
 # running dvmc.out
 
@@ -83,15 +82,18 @@ and to use every CPU of the core with OpenMP, by setting:
 $ export MKL_NUM_THREADS=1
 $ export OMP_NUM_THREADS=24
 
-
 # postprocess_dVMC.sh
+
 #
-# mergeOutputBin.py output/zvo_nCHAm_nAHCm_0*.bin
-Merge all the binary files 'output/zvo_nCHAm_nAHCm_***.bin' in order to
+
+# mergeOutputBin.py output/zvo_nCHAm_nAHCm_0\*.bin
+
+Merge all the binary files 'output/zvo*nCHAm_nAHCm*\*\*\*.bin' in order to
 reduce the Monte Carlo noise and convert the result in an numpy array of
 floats in order to reduce the memory on hard drive.
 
-#dvmc_spectrum.py spectrumpara.def output
+# dvmc_spectrum.py spectrumpara.def output
+
 From this averaging, the task "dvmc_spectrum.py" is used to calculate the
 full spectrum Akw_all.dat and the dos.dat.
 
@@ -106,34 +108,35 @@ and "postprocess_dVMC.sh" (in ~/bin/. directory, or in tool/dvmc/.)
 as there is more comments to be found that details every task, and show
 how to call the different tasks.
 
-
 # Notes
 
 1. During the treatment of "dvmc_spectrum.py" you should read
-a step printing:
+   a step printing:
 
- k#/Nk  --   kx/π   ky/π :  sumRule: ∫dw A( k#,w)  ≟  1.00000
- ------------------------------------------------------------
-  1/16  --   0/ 2   0/ 2 :           ∫dw A( k0,w)  =  0.98885
-  2/16  --   1/ 2   0/ 2 :           ∫dw A( k1,w)  =  0.99028
-  3/16  --   2/ 2   0/ 2 :           ∫dw A( k2,w)  =  0.99061
-  4/16  --   3/ 2   0/ 2 :           ∫dw A( k3,w)  =  0.99012
-  5/16  --   0/ 2   1/ 2 :           ∫dw A( k4,w)  =  0.99004
-  6/16  --   1/ 2   1/ 2 :           ∫dw A( k5,w)  =  0.99064
-  7/16  --   2/ 2   1/ 2 :           ∫dw A( k6,w)  =  0.99023
-  8/16  --   3/ 2   1/ 2 :           ∫dw A( k7,w)  =  0.99061
-  9/16  --   0/ 2   2/ 2 :           ∫dw A( k8,w)  =  0.99061
- 10/16  --   1/ 2   2/ 2 :           ∫dw A( k9,w)  =  0.99026
- 11/16  --   2/ 2   2/ 2 :           ∫dw A(k10,w)  =  0.98952
- 12/16  --   3/ 2   2/ 2 :           ∫dw A(k11,w)  =  0.99026
- 13/16  --   0/ 2   3/ 2 :           ∫dw A(k12,w)  =  0.99003
- 14/16  --   1/ 2   3/ 2 :           ∫dw A(k13,w)  =  0.99062
- 15/16  --   2/ 2   3/ 2 :           ∫dw A(k14,w)  =  0.99022
- 16/16  --   3/ 2   3/ 2 :           ∫dw A(k15,w)  =  0.99064
+k#/Nk -- kx/π ky/π : sumRule: ∫dw A( k#,w) ≟ 1.00000
+
+---
+
+1/16 -- 0/ 2 0/ 2 : ∫dw A( k0,w) = 0.98885
+2/16 -- 1/ 2 0/ 2 : ∫dw A( k1,w) = 0.99028
+3/16 -- 2/ 2 0/ 2 : ∫dw A( k2,w) = 0.99061
+4/16 -- 3/ 2 0/ 2 : ∫dw A( k3,w) = 0.99012
+5/16 -- 0/ 2 1/ 2 : ∫dw A( k4,w) = 0.99004
+6/16 -- 1/ 2 1/ 2 : ∫dw A( k5,w) = 0.99064
+7/16 -- 2/ 2 1/ 2 : ∫dw A( k6,w) = 0.99023
+8/16 -- 3/ 2 1/ 2 : ∫dw A( k7,w) = 0.99061
+9/16 -- 0/ 2 2/ 2 : ∫dw A( k8,w) = 0.99061
+10/16 -- 1/ 2 2/ 2 : ∫dw A( k9,w) = 0.99026
+11/16 -- 2/ 2 2/ 2 : ∫dw A(k10,w) = 0.98952
+12/16 -- 3/ 2 2/ 2 : ∫dw A(k11,w) = 0.99026
+13/16 -- 0/ 2 3/ 2 : ∫dw A(k12,w) = 0.99003
+14/16 -- 1/ 2 3/ 2 : ∫dw A(k13,w) = 0.99062
+15/16 -- 2/ 2 3/ 2 : ∫dw A(k14,w) = 0.99022
+16/16 -- 3/ 2 3/ 2 : ∫dw A(k15,w) = 0.99064
 
 dos printing
 
-  correction factor:                ∫∫dw dk A(k,w) =  0.99022
+correction factor: ∫∫dw dk A(k,w) = 0.99022
 
 Note here that the number on the right is the sum rule. In theory
 this sum rule should be exactly one (if your frequency integration
@@ -158,40 +161,35 @@ directory "12x12_U8_Ne126", or any big cluster. It is simple to
 exclude any file where the sum rule is not respected.
 
 2. Some examples shown in this directory start from a random guess for
-the ground state determination. This may be sufficient or good for small
-cluster in certain case. But keep in mind that in the general case, on
-bigger model (bigger than 16 sites), care must be taken to correctly
-determine the ground state properly before proceeding to the sampling
-of the spectral weight A(k,w).
+   the ground state determination. This may be sufficient or good for small
+   cluster in certain case. But keep in mind that in the general case, on
+   bigger model (bigger than 16 sites), care must be taken to correctly
+   determine the ground state properly before proceeding to the sampling
+   of the spectral weight A(k,w).
 
 3. An undersampled A(k,w) will result in a similar error than
-an unconverged ground state. Both steps are importants.
+   an unconverged ground state. Both steps are importants.
 
 4. On a big computed cluster, you need to edit properly the header
-of "run_vmc.sh" befor submitting:
+   of "run_vmc.sh" befor submitting:
 
 5. It is better to avoid to include the postprocessing
-in the cluster submission as it can take several minutes
-and it is not parallelized.
+   in the cluster submission as it can take several minutes
+   and it is not parallelized.
 
 6. This example also require gnuplot installed to plot Akw_all.dat.
-But Akw_all.dat could be plot with any software and script at this point.
+   But Akw_all.dat could be plot with any software and script at this point.
 
 7. Although, some generic parameters might need to be adjusted to obtain a
-good result (axis label). Gnuplot is the software of choice here because
-it can embed an image of the A(k,w), resulting in smaller file, faster
-to process and easier to scroll by in a PDF file.
+   good result (axis label). Gnuplot is the software of choice here because
+   it can embed an image of the A(k,w), resulting in smaller file, faster
+   to process and easier to scroll by in a PDF file.
 
-
-
-# Samples description:
+# Samples description
 
 "./16x1_U8_Ne16" -- chain lattice (1D) Hubbard model, t=1, U=8, Ne=16 electrons, N=16 sites periodic boundary condition. (~10 minutes)
-"./16x1_U8_Ne14" -- chain lattice (1D) Hubbard model, t=1, U=8, Ne=14 electrons, N=16 sites periodic boundary condition.  (~10 minutes)
+"./16x1_U8_Ne14" -- chain lattice (1D) Hubbard model, t=1, U=8, Ne=14 electrons, N=16 sites periodic boundary condition. (~10 minutes)
 "./4x4_U8_Ne16" -- 2d Hubbard model, t=1, U=8, Ne=16 electrons, N=16 sites, periodic-periodic boundary conditions. (~10 minutes)
 "./4x4_U8_Ne14" -- 2d Hubbard model, t=1, U=8, Ne=14 electrons, N=16 sites, periodic-periodic boundary conditions. (~10 minutes)
-"./chain2_U8"  -- trivial example for comparison with analytical results
+"./chain2_U8" -- trivial example for comparison with analytical results
 "./12x12_U8_Ne126" -- 2d Hubbard model, t=1, U=8, Ne=126 electrons, N=144 sites, periodic-periodic boundary conditions. (~24 hours)
-
-
-
