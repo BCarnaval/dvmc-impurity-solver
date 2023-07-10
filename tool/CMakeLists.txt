@@ -13,6 +13,8 @@ add_library(key2lower STATIC key2lower.c)
 add_executable(greenr2k greenr2k.F90)
 target_link_libraries(greenr2k key2lower ${LAPACK_LIBRARIES})
 
+install(DIRECTORY DESTINATION "$ENV{HOME}/.local/share/dvmc")
+install(DIRECTORY DESTINATION "$ENV{HOME}/.local/bin")
 install(TARGETS greenr2k RUNTIME DESTINATION $ENV{HOME}/.local/share/dvmc)
 
 # Scripts
