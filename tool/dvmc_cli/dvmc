@@ -33,7 +33,7 @@ dvmc_usage() {
   echo
   # :command.usage_commands
   printf "%s\n" "$(bold "Commands:")"
-  printf "  %s   Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC)\n" "$(green "groundstate")   "
+  printf "  %s   Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC). It uses 'namelist.def' file in which the configuration files are specified.\n" "$(green "groundstate")   "
   printf "  %s   Generates all '.def' input files needed based on a global parameters input\n" "$(green "generate")      "
   printf "  %s   Proceeds to dynamical calculations using 'namelist_G.def'\n" "$(green "excitations")   "
   printf "  %s   Merge binary output files\n" "$(green "process-output")"
@@ -73,11 +73,11 @@ dvmc_usage() {
 # :command.usage
 dvmc_groundstate_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC)\n"
+    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC). It uses 'namelist.def' file in which the configuration files are specified.\n"
     echo
 
   else
-    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC)\n"
+    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC). It uses 'namelist.def' file in which the configuration files are specified.\n"
     echo
 
   fi
@@ -86,7 +86,7 @@ dvmc_groundstate_usage() {
   echo
 
   printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc groundstate NAMELIST [OPTIMIZED]\n"
+  printf "  dvmc groundstate [OPTIONS]\n"
   printf "  dvmc groundstate --help | -h\n"
   echo
 
@@ -94,28 +94,21 @@ dvmc_groundstate_usage() {
   if [[ -n $long_usage ]]; then
     printf "%s\n" "$(bold "Options:")"
 
+    # :command.usage_flags
+    # :flag.usage
+    printf "  %s\n" "$(magenta "--optimized, -o")"
+    printf "    Specifies to use 'zqp_opt.dat' file in which the binary finds optimized\n    dynamical parameters coefficients to proceed his calculations.\n"
+    echo
+
     # :command.usage_fixed_flags
     printf "  %s\n" "$(magenta "--help, -h")"
     printf "    Show this help\n"
     echo
 
-    # :command.usage_args
-    printf "%s\n" "$(bold "Arguments:")"
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "NAMELIST")"
-    printf "    Specifies configurations files to dVMC binary\n    \n    Basic parameters\n    - modpara.def       -> basic parameters for calculations\n    - locspn.def        -> locations of local spins\n    \n    Hamiltonian\n    - trans.def         -> transfer integrals\n    - coulombintra.def  -> on-site Coulomb interactions (U_i)\n    - coulombinter.def  -> inter-site Coulomb interactions (V_{ij})\n    - hund.def          -> J_{ij}^{Hund} in H_H hamiltonian\n    - exchange.def      -> J_{ij}^{Ex} in H_E hamiltonian\n    \n    Variationnal parameters\n    - gutzwilleridx.def -> gutzwiller correlation factors (g_i)\n    - jastrowidx.def    -> jastrow correlation factors (v_{ij})\n    - orbitalidx.def    -> anti-parallel Pfaffian wave functions\n    - qptransidx.def    -> momentum and point-group projections\n"
-    echo
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "OPTIMIZED")"
-    printf "    Specifies the path to 'zqp_opt.dat' file in which the binary finds optimized\n    dynamical parameters coefficients to proceed his calculations.\n"
-    echo
-
     # :command.usage_examples
     printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc groundstate ./namelist.def\n"
-    printf "  dvmc gs ./namelist.def\n"
+    printf "  dvmc groundstate\n"
+    printf "  dvmc gs --optimized\n"
     echo
 
   fi
@@ -422,20 +415,25 @@ dvmc_groundstate_command() {
   run_dvmc () {
     # Constants
     N_PROC="${DVMC_MPI_PROC}"
-    NAMELIST="${args[namelist]}"
-    OPTIMIZED="${args[optimized]}"
+    NAMELIST=$(find . -name "namelist.def" -type f)
+    OPTIMIZED=${args[--optimized]}
 
     # Script
-    if [ $(basename "${NAMELIST}") == 'namelist.def' ] && [ -f "${NAMELIST}" ]; then
+    if [ -f "${NAMELIST}" ]; then
       green "[@] Static ground state numerical evaluation..."
-      if [ -z "${OPTMIZED}" ]; then
-        mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
+      if [ "${OPTIMIZED}" ]; then
+        if [ -f "./output/zqp_opt.dat" ]; then
+          green "[@] Using optimized parameters stored in './output/zqp_opt.dat'"
+          mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}" "./output/zqp_opt.dat"
+        else
+          red "[X] Optimized parameters: './output/zqp_opt.dat' not found in current directory."
+          exit 1
+        fi
       else
-        green "[@] Using optimized parameters stored in '${OPTIMIZED}'"
-        mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}" "${OPTMIZED}"
+        mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
       fi
     else
-      red "[X] Input must be a file named: 'namelist.def'."
+      red "[X] File named: 'namelist.def' not found in current directory."
       exit 1
     fi
   }
@@ -692,6 +690,13 @@ dvmc_groundstate_parse_requirements() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
+      # :flag.case
+      --optimized | -o)
+
+        # :flag.case_no_arg
+        args['--optimized']=1
+        shift
+        ;;
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2
@@ -701,29 +706,13 @@ dvmc_groundstate_parse_requirements() {
       *)
         # :command.parse_requirements_case
         # :command.parse_requirements_case_simple
-        if [[ -z ${args['namelist']+x} ]]; then
-
-          args['namelist']=$1
-          shift
-        elif [[ -z ${args['optimized']+x} ]]; then
-
-          args['optimized']=$1
-          shift
-        else
-          printf "invalid argument: %s\n" "$key" >&2
-          exit 1
-        fi
+        printf "invalid argument: %s\n" "$key" >&2
+        exit 1
 
         ;;
 
     esac
   done
-
-  # :command.required_args_filter
-  if [[ -z ${args['namelist']+x} ]]; then
-    printf "missing required argument: NAMELIST\nusage: dvmc groundstate NAMELIST [OPTIMIZED]\n" >&2
-    exit 1
-  fi
 
 }
 

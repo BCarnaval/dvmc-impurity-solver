@@ -97,8 +97,7 @@ def main() -> None:
     dvmc_params = {
         'save_iters': True,
         'use_SVD': True,
-        'k_tol': 6,
-        'CPT_flg': False
+        'k_tol': 6
     }
     pyqcm.dvmc.dvmc_cdmft_parameters['min_iter_E0'] = 25
 
@@ -108,9 +107,8 @@ def main() -> None:
 
     # Calling PyQCM CDMFT
     pyqcm.cdmft.CDMFT(model=latt_model, varia=varia, beta=25, accur=5e-3,
-                      method='Nelder-Mead', accur_E0=3e-3, miniter=15,
-                      maxiter=60, averages=True, compute_potential_energy=True,
-                      SEF=True)
+                      accur_E0=3e-3, miniter=15, maxiter=60, averages=True,
+                      compute_potential_energy=True, SEF=True)
     return
 
 

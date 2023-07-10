@@ -3,20 +3,25 @@
 run_dvmc () {
   # Constants
   N_PROC="${DVMC_MPI_PROC}"
-  NAMELIST="${args[namelist]}"
-  OPTIMIZED="${args[optimized]}"
+  NAMELIST=$(find . -name "namelist.def" -type f)
+  OPTIMIZED=${args[--optimized]}
 
   # Script
-  if [ $(basename "${NAMELIST}") == 'namelist.def' ] && [ -f "${NAMELIST}" ]; then
+  if [ -f "${NAMELIST}" ]; then
     green "[@] Static ground state numerical evaluation..."
-    if [ -z "${OPTMIZED}" ]; then
-      mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
+    if [ "${OPTIMIZED}" ]; then
+      if [ -f "./output/zqp_opt.dat" ]; then
+        green "[@] Using optimized parameters stored in './output/zqp_opt.dat'"
+        mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}" "./output/zqp_opt.dat"
+      else
+        red "[X] Optimized parameters: './output/zqp_opt.dat' not found in current directory."
+        exit 1
+      fi
     else
-      green "[@] Using optimized parameters stored in '${OPTIMIZED}'"
-      mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}" "${OPTMIZED}"
+      mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
     fi
   else
-    red "[X] Input must be a file named: 'namelist.def'."
+    red "[X] File named: 'namelist.def' not found in current directory."
     exit 1
   fi
 }

@@ -18,40 +18,20 @@ commands:
   # -------------------
   - name: groundstate
     alias: gs
-    help: Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC)
+    help:
+      Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC).
+      It uses 'namelist.def' file in which the configuration files are specified.
 
-    args:
-      - name: namelist
-        required: true
+    flags:
+      - long: --optimized
+        short: -o
         help: |
-          Specifies configurations files to dVMC binary
-
-          Basic parameters
-          - modpara.def       -> basic parameters for calculations
-          - locspn.def        -> locations of local spins
-
-          Hamiltonian
-          - trans.def         -> transfer integrals
-          - coulombintra.def  -> on-site Coulomb interactions (U_i)
-          - coulombinter.def  -> inter-site Coulomb interactions (V_{ij})
-          - hund.def          -> J_{ij}^{Hund} in H_H hamiltonian
-          - exchange.def      -> J_{ij}^{Ex} in H_E hamiltonian
-
-          Variationnal parameters
-          - gutzwilleridx.def -> gutzwiller correlation factors (g_i)
-          - jastrowidx.def    -> jastrow correlation factors (v_{ij})
-          - orbitalidx.def    -> anti-parallel Pfaffian wave functions
-          - qptransidx.def    -> momentum and point-group projections
-
-      - name: optimized
-        required: false
-        help: |
-          Specifies the path to 'zqp_opt.dat' file in which the binary finds optimized
+          Specifies to use 'zqp_opt.dat' file in which the binary finds optimized
           dynamical parameters coefficients to proceed his calculations.
 
     examples:
-      - dvmc groundstate ./namelist.def
-      - dvmc gs ./namelist.def
+      - dvmc groundstate
+      - dvmc gs --optimized
 
   # ----------------
   # GENERATE COMMAND
