@@ -6,7 +6,7 @@ import pyqcm.cdmft
 import numpy as np
 
 
-def model1D(ns: int, nb: int, S: list) -> None:
+def model1D(ns: int, nb: int, S: list) -> pyqcm.lattice_model:
     """Defines a PyQCM lattice model based on given number of cluster
     sites and bath sites.
 
@@ -68,7 +68,7 @@ def main() -> None:
 
     # Write sector for dVMC
     f = open('sec', 'w')
-    f.write(f'R0:N{n_electrons}:S0')
+    f.write(f'sector R0:N{n_electrons}:S0')
     f.close()
 
     # Defining PyQCM parameters
@@ -94,7 +94,12 @@ def main() -> None:
         ['tb{:d}_1'.format(i+1) for i in range(nb)]
 
     # dVMC parameters
-    dvmc_params = {'save_iters': True, 'use_SVD': True, 'k_tol': 6}
+    dvmc_params = {
+        'save_iters': True,
+        'use_SVD': True,
+        'k_tol': 6,
+        'CPT_flg': False
+    }
     pyqcm.dvmc.dvmc_cdmft_parameters['min_iter_E0'] = 25
 
     # Specify PyQCM solver

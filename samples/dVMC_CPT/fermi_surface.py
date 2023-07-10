@@ -25,6 +25,10 @@ def main() -> None:
         """
     )
 
+    f = open('QCM_params.def', 'w')
+    f.write('sector ' + sector + '\n')
+    f.close()
+
     # Setup dVMC solver through PyQCM
     pyqcm.solver = pyqcm.dvmc.dvmc_solver
     model_instance = pyqcm.model_instance(model)

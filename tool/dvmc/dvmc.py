@@ -1,4 +1,6 @@
-"""Docs
+"""dVMC solver interface module for PyQCM library. Should be placed in
+directory: path_to_pyqcm/qcm_wed/pyqcm/ and small changes should be made to
+PyQCM __init__.py and cdmft.py modules in order to be fully functionnal.
 """
 import os
 import pyqcm
@@ -72,7 +74,16 @@ def verify_dvmc_installation() -> None:
 
 
 def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
-    """Docs
+    """Computes the ground state using dynamical variational Monte Carlo
+    within PyQCM library, then computes the Q-matrix representation.
+
+    Returns of the solver are internal results for PyQCM library. Specific
+    dVMC results could be found inside ./output/ directory of the project.
+
+    Parameters
+    ----------
+    model_instance: pyqcm.model_instance, default=None
+        The PyQCM model that defines the model to solve for GS.
     """
     # Verifying dVMC installation before any further calculation
     if not pyqcm.dvmc_installation:
@@ -88,6 +99,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         n_threads = 1
         n_proc = dvmc_parameters['nproc']
 
+    # Setting ENV. variables according to threads & proc numbers
     print('nthreads = ', n_threads)
     print('nproc = ', n_proc)
     os.environ["DVMC_MPI_PROC"] = str(n_proc)
@@ -108,7 +120,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
     np.save('interaction.npy', interaction)
 
     # Getting the hamiltonian sector
-    print('reading sector')
+    print('Reading sector')
     f = open('sec', 'r')
     sec = f.readline()
     f.close()
