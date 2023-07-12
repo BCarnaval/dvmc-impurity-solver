@@ -31,7 +31,7 @@ add_library(
   ../StdFace/Wannier90.c
   ../StdFace/FCOrtho.c)
 
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../pfapack)
+link_directories("$ENV{HOME}/.local/share/dvmc/lib")
 
 add_executable(dvmcdry.out vmcdry.c)
 target_link_libraries(dvmcdry.out StdFace m)

@@ -31,8 +31,10 @@ set(SOURCES_PFAPACK
 include_directories(${MPI_Fortran_INCLUDE_PATH})
 add_library(pfapack ${SOURCES_PFAPACK})
 target_link_libraries(pfapack ${MPI_Fortran_LIBRARIES} ${LAPACK_LIBRARIES})
+
+install(DIRECTORY DESTINATION "$ENV{HOME}/.local/share/dvmc/lib")
 install(
   TARGETS pfapack
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
+  ARCHIVE DESTINATION "$ENV{HOME}/.local/share/dvmc/lib"
+  LIBRARY DESTINATION "$ENV{HOME}/.local/share/dvmc/lib"
+  RUNTIME DESTINATION "$ENV{HOME}/.local/share/dvmc")

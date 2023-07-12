@@ -15,12 +15,12 @@ NMPTrans    1
 NSPGaussLeg    16
 complextype    0
 NSplitSize    1
-NSROptItrStep    500
+NSROptItrStep    100
 NSROptItrSmp    50
 NVMCWarmUp    50
 NVMCSample    200
 NExUpdatePath    1
-NDataQtySmp    30
+NDataQtySmp    10
 2Sz    0
 DSROptRedCut    1e-5
 DSROptStaDel    0.01

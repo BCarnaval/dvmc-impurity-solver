@@ -34,15 +34,18 @@ def main(iters: int) -> None:
         pyqcm.solver = pyqcm.dvmc.dvmc_solver
         model_instance = pyqcm.model_instance(model)
 
-        # Cluster spectral function
-        model_instance.cluster_spectral_function(
-            wmax=6,
-            eta=0.12,
-            file=f"./spectrums/spectrum_{i}.pdf")
+        # Cluster averages
+        model_instance.properties()
+
+        # # Cluster spectral function
+        # model_instance.cluster_spectral_function(
+        #     wmax=6,
+        #     eta=0.12,
+        #     file=f"./spectrums/spectrum_{i}.pdf")
 
     return
 
 
 if __name__ == "__main__":
     # i = sys.argv[1]
-    main(20)
+    main(30)

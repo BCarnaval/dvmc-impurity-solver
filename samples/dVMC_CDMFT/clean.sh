@@ -16,7 +16,7 @@ shopt -s extglob
 clean_inputs () {
   echo -e "${WHITE}-----------------------------------------------"
   echo -e "${GREEN}[@] Deleting '.dat', '.pdf' and '.def' files..."
-  rm -v !(*.py|README.md|params|clean.sh|*.pdf|output|cdmft_iter.tsv)
+  rm -v !(*.py|README.md|params|clean.sh|*.pdf|output|*.tsv)
   echo -e "${GREEN}[@] Input files deleted."
   echo -e "${WHITE}-----------------------------------------------"
 }

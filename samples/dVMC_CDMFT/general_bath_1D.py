@@ -4,6 +4,7 @@ import pyqcm
 import pyqcm.dvmc
 import pyqcm.cdmft
 import numpy as np
+import faulthandler
 
 
 def model1D(ns: int, nb: int, S: list) -> pyqcm.lattice_model:
@@ -68,7 +69,7 @@ def main() -> None:
 
     # Write sector for dVMC
     f = open('sec', 'w')
-    f.write(f'sector R0:N{n_electrons}:S0')
+    f.write(f'R0:N{n_electrons}:S0')
     f.close()
 
     # Defining PyQCM parameters
@@ -113,4 +114,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    faulthandler.enable()
     main()
