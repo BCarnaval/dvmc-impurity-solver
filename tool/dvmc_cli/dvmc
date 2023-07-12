@@ -33,9 +33,9 @@ dvmc_usage() {
   echo
   # :command.usage_commands
   printf "%s\n" "$(bold "Commands:")"
-  printf "  %s   Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC). It uses 'namelist.def' file in which the configuration files are specified.\n" "$(green "groundstate")   "
+  printf "  %s   Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC) using 'namelist.def' file in which the configuration files are specified.\n" "$(green "groundstate")   "
   printf "  %s   Generates all '.def' input files needed based on a global parameters input\n" "$(green "generate")      "
-  printf "  %s   Proceeds to dynamical calculations using 'namelist_G.def'\n" "$(green "excitations")   "
+  printf "  %s   Proceeds to dynamical calculations using 'namelist_G.def' to specifie configuration files and './output/zqp_opt.dat' file to access optimized dynamical parameters.\n" "$(green "excitations")   "
   printf "  %s   Merge binary output files\n" "$(green "process-output")"
   printf "  %s   Q-matrix calcultations\n" "$(green "qmatrix")       "
   echo
@@ -73,11 +73,11 @@ dvmc_usage() {
 # :command.usage
 dvmc_groundstate_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC). It uses 'namelist.def' file in which the configuration files are specified.\n"
+    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC) using 'namelist.def' file in which the configuration files are specified.\n"
     echo
 
   else
-    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC). It uses 'namelist.def' file in which the configuration files are specified.\n"
+    printf "dvmc groundstate - Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC) using 'namelist.def' file in which the configuration files are specified.\n"
     echo
 
   fi
@@ -168,11 +168,11 @@ dvmc_generate_usage() {
 # :command.usage
 dvmc_excitations_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc excitations - Proceeds to dynamical calculations using 'namelist_G.def'\n"
+    printf "dvmc excitations - Proceeds to dynamical calculations using 'namelist_G.def' to specifie configuration files and './output/zqp_opt.dat' file to access optimized dynamical parameters.\n"
     echo
 
   else
-    printf "dvmc excitations - Proceeds to dynamical calculations using 'namelist_G.def'\n"
+    printf "dvmc excitations - Proceeds to dynamical calculations using 'namelist_G.def' to specifie configuration files and './output/zqp_opt.dat' file to access optimized dynamical parameters.\n"
     echo
 
   fi
@@ -181,7 +181,7 @@ dvmc_excitations_usage() {
   echo
 
   printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc excitations NAMELIST OPTIMIZED\n"
+  printf "  dvmc excitations\n"
   printf "  dvmc excitations --help | -h\n"
   echo
 
@@ -194,23 +194,10 @@ dvmc_excitations_usage() {
     printf "    Show this help\n"
     echo
 
-    # :command.usage_args
-    printf "%s\n" "$(bold "Arguments:")"
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "NAMELIST")"
-    printf "    Specifies the configuration files to dVMC dynamical binary.\n"
-    echo
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "OPTIMIZED")"
-    printf "    Specifies the path to 'zqp_opt.dat' file in which the binary finds optimized\n    dynamical parameters coefficients to proceed his calculations.\n"
-    echo
-
     # :command.usage_examples
     printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc excitations namelist_G.def output/zqp_opt.dat\n"
-    printf "  dvmc excs namelist_G.def output/zqp_opt.dat\n"
+    printf "  dvmc excitations\n"
+    printf "  dvmc excs\n"
     echo
 
   fi
@@ -488,15 +475,22 @@ dvmc_excitations_command() {
   excitations () {
     # Constants
     N_PROC="${DVMC_MPI_PROC}"
-    OPTIMIZED="${args[optimized]}"
-    NAMELIST="${args[namelist]}"
+    NAMELIST_G=$(find . -name "namelist_G.def" -type f)
+    OPTIMIZED=$(find ./output -name "zqp_opt.dat" -type f)
 
     # Script
-    if [ $(basename "${NAMELIST}") == 'namelist_G.def' ] && [ -f "${NAMELIST}" ]; then
+    if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
       green "[@] Beginning dynamical VMC calculations..."
-      mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}" "${OPTIMIZED}"
+      echo ${NAMELIST_G} ${OPTIMIZED}
+      mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
+    elif [[ ! -f "${NAMELIST_G}" ]]; then
+      red "[X] File named: 'namelist_G.def' not found in current directory."
+      exit 1
+    elif [[ ! -f "${OPTIMIZED}" ]]; then
+      red "[X] File named: './output/zqp_opt.dat' not found in current directory."
+      exit 1
     else
-      red "[X] Input must be a file named: 'namelist_G.def'."
+      red "[X] Neither './output/zqp_opt.dat' and 'namelist_G.def' have been found."
       exit 1
     fi
   }
@@ -810,33 +804,13 @@ dvmc_excitations_parse_requirements() {
       *)
         # :command.parse_requirements_case
         # :command.parse_requirements_case_simple
-        if [[ -z ${args['namelist']+x} ]]; then
-
-          args['namelist']=$1
-          shift
-        elif [[ -z ${args['optimized']+x} ]]; then
-
-          args['optimized']=$1
-          shift
-        else
-          printf "invalid argument: %s\n" "$key" >&2
-          exit 1
-        fi
+        printf "invalid argument: %s\n" "$key" >&2
+        exit 1
 
         ;;
 
     esac
   done
-
-  # :command.required_args_filter
-  if [[ -z ${args['namelist']+x} ]]; then
-    printf "missing required argument: NAMELIST\nusage: dvmc excitations NAMELIST OPTIMIZED\n" >&2
-    exit 1
-  fi
-  if [[ -z ${args['optimized']+x} ]]; then
-    printf "missing required argument: OPTIMIZED\nusage: dvmc excitations NAMELIST OPTIMIZED\n" >&2
-    exit 1
-  fi
 
 }
 

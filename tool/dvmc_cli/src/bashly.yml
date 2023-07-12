@@ -19,8 +19,8 @@ commands:
   - name: groundstate
     alias: gs
     help:
-      Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC).
-      It uses 'namelist.def' file in which the configuration files are specified.
+      Evaluates the ground state using dynamical variationnal Monte Carlo (dVMC)
+      using 'namelist.def' file in which the configuration files are specified.
 
     flags:
       - long: --optimized
@@ -67,22 +67,13 @@ commands:
   # -------------------
   - name: excitations
     alias: excs
-    help: Proceeds to dynamical calculations using 'namelist_G.def'
-    args:
-      - name: namelist
-        required: true
-        help: |
-          Specifies the configuration files to dVMC dynamical binary.
-
-      - name: optimized
-        required: true
-        help: |
-          Specifies the path to 'zqp_opt.dat' file in which the binary finds optimized
-          dynamical parameters coefficients to proceed his calculations.
+    help:
+      Proceeds to dynamical calculations using 'namelist_G.def' to specifie configuration
+      files and './output/zqp_opt.dat' file to access optimized dynamical parameters.
 
     examples:
-      - dvmc excitations namelist_G.def output/zqp_opt.dat
-      - dvmc excs namelist_G.def output/zqp_opt.dat
+      - dvmc excitations
+      - dvmc excs
 
   # ----------------------
   # PROCESS-OUTPUT COMMAND
