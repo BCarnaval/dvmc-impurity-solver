@@ -32,7 +32,7 @@ dvmc generate params 3
 #### Run dVMC to get ground state
 
 ```shell
-dvmc groundstate namelist.def
+dvmc groundstate
 ```
 
 #### Run dVMC to get excitations
