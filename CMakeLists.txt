@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 project(mVMC NONE)
-
 option(USE_SCALAPACK "Use Scalapack" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 add_definitions(-D_mVMC)
@@ -46,14 +45,15 @@ set(CMAKE_MACOSX_RPATH 1)
 # -------------------------------
 # Compiler specific configuration
 # -------------------------------
-if(CMAKE_C_COMPILER_ID STREQUAL "Intel")
-  if("${CMAKE_C_COMPILER_VERSION}" VERSION_LESS "15.0.0.20140528")
-    set(OMP_FLAG_Intel "-openmp")
-  else()
-    set(OMP_FLAG_Intel "-qopenmp")
-  endif()
+if(CMAKE_C_COMPILER STREQUAL "icc")
+  set(OpenMP_C_LIB_NAMES "libomp" "omp")
+  set(OpenMP_omp_LIBRARY "/usr/local/lib/libomp.dylib")
+  set(OpenMP_libomp_LIBRARY "/usr/local/lib/libomp.dylib")
+  set(OpenMP_C_FLAGS
+      "-I/usr/local/opt/libomp/include/ -L /usr/local/opt/libomp/lib")
+  set(OMP_FLAG_Intel "-qopenmp")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OMP_FLAG_Intel}")
-elseif(CMAKE_C_COMPILER_ID MATCHES "AppleClang")
+elseif(CMAKE_C_COMPILER MATCHES "clang")
   set(OpenMP_C_LIB_NAMES "libomp" "omp")
   set(OpenMP_C_FLAGS
       "-Xclang -fopenmp -I/usr/local/opt/libomp/include/ -L /usr/local/opt/libomp/lib -lomp"
