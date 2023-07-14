@@ -46,11 +46,6 @@ set(CMAKE_MACOSX_RPATH 1)
 # Compiler specific configuration
 # -------------------------------
 if(CMAKE_C_COMPILER STREQUAL "icc")
-  set(OpenMP_C_LIB_NAMES "libomp" "omp")
-  set(OpenMP_omp_LIBRARY "/usr/local/lib/libomp.dylib")
-  set(OpenMP_libomp_LIBRARY "/usr/local/lib/libomp.dylib")
-  set(OpenMP_C_FLAGS
-      "-I/usr/local/opt/libomp/include/ -L /usr/local/opt/libomp/lib")
   set(OMP_FLAG_Intel "-qopenmp")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OMP_FLAG_Intel}")
 elseif(CMAKE_C_COMPILER MATCHES "clang")
