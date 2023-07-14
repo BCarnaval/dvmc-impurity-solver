@@ -4,7 +4,6 @@ import pyqcm
 import pyqcm.dvmc
 import pyqcm.cdmft
 import numpy as np
-import faulthandler
 
 
 def model1D(ns: int, nb: int, S: list) -> pyqcm.lattice_model:
@@ -114,5 +113,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    faulthandler.enable()
     main()
