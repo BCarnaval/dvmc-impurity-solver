@@ -98,32 +98,29 @@ commands:
     help: Q-matrix calcultations
     args:
       - name: processing
-        help: |
-          Type of processing to do on the Q-matrix. Either 'cond',
+        help: Type of processing to do on the Q-matrix. Either 'cond',
           'svd' or 'sqrt' or empty argument for basic processing
         required: true
 
-      - name: tolerance
-        help: |
+    flags:
+      - long: --tolerance
+        arg: tolerance
+        help:
           Specific tolerance that determines the number of states kept for the
-          calculations of the Q-matrix. The default value is 1e-10
-        required: true
+          calculations of the Q-matrix. The default value is 1e-10.
 
-      - name: use_filter
-        help: |
-          If set, modifies the number of states kept for the Q-matrix calculations.
-        required: true
+      - long: --use_filter
+        arg: use_filter
+        help: If set, modifies the number of states kept for the Q-matrix calculations.
 
-      - name: addtl_filter
-        help: |
-          Modifies the default value for the filter, which is 0.9.
-        required: true
+      - long: --addtl_filter
+        arg: filter_value
+        help: Modifies the default value for the filter, which is 0.9.
 
-      - name: k_tolerance
-        help: |
-          Modifies the Q-matrix calculations in the 'svd' processing case
-        required: false
+      - long: --k_tolerance
+        arg: k_tolerance
+        help: Modifies the Q-matrix calculations in the 'svd' processing case.
 
     examples:
-      - dvmc qmatrix sqrt 0.75 1 0.9
-      - dvmc qmatrix svd 0.75 1 0.9 0.8
+      - dvmc qmatrix sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9
+      - dvmc qmatrix svd --tolerance=0.75 --k_tolerance=0.8

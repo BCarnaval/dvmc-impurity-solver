@@ -5,7 +5,7 @@ process_output () {
   PREFIX="${args[prefix]}"
 
   # Script
-  green "[@] Processing ${PREFIX}*bin files..."
+  green_bold "[@] Processing ${PREFIX}*bin files..."
   "${DVMC_SCRIPTS_LOCATION}"/mergeOutputBin.py "${PREFIX}"*bin
 }
 

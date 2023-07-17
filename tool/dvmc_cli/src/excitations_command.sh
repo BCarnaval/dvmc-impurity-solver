@@ -8,16 +8,16 @@ excitations () {
 
   # Script
   if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
-    green "[@] Beginning dynamical VMC calculations..."
+    green_bold "[@] Beginning dynamical VMC calculations..."
     mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
   elif [[ ! -f "${NAMELIST_G}" ]]; then
-    red "[X] File named: 'namelist_G.def' not found in current directory."
+    red_bold "[X] File named: 'namelist_G.def' not found in current directory."
     exit 1
   elif [[ ! -f "${OPTIMIZED}" ]]; then
-    red "[X] File named: './output/zqp_opt.dat' not found in current directory."
+    red_bold "[X] File named: './output/zqp_opt.dat' not found in current directory."
     exit 1
   else
-    red "[X] Neither './output/zqp_opt.dat' and 'namelist_G.def' have been found."
+    red_bold "[X] Neither './output/zqp_opt.dat' and 'namelist_G.def' have been found."
     exit 1
   fi
 }

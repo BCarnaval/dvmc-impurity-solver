@@ -258,13 +258,34 @@ dvmc_qmatrix_usage() {
   fi
 
   printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc qmatrix PROCESSING TOLERANCE USE_FILTER ADDTL_FILTER [K_TOLERANCE]\n"
+  printf "  dvmc qmatrix PROCESSING [OPTIONS]\n"
   printf "  dvmc qmatrix --help | -h\n"
   echo
 
   # :command.long_usage
   if [[ -n $long_usage ]]; then
     printf "%s\n" "$(bold "Options:")"
+
+    # :command.usage_flags
+    # :flag.usage
+    printf "  %s\n" "$(magenta "--tolerance TOLERANCE")"
+    printf "    Specific tolerance that determines the number of states kept for the\n    calculations of the Q-matrix. The default value is 1e-10.\n"
+    echo
+
+    # :flag.usage
+    printf "  %s\n" "$(magenta "--use_filter USE_FILTER")"
+    printf "    If set, modifies the number of states kept for the Q-matrix calculations.\n"
+    echo
+
+    # :flag.usage
+    printf "  %s\n" "$(magenta "--addtl_filter FILTER_VALUE")"
+    printf "    Modifies the default value for the filter, which is 0.9.\n"
+    echo
+
+    # :flag.usage
+    printf "  %s\n" "$(magenta "--k_tolerance K_TOLERANCE")"
+    printf "    Modifies the Q-matrix calculations in the 'svd' processing case.\n"
+    echo
 
     # :command.usage_fixed_flags
     printf "  %s\n" "$(magenta "--help, -h")"
@@ -276,33 +297,13 @@ dvmc_qmatrix_usage() {
 
     # :argument.usage
     printf "  %s\n" "$(blue "PROCESSING")"
-    printf "    Type of processing to do on the Q-matrix. Either 'cond',\n    'svd' or 'sqrt' or empty argument for basic processing\n"
-    echo
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "TOLERANCE")"
-    printf "    Specific tolerance that determines the number of states kept for the\n    calculations of the Q-matrix. The default value is 1e-10\n"
-    echo
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "USE_FILTER")"
-    printf "    If set, modifies the number of states kept for the Q-matrix calculations.\n"
-    echo
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "ADDTL_FILTER")"
-    printf "    Modifies the default value for the filter, which is 0.9.\n"
-    echo
-
-    # :argument.usage
-    printf "  %s\n" "$(blue "K_TOLERANCE")"
-    printf "    Modifies the Q-matrix calculations in the 'svd' processing case\n"
+    printf "    Type of processing to do on the Q-matrix. Either 'cond', 'svd' or 'sqrt' or\n    empty argument for basic processing\n"
     echo
 
     # :command.usage_examples
     printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc qmatrix sqrt 0.75 1 0.9\n"
-    printf "  dvmc qmatrix svd 0.75 1 0.9 0.8\n"
+    printf "  dvmc qmatrix sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9\n"
+    printf "  dvmc qmatrix svd --tolerance=0.75 --k_tolerance=0.8\n"
     echo
 
   fi
@@ -407,20 +408,20 @@ dvmc_groundstate_command() {
 
     # Script
     if [ -f "${NAMELIST}" ]; then
-      green "[@] Static ground state numerical evaluation..."
+      green_bold "[@] Static ground state numerical evaluation..."
       if [ "${OPTIMIZED}" ]; then
         if [ -f "./output/zqp_opt.dat" ]; then
-          green "[@] Using optimized parameters stored in './output/zqp_opt.dat'"
+          green_bold "[@] Using optimized parameters stored in './output/zqp_opt.dat'"
           mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}" "./output/zqp_opt.dat"
         else
-          red "[X] Optimized parameters: './output/zqp_opt.dat' not found in current directory."
+          red_bold "[X] Optimized parameters: './output/zqp_opt.dat' not found in current directory."
           exit 1
         fi
       else
         mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
       fi
     else
-      red "[X] File named: 'namelist.def' not found in current directory."
+      red_bold "[X] File named: 'namelist.def' not found in current directory."
       exit 1
     fi
   }
@@ -438,29 +439,29 @@ dvmc_generate_command() {
     # Generating global .def files
     PARAMS="${args[parameters_file]}"
     if [ -f "${PARAMS}" ]; then
-      green "[@] Generating .def files..."
+      green_bold "[@] Generating .def files..."
       "${DVMC_SCRIPTS_LOCATION}"/init_params.py "${PARAMS}"
     else
-      red "[X] Input must be a file."
+      red_bold "[X] Input must be a file."
       exit 1
     fi
 
     # Generating excitation.def file
     if [ -z "${args[hopping_option]}" ]; then
-      yellow "[!] Skipping excitation.def"
+      yellow_bold "[!] Skipping excitation.def"
     elif [ "${args[hopping_option]}" == 1 ]; then
-      green "[@] Using 'makeExcitation.py' to generate excitation.def"
+      green_bold "[@] Using 'makeExcitation.py' to generate excitation.def"
       "${DVMC_SCRIPTS_LOCATION}"/makeExcitation.py
 
     elif [ "${args[hopping_option]}" == 2 ]; then
-      green "[@] Using 'makeExcitation_from_hopping.py' to generate excitation.def"
+      green_bold "[@] Using 'makeExcitation_from_hopping.py' to generate excitation.def"
       "${DVMC_SCRIPTS_LOCATION}"/makeExcitation_from_hopping.py
 
     elif [ "${args[hopping_option]}" == 3 ]; then
-      green "[@] Using 'makeExcitation_from_hopping_only_t.py' to generate excitation.def"
+      green_bold "[@] Using 'makeExcitation_from_hopping_only_t.py' to generate excitation.def"
       "${DVMC_SCRIPTS_LOCATION}"/makeExcitation_from_hopping_only_t.py
     fi
-    green "[@] .def files generated."
+    green_bold "[@] .def files generated."
   }
 
   generate
@@ -480,17 +481,16 @@ dvmc_excitations_command() {
 
     # Script
     if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
-      green "[@] Beginning dynamical VMC calculations..."
-      echo ${NAMELIST_G} ${OPTIMIZED}
+      green_bold "[@] Beginning dynamical VMC calculations..."
       mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
     elif [[ ! -f "${NAMELIST_G}" ]]; then
-      red "[X] File named: 'namelist_G.def' not found in current directory."
+      red_bold "[X] File named: 'namelist_G.def' not found in current directory."
       exit 1
     elif [[ ! -f "${OPTIMIZED}" ]]; then
-      red "[X] File named: './output/zqp_opt.dat' not found in current directory."
+      red_bold "[X] File named: './output/zqp_opt.dat' not found in current directory."
       exit 1
     else
-      red "[X] Neither './output/zqp_opt.dat' and 'namelist_G.def' have been found."
+      red_bold "[X] Neither './output/zqp_opt.dat' and 'namelist_G.def' have been found."
       exit 1
     fi
   }
@@ -505,8 +505,11 @@ dvmc_process_output_command() {
   # Process-output command script
 
   process_output () {
+    # Constants
     PREFIX="${args[prefix]}"
-    green "[@] Processing ${PREFIX}*bin files..."
+
+    # Script
+    green_bold "[@] Processing ${PREFIX}*bin files..."
     "${DVMC_SCRIPTS_LOCATION}"/mergeOutputBin.py "${PREFIX}"*bin
   }
 
@@ -522,32 +525,48 @@ dvmc_qmatrix_command() {
   q_matrix () {
     # Constants
     PROCESS="${args[processing]}"
-    TOL="${args[tolerance]}"
-    USE_FILTER="${args[use_filter]}"
-    TL_FILTER="${args[addtl_filter]}"
-    K_TOL="${args[k_tolerance]}"
+    TOL="${args[--tolerance]}"
+    USE_FILTER="${args[--use_filter]}"
+    TL_FILTER="${args[--addtl_filter]}"
+    K_TOL="${args[--k_tolerance]}"
 
-    # Script
+    # Script selection
     if [ "${PROCESS}" == "cond" ]; then
       SCRIPT=dvmc_spectrum_w_cond_number.py
     elif [ "${PROCESS}" == "svd" ]; then
       SCRIPT=dvmc_spectrum_w_SVD.py
     elif [ "${PROCESS}" == "sqrt" ]; then
       SCRIPT=dvmc_spectrum_eigh_w_sqrtS.py
-    elif [ -z "${PROCESS}" ]; then
-      SCRIPT=dvmc_spectrum.py
     else
-      red "[X] The option: '${PROCESS}' isn't supported. Exiting..."
+      red_bold "[X] The option: '${PROCESS}' isn't supported. Exiting..."
       exit 1
     fi
 
-    green "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
-    if [ -z "${K_TOL}" ]; then
+    # Options selection
+    if [[ ! "${TOL}" ]]; then
+      yellow_bold "[!] '--tolerance' not specified. Using default value: 1e-10."
+      TOL=1e-10
+    fi
+    if [[ ! "${USE_FILTER}" ]]; then
+      yellow_bold "[!] '--use_filter' not specified. Using default value: 0 (false)."
+      USE_FILTER=0
+    fi
+    if [[ ! "${TL_FILTER}" ]]; then
+      yellow_bold "[!] '--addtl_filter' not specified. Using default value: 0.9."
+      TL_FILTER=0.9
+    fi
+    if [[ "${K_TOL}" ]] && [[ ! "${PROCESS}" == "svd" ]]; then
+      red_bold "[X] '--k_tolerance' flag cannot be used with process: ${PROCESS}."
+      exit 1
+    fi
+
+    green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
+    if [ ! "${K_TOL}" ]; then
       "${DVMC_SCRIPTS_LOCATION}"/"${SCRIPT}" spectrumpara.def output "${TOL}" "${USE_FILTER}" "${TL_FILTER}"
     else
       "${DVMC_SCRIPTS_LOCATION}"/"${SCRIPT}" spectrumpara.def output "${TOL}" "${USE_FILTER}" "${TL_FILTER}" "${K_TOL}"
     fi
-    green "[@] Green's function calculations done."
+    green_bold "[@] Green's function calculations done."
   }
 
   q_matrix
@@ -895,6 +914,65 @@ dvmc_qmatrix_parse_requirements() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
+      # :flag.case
+      --tolerance)
+
+        # :flag.case_arg
+        if [[ -n ${2+x} ]]; then
+
+          args['--tolerance']="$2"
+          shift
+          shift
+        else
+          printf "%s\n" "--tolerance requires an argument: --tolerance TOLERANCE" >&2
+          exit 1
+        fi
+        ;;
+
+      # :flag.case
+      --use_filter)
+
+        # :flag.case_arg
+        if [[ -n ${2+x} ]]; then
+
+          args['--use_filter']="$2"
+          shift
+          shift
+        else
+          printf "%s\n" "--use_filter requires an argument: --use_filter USE_FILTER" >&2
+          exit 1
+        fi
+        ;;
+
+      # :flag.case
+      --addtl_filter)
+
+        # :flag.case_arg
+        if [[ -n ${2+x} ]]; then
+
+          args['--addtl_filter']="$2"
+          shift
+          shift
+        else
+          printf "%s\n" "--addtl_filter requires an argument: --addtl_filter FILTER_VALUE" >&2
+          exit 1
+        fi
+        ;;
+
+      # :flag.case
+      --k_tolerance)
+
+        # :flag.case_arg
+        if [[ -n ${2+x} ]]; then
+
+          args['--k_tolerance']="$2"
+          shift
+          shift
+        else
+          printf "%s\n" "--k_tolerance requires an argument: --k_tolerance K_TOLERANCE" >&2
+          exit 1
+        fi
+        ;;
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2
@@ -908,22 +986,6 @@ dvmc_qmatrix_parse_requirements() {
 
           args['processing']=$1
           shift
-        elif [[ -z ${args['tolerance']+x} ]]; then
-
-          args['tolerance']=$1
-          shift
-        elif [[ -z ${args['use_filter']+x} ]]; then
-
-          args['use_filter']=$1
-          shift
-        elif [[ -z ${args['addtl_filter']+x} ]]; then
-
-          args['addtl_filter']=$1
-          shift
-        elif [[ -z ${args['k_tolerance']+x} ]]; then
-
-          args['k_tolerance']=$1
-          shift
         else
           printf "invalid argument: %s\n" "$key" >&2
           exit 1
@@ -936,19 +998,7 @@ dvmc_qmatrix_parse_requirements() {
 
   # :command.required_args_filter
   if [[ -z ${args['processing']+x} ]]; then
-    printf "missing required argument: PROCESSING\nusage: dvmc qmatrix PROCESSING TOLERANCE USE_FILTER ADDTL_FILTER [K_TOLERANCE]\n" >&2
-    exit 1
-  fi
-  if [[ -z ${args['tolerance']+x} ]]; then
-    printf "missing required argument: TOLERANCE\nusage: dvmc qmatrix PROCESSING TOLERANCE USE_FILTER ADDTL_FILTER [K_TOLERANCE]\n" >&2
-    exit 1
-  fi
-  if [[ -z ${args['use_filter']+x} ]]; then
-    printf "missing required argument: USE_FILTER\nusage: dvmc qmatrix PROCESSING TOLERANCE USE_FILTER ADDTL_FILTER [K_TOLERANCE]\n" >&2
-    exit 1
-  fi
-  if [[ -z ${args['addtl_filter']+x} ]]; then
-    printf "missing required argument: ADDTL_FILTER\nusage: dvmc qmatrix PROCESSING TOLERANCE USE_FILTER ADDTL_FILTER [K_TOLERANCE]\n" >&2
+    printf "missing required argument: PROCESSING\nusage: dvmc qmatrix PROCESSING [OPTIONS]\n" >&2
     exit 1
   fi
 
