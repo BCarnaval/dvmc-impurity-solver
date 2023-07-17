@@ -18,8 +18,6 @@ surface of the system by calling PyQCM library.
 
 - `params`: Global dVMC solver input parameter file.
 
-- `clean.sh`: Cleans this directory except for listed files.
-
 - `fermi_surface_expected.pdf`: The expected Fermi surface that any user should
   obtain by running this example.
 
@@ -34,4 +32,16 @@ the `fermi_surface.py` script using Python 3 (with proper PyQCM installation)
 
 ```shell
 python3 fermi_surface.py
+```
+
+#### Post processing
+
+The expected and relevant output of this sample is the Fermi surface of the system. To
+access it, open the file `fermi_surface.pdf`.
+
+To clean the directory from generated files that would be overwritten by the program,
+use the `dvmc` command line interface
+
+```shell
+dvmc clean --help
 ```
