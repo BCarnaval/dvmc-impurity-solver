@@ -20,8 +20,6 @@ surface of the system by calling PyQCM library.
 
 - `QCM_param.def`[^1]: PyQCM specificly formatted parameter file.
 
-- `clean.sh`: Cleans this directory except for listed files.
-
 - `fermi_surface_expected.pdf`: The expected Fermi surface that any user should
   obtain by running this example.
 
@@ -43,13 +41,13 @@ dvmc generate params 3
 #### Run dVMC to get ground state
 
 ```shell
-dvmc groundstate namelist.def
+dvmc groundstate
 ```
 
 #### Run dVMC to get excitations
 
 ```shell
-dvmc excitations namelist_G.def output/zqp_opt.dat
+dvmc excitations
 ```
 
 #### Merge binary files
@@ -58,13 +56,11 @@ dvmc excitations namelist_G.def output/zqp_opt.dat
 dvmc process-output output/zvo_nCHAm_nAHCm_0
 ```
 
-#### Get Q-matrix [^2]
+#### Get Q-matrix
 
 ```shell
-dvmc qmatrix sqrt 1e-10 0 0.9
+dvmc qmatrix sqrt
 ```
-
-[^2]: Add defaults for the three float parameters.
 
 #### Run script to generate A(k,w) from CPT
 
