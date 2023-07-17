@@ -50,3 +50,15 @@ dvmc process-output output/zvo_nCHAm_nAHCm_0
 ```shell
 dvmc qmatrix sqrt
 ```
+
+#### Post processing
+
+The expected and relevant output of this sample is the spectrum of the system. To
+access it, open the file `spectrum_rspace.pdf`.
+
+To clean the directory from generated files that would be overwritten by the program,
+use the `dvmc` command line interface
+
+```shell
+dvmc clean --help
+```
