@@ -15,10 +15,10 @@ NMPTrans    1
 NSPGaussLeg    16
 complextype    0
 NSplitSize    1
-NSROptItrStep    500
+NSROptItrStep    100
 NSROptItrSmp    50
-NVMCWarmUp    50
-NVMCSample    200
+NVMCWarmUp    20
+NVMCSample    100
 NExUpdatePath    1
 NDataQtySmp    30
 2Sz    0

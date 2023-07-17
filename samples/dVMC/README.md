@@ -50,7 +50,7 @@ dvmc process-output output/zvo_nCHAm_nAHCm_0
 #### Get Q-matrix [^2]
 
 ```shell
-dvmc qmatrix sqrt 1e-10 0 0.9
+dvmc qmatrix sqrt
 ```
 
 [^2]: Add defaults for the three float parameters.
