@@ -11,8 +11,6 @@ compute the ground state of a small 3x4 cluster then the Q-matrix.
 
 - `params`: Global dVMC solver input parameter file.
 
-- `clean.sh`: Cleans this directory except for listed files.
-
 - `spectrum_rspace_expected.pdf`: The expected spectrum that any user should
   obtain by running this example.
 
@@ -38,7 +36,7 @@ dvmc groundstate
 #### Run dVMC to get excitations
 
 ```shell
-dvmc excitations namelist_G.def output/zqp_opt.dat
+dvmc excitations
 ```
 
 #### Merge binary files
@@ -47,10 +45,8 @@ dvmc excitations namelist_G.def output/zqp_opt.dat
 dvmc process-output output/zvo_nCHAm_nAHCm_0
 ```
 
-#### Get Q-matrix [^2]
+#### Get Q-matrix
 
 ```shell
 dvmc qmatrix sqrt
 ```
-
-[^2]: Add defaults for the three float parameters.
