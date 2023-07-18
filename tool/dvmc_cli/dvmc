@@ -323,7 +323,7 @@ dvmc_clean_usage() {
   fi
 
   printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc clean [OPTIONS]\n"
+  printf "  dvmc clean [SPARE] [OPTIONS]\n"
   printf "  dvmc clean --help | -h\n"
   echo
 
@@ -342,11 +342,19 @@ dvmc_clean_usage() {
     printf "    Show this help\n"
     echo
 
+    # :command.usage_args
+    printf "%s\n" "$(bold "Arguments:")"
+
+    # :argument.usage
+    printf "  %s\n" "$(blue "SPARE")"
+    printf "    String containing files to save from being deleted.\n"
+    echo
+
     # :command.usage_examples
     printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc clean\n"
+    printf "  dvmc clean \"QCM_params.def\"\n"
     printf "  dvmc clean --deep\n"
-    printf "  dvmc clean -d\n"
+    printf "  dvmc clean -d \"QCM_params.def hop.dat trans.def\"\n"
     echo
 
   fi
@@ -623,7 +631,32 @@ dvmc_clean_command() {
 
   clean () {
     # Constants
-    TRASH=$(find . -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec" -type f)
+    SPACE_IFS=' '
+    OLD_IFS=$IFS
+
+    if [[ "${args[spare]}" ]]; then
+      yellow_bold "[!] Saved files: ${args[spare]}"
+
+      # Reading prompt
+      IFS=${SPACE_IFS}
+      read -a SPARE <<< "${args[spare]}"
+
+      # Saving those poor files...
+      mkdir save
+      for file in "${SPARE[@]}"; do
+        if [[ -f ${file} ]]; then
+          cp ${file} ./save/${file}
+        else
+          yellow_bold "[!] ${file} doesn't exist."
+        fi
+      done
+
+      # Restoring IFS variable
+      IFS=${OLD_IFS}
+    fi
+
+    # Defining trash files
+    TRASH=$(find . -type f -maxdepth 1 -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec")
     OUTPUT_TRASH=$(find ./output -type f)
 
     # Script
@@ -631,7 +664,16 @@ dvmc_clean_command() {
       yellow_bold "[!] Nothing to clean in current directory."
     else
       green_bold "[@] Removing '.def', '.dat' and '.npy' generated files..."
-      rm -vf ${TRASH}
+      rm -fv ${TRASH}
+    fi
+
+    if [[ -d ./save ]]; then
+      for file in ./save/*; do
+        NAME=$(basename ${file})
+        cp ${file} ./${NAME}
+      done
+
+      rm -rf ./save
     fi
 
     if [[ "${args[--deep]}" ]] || [[ "${args[-d]}" ]]; then
@@ -1129,8 +1171,14 @@ dvmc_clean_parse_requirements() {
       *)
         # :command.parse_requirements_case
         # :command.parse_requirements_case_simple
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
+        if [[ -z ${args['spare']+x} ]]; then
+
+          args['spare']=$1
+          shift
+        else
+          printf "invalid argument: %s\n" "$key" >&2
+          exit 1
+        fi
 
         ;;
 

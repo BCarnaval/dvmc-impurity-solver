@@ -2,7 +2,32 @@
 
 clean () {
   # Constants
-  TRASH=$(find . -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec" -type f)
+  SPACE_IFS=' '
+  OLD_IFS=$IFS
+
+  if [[ "${args[spare]}" ]]; then
+    yellow_bold "[!] Saved files: ${args[spare]}"
+
+    # Reading prompt
+    IFS=${SPACE_IFS}
+    read -a SPARE <<< "${args[spare]}"
+
+    # Saving those poor files...
+    mkdir save
+    for file in "${SPARE[@]}"; do
+      if [[ -f ${file} ]]; then
+        cp ${file} ./save/${file}
+      else
+        yellow_bold "[!] ${file} doesn't exist."
+      fi
+    done
+
+    # Restoring IFS variable
+    IFS=${OLD_IFS}
+  fi
+
+  # Defining trash files
+  TRASH=$(find . -type f -maxdepth 1 -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec")
   OUTPUT_TRASH=$(find ./output -type f)
 
   # Script
@@ -10,7 +35,16 @@ clean () {
     yellow_bold "[!] Nothing to clean in current directory."
   else
     green_bold "[@] Removing '.def', '.dat' and '.npy' generated files..."
-    rm -vf ${TRASH}
+    rm -fv ${TRASH}
+  fi
+
+  if [[ -d ./save ]]; then
+    for file in ./save/*; do
+      NAME=$(basename ${file})
+      cp ${file} ./${NAME}
+    done
+
+    rm -rf ./save
   fi
 
   if [[ "${args[--deep]}" ]] || [[ "${args[-d]}" ]]; then
