@@ -4,7 +4,7 @@
 
 </div>
 
-This directory contains a direct application of the dVMC software usage to
+This directory contains a direct application of the dVMC software to
 compute the ground state of a small 3x4 cluster then using the Q-matrix
 representation in cluster perturbation theory (CPT) to output the Fermi
 surface of the system by calling PyQCM library.
@@ -18,14 +18,9 @@ surface of the system by calling PyQCM library.
 
 - `params`: Global dVMC solver input parameter file.
 
-- `QCM_param.def`[^1]: PyQCM specificly formatted parameter file.
+- `QCM_param.def`: PyQCM specificly formatted parameter file.
 
-- `fermi_surface_expected.pdf`: The expected Fermi surface that any user should
-  obtain by running this example.
-
-- `output/`: Working subdirectory.
-
-[^1]: Might be yeeted soon, it's content is contained inside params file.
+- `expected/`: Directory containing expected results from the CPT calculations.
 
 ## Usage
 
@@ -66,4 +61,13 @@ dvmc qmatrix sqrt
 
 ```shell
 python3 fermi_surface.py output/qmatrix.def
+```
+
+## Post processing
+
+To clean the directory from generated files that would be overwritten by the program,
+use the `dvmc` command line interface
+
+```shell
+dvmc clean --help
 ```

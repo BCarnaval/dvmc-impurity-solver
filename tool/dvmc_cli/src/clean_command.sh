@@ -27,9 +27,9 @@ clean () {
   fi
 
   # Defining trash files
-  TRASH=$(find . -maxdepth 1 -type f -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec")
+  TRASH=$(find . -maxdepth 1 -type f -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec" -o -name "*.pdf" -o -name "*.tsv")
   if [[ -d ./output ]]; then
-    OUTPUT_TRASH=$(find ./output -type f)
+    OUTPUT_TRASH=$(find ./output -type d)
   else
     OUTPUT_TRASH=''
   fi
@@ -53,10 +53,10 @@ clean () {
 
   if [[ "${args[--deep]}" ]] || [[ "${args[-d]}" ]]; then
     if [[ -z "${OUTPUT_TRASH}" ]]; then
-      yellow_bold "[!] Nothing to clean in './output' directory."
+      yellow_bold "[!] './output' directory not found."
     else
       yellow_bold "[!] Cleaning './output' directory..."
-      rm -vf ${OUTPUT_TRASH}
+      rm -vrf ${OUTPUT_TRASH}
     fi
   fi
   green_bold "[@] Cleaning done."

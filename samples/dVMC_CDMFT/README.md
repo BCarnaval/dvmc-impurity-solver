@@ -4,8 +4,8 @@
 
 </div>
 
-This directory contains a direct application of the dVMC software usage to
-compute the ground state of a small 1D cluster with bath sites then using
+This directory contains a direct application of the dVMC software to
+compute the ground state of a 1D cluster with bath sites then using
 the Q-matrix representation in cluster dynamical mean field theory (CDMFT)
 from PyQCM library.
 
@@ -15,12 +15,7 @@ from PyQCM library.
 
 - `params`: Global dVMC solver input parameter file.
 
-- `clean.sh`: Cleans this directory except for listed files.
-
-- `spectrum_rspace_expected.pdf`: The expected spectrum that any user should
-  obtain by running this example.
-
-- `output/`: Working subdirectory.
+- `expected/`: Directory containing expected results from the dVMC + CDMFT calculations.
 
 ## Usage
 
@@ -31,4 +26,13 @@ the `general_bath_1D.py` script using Python 3 (with proper PyQCM installation)
 
 ```shell
 python3 general_bath_1D.py
+```
+
+## Post processing
+
+To clean the directory from generated files that would be overwritten by the program,
+use the `dvmc` command line interface
+
+```shell
+dvmc clean --help
 ```

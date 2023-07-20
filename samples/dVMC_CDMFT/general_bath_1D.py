@@ -1,4 +1,5 @@
-"""Docs
+"""This module defines the general 1D cluster to solve within dVMC
+solver at each iteration of the PyQCM CDMFT loop.
 """
 import pyqcm
 import pyqcm.dvmc
@@ -94,11 +95,7 @@ def main() -> None:
         ['tb{:d}_1'.format(i+1) for i in range(nb)]
 
     # dVMC parameters
-    dvmc_params = {
-        'save_iters': True,
-        'use_SVD': True,
-        'k_tol': 6
-    }
+    dvmc_params = {'use_SVD': True, 'k_tol': 6}
     pyqcm.dvmc.dvmc_cdmft_parameters['min_iter_E0'] = 25
 
     # Specify PyQCM solver

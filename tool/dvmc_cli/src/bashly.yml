@@ -125,7 +125,7 @@ commands:
   # CLEAN COMMAND
   # -------------
   - name: clean
-    help: Cleans directory by removing generated configuration files.
+    help: Cleans directory by removing generated configuration/output files.
 
     args:
       - name: spare

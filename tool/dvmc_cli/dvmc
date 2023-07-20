@@ -11,7 +11,7 @@
 
 # :command.version_command
 version_command() {
-  cyan_bold "[~] Version ${version}, BCarnaval"
+  echo "$version"
 }
 
 # :command.usage
@@ -38,7 +38,7 @@ dvmc_usage() {
   printf "  %s   Proceeds to dynamical calculations via optimized parameters.\n" "$(green "excitations")   "
   printf "  %s   Merges binary output files based on given prefix.\n" "$(green "process-output")"
   printf "  %s   Computes the Green's function using Q-matrix representation.\n" "$(green "qmatrix")       "
-  printf "  %s   Cleans directory by removing generated configuration files.\n" "$(green "clean")         "
+  printf "  %s   Cleans directory by removing generated configuration/output files.\n" "$(green "clean")         "
   echo
 
   # :command.long_usage
@@ -313,11 +313,11 @@ dvmc_qmatrix_usage() {
 # :command.usage
 dvmc_clean_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc clean - Cleans directory by removing generated configuration files.\n"
+    printf "dvmc clean - Cleans directory by removing generated configuration/output files.\n"
     echo
 
   else
-    printf "dvmc clean - Cleans directory by removing generated configuration files.\n"
+    printf "dvmc clean - Cleans directory by removing generated configuration/output files.\n"
     echo
 
   fi
@@ -656,9 +656,9 @@ dvmc_clean_command() {
     fi
 
     # Defining trash files
-    TRASH=$(find . -maxdepth 1 -type f -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec")
+    TRASH=$(find . -maxdepth 1 -type f -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec" -o -name "*.pdf" -o -name "*.tsv")
     if [[ -d ./output ]]; then
-      OUTPUT_TRASH=$(find ./output -type f)
+      OUTPUT_TRASH=$(find ./output -type d)
     else
       OUTPUT_TRASH=''
     fi
@@ -682,10 +682,10 @@ dvmc_clean_command() {
 
     if [[ "${args[--deep]}" ]] || [[ "${args[-d]}" ]]; then
       if [[ -z "${OUTPUT_TRASH}" ]]; then
-        yellow_bold "[!] Nothing to clean in './output' directory."
+        yellow_bold "[!] './output' directory not found."
       else
         yellow_bold "[!] Cleaning './output' directory..."
-        rm -vf ${OUTPUT_TRASH}
+        rm -vrf ${OUTPUT_TRASH}
       fi
     fi
     green_bold "[@] Cleaning done."

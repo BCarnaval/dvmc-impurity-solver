@@ -18,10 +18,7 @@ surface of the system by calling PyQCM library.
 
 - `params`: Global dVMC solver input parameter file.
 
-- `fermi_surface_expected.pdf`: The expected Fermi surface that any user should
-  obtain by running this example.
-
-- `output/`: Working subdirectory.
+- `expected/`: Directory containing expected results from the dVMC + CPT calculations.
 
 ## Usage
 
@@ -35,9 +32,6 @@ python3 fermi_surface.py
 ```
 
 #### Post processing
-
-The expected and relevant output of this sample is the Fermi surface of the system. To
-access it, open the file `fermi_surface.pdf`.
 
 To clean the directory from generated files that would be overwritten by the program,
 use the `dvmc` command line interface
