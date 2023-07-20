@@ -31,7 +31,7 @@ the `fermi_surface.py` script using Python 3 (with proper PyQCM installation)
 python3 fermi_surface.py
 ```
 
-#### Post processing
+## Post processing
 
 To clean the directory from generated files that would be overwritten by the program,
 use the `dvmc` command line interface
