@@ -36,7 +36,7 @@ commands:
   # ----------------
   - name: generate
     alias: gen
-    help: Generates '.def' input files needed based on a global parameters input.
+    help: Generates configuration files needed based on a global parameters input.
     args:
       - name: parameters_file
         required: true
@@ -54,7 +54,7 @@ commands:
         help: |
           Generating 'excitation.def' file using options (1, 2 or 3). The first option
           calls 'makeExcitation.py', the second 'makeExcitation_from_hopping.py' and
-          the third 'makeExcitation_from_hopping_only_t.py'. Those are respectively # TODO Add description
+          the third 'makeExcitation_from_hopping_only_t.py'.
 
     examples:
       - dvmc generate parameters.txt 1
@@ -65,7 +65,7 @@ commands:
   # -------------------
   - name: excitations
     alias: excs
-    help: Proceeds to dynamical calculations via 'namelist_G.def' and './output/zqp_opt.dat'.
+    help: Proceeds to dynamical calculations via optimized parameters.
 
     examples:
       - dvmc excitations
@@ -91,7 +91,7 @@ commands:
   # QMATRIX COMMAND
   # ---------------
   - name: qmatrix
-    help: Q-matrix calcultations.
+    help: Computes the Green's function using Q-matrix representation.
     args:
       - name: processing
         help: Type of processing to do on the Q-matrix. Either 'cond',
@@ -125,7 +125,7 @@ commands:
   # CLEAN COMMAND
   # -------------
   - name: clean
-    help: Cleans directory by removing generated '.def', '.dat' and '.npy' files.
+    help: Cleans directory by removing generated configuration files.
 
     args:
       - name: spare

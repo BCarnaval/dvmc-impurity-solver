@@ -11,7 +11,7 @@
 
 # :command.version_command
 version_command() {
-  cyan_bold "[~] $version, BCarnaval"
+  echo "$version"
 }
 
 # :command.usage
@@ -34,11 +34,11 @@ dvmc_usage() {
   # :command.usage_commands
   printf "%s\n" "$(bold "Commands:")"
   printf "  %s   Evaluates the ground state using 'namelist.def' to access configuration files.\n" "$(green "groundstate")   "
-  printf "  %s   Generates '.def' input files needed based on a global parameters input.\n" "$(green "generate")      "
-  printf "  %s   Proceeds to dynamical calculations via 'namelist_G.def' and './output/zqp_opt.dat'.\n" "$(green "excitations")   "
+  printf "  %s   Generates configuration files needed based on a global parameters input.\n" "$(green "generate")      "
+  printf "  %s   Proceeds to dynamical calculations via optimized parameters.\n" "$(green "excitations")   "
   printf "  %s   Merges binary output files based on given prefix.\n" "$(green "process-output")"
-  printf "  %s   Q-matrix calcultations.\n" "$(green "qmatrix")       "
-  printf "  %s   Cleans directory by removing generated '.def', '.dat' and '.npy' files.\n" "$(green "clean")         "
+  printf "  %s   Computes the Green's function using Q-matrix representation.\n" "$(green "qmatrix")       "
+  printf "  %s   Cleans directory by removing generated configuration files.\n" "$(green "clean")         "
   echo
 
   # :command.long_usage
@@ -118,11 +118,11 @@ dvmc_groundstate_usage() {
 # :command.usage
 dvmc_generate_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc generate - Generates '.def' input files needed based on a global parameters input.\n"
+    printf "dvmc generate - Generates configuration files needed based on a global parameters input.\n"
     echo
 
   else
-    printf "dvmc generate - Generates '.def' input files needed based on a global parameters input.\n"
+    printf "dvmc generate - Generates configuration files needed based on a global parameters input.\n"
     echo
 
   fi
@@ -154,7 +154,7 @@ dvmc_generate_usage() {
 
     # :argument.usage
     printf "  %s\n" "$(blue "HOPPING_OPTION")"
-    printf "    Generating 'excitation.def' file using options (1, 2 or 3). The first option\n    calls 'makeExcitation.py', the second 'makeExcitation_from_hopping.py' and\n    the third 'makeExcitation_from_hopping_only_t.py'. Those are respectively #\n    TODO Add description\n"
+    printf "    Generating 'excitation.def' file using options (1, 2 or 3). The first option\n    calls 'makeExcitation.py', the second 'makeExcitation_from_hopping.py' and\n    the third 'makeExcitation_from_hopping_only_t.py'.\n"
     echo
 
     # :command.usage_examples
@@ -169,11 +169,11 @@ dvmc_generate_usage() {
 # :command.usage
 dvmc_excitations_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc excitations - Proceeds to dynamical calculations via 'namelist_G.def' and './output/zqp_opt.dat'.\n"
+    printf "dvmc excitations - Proceeds to dynamical calculations via optimized parameters.\n"
     echo
 
   else
-    printf "dvmc excitations - Proceeds to dynamical calculations via 'namelist_G.def' and './output/zqp_opt.dat'.\n"
+    printf "dvmc excitations - Proceeds to dynamical calculations via optimized parameters.\n"
     echo
 
   fi
@@ -249,11 +249,11 @@ dvmc_process_output_usage() {
 # :command.usage
 dvmc_qmatrix_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc qmatrix - Q-matrix calcultations.\n"
+    printf "dvmc qmatrix - Computes the Green's function using Q-matrix representation.\n"
     echo
 
   else
-    printf "dvmc qmatrix - Q-matrix calcultations.\n"
+    printf "dvmc qmatrix - Computes the Green's function using Q-matrix representation.\n"
     echo
 
   fi
@@ -313,11 +313,11 @@ dvmc_qmatrix_usage() {
 # :command.usage
 dvmc_clean_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc clean - Cleans directory by removing generated '.def', '.dat' and '.npy' files.\n"
+    printf "dvmc clean - Cleans directory by removing generated configuration files.\n"
     echo
 
   else
-    printf "dvmc clean - Cleans directory by removing generated '.def', '.dat' and '.npy' files.\n"
+    printf "dvmc clean - Cleans directory by removing generated configuration files.\n"
     echo
 
   fi
