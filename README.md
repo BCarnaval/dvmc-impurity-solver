@@ -51,7 +51,7 @@ and authors of mVMC at the end of this document.
 
 - [Details](#details)
 
-- [Original README](#original-readme)
+- [Original mVMC README](#original-mvmc-readme)
 
 # Requirements
 
@@ -204,11 +204,6 @@ doesn't work on your machine, you should add this directory to your `$PATH` so i
 be found as a command.
 
 # Details
-
-Two more README are encouraged to read after this one:
-
-- `./samples/README` - About the code usage (with few working examples).
-- `./tool/dvmc/README` - About the tools that can be used to analyse the data.
 
 Please email us at <maxime.charlebois@uqtr.ca> or <antoine.de.lagrave@usherbrooke.ca>
 if you have any question on the code. This complete the documentation of dVMC.
