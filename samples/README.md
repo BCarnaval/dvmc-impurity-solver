@@ -1,32 +1,18 @@
-#########################
+# Samples (examples directory)
 
-# How to run the example
+This directory contains subdirectories in which are presented diverse techniques
+to solve and simulate Hamiltonians for interacting fermions systems. Each of these
+samples subdirectories has a specific `README` to guide the user through the different
+types of calculations.
 
-In any sub directories (except chain2_U8), generate all the input files using
-the command (inside the directories):
-
-$ preprocess_dVMC.sh
-
-After that, you can submit the job to a supercomputer with command like
-
-$ qsub ./run_vmc.sh
-
-This file is optimized for sekirei (issp) for now, but can be adapted for any
-computer with lapacke or mkl. with this specific file, it takes under 20 minutes
-to run. This will generate Monte Carlo sampling binary files in the output directory.
-You can automatically postprocess the Monte Carlo samples to generate the A(k,w) plots
-simply by typing:
-
-$ postprocess_dVMC.sh
-
-# Result
+## Result
 
 If everything works, the figure "akw_all.pdf"
 shown if "expected_Akw" should be produced when typing the command:
 
 $ gnuplot plot_allAkw.gp
 
-# Details
+## Details
 
 The two scripts preprocess_dVMC.sh and postprocess_dVMC.sh do a bunch of
 automatizations in order to make the examples contained in the "./samples/"
@@ -34,35 +20,7 @@ subdirectories easy to run. In general it can be used for other geometries
 and parameters, but at this point the user might want to know more about
 the details of the implementation. Here is a short description:
 
-# preprocess_dVMC.sh
-
-Generate all the input files for the Monte Carlo sampling procedure to run.
-The main task added to the already present dvmcdry.out is a function
-that generate the excitation.def file, called makeExcitation.py. This
-python function takes the definitions in spectrumpara.def to define the
-neighbor charge positions. In "spectrumpara.def" this last file,
-the values "dr1_x, dr1_y, dr2_x, dr2_y", defines the
-difference in position of the charge excitation relatif to site "i" or
-"j" of the operator "c^dagger_i" or "c_j" for the Green function
-<n|c^dagger_i cj|m>. For example:
-
-"
-dr1_x -1:2 # will generate array [-1,0,1,2]
-dr1_y -1:2 # will generate array [-1,0,1,2]
-dr2_x -1:2 # will generate array [-1,0,1,2]
-dr2_y -1:2 # will generate array [-1,0,1,2]
-"
-
-will generate all the allowed combination of the four vector described.
-This will result in 377 different charge-charge excitations in the file
-"excitation.def". Perhaps futur user will want to
-change this part, and possibly add different kind of excitation. If so,
-this script will also need to be adapted. The number on the far left
-is the type of excitation. It is directly related to the types defined
-in "src/mVMC/calgrn.c" file. Each type (with position differences)
-define a commutation relation with c^dagger and c. To
-
-# running dvmc.out
+## running dvmc.out
 
 preprocessing wil generate all the necessary files and configuration.
 However, make sure that you have enough memory for the calculation.
@@ -83,8 +41,6 @@ $ export MKL_NUM_THREADS=1
 $ export OMP_NUM_THREADS=24
 
 # postprocess_dVMC.sh
-
-#
 
 # mergeOutputBin.py output/zvo_nCHAm_nAHCm_0\*.bin
 
