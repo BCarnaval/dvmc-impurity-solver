@@ -32,7 +32,7 @@ new calculation mode. It is restricted to:
 - OrbitalAntiParallel (not OrbitalGeneral or OrbitalParallel)
 - Hubbard model
 
-The present authors (Maxime Charlebois and Antoine de Lagrave) only work on these
+The present authors (Maxime Charlebois, Peter Rosenberg and Antoine de Lagrave) only work on these
 changes and not on the original mVMC package. You can find the original README
 and authors of mVMC at the end of this document.
 
