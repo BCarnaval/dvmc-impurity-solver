@@ -215,7 +215,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 By running this command, your shell will be able to access the scripts in `$HOME/.local/bin`
 until the current session is ended. To add it every time a shell session is
-openned, you must add the previous line to the `$HOME/.bashrc` file
+openned, you must add the previous line to the `$HOME/.bashrc` file.
 
 # Authors
 
