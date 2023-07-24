@@ -1,20 +1,21 @@
 <div align="center">
 
-# DynamicalVMC
+# dvmc-impurity-solver
 
-This code is based on the original mVMC open source package
+This package compute the Variational Monte Carlo ground state
+and its associated Green function.
+
+This package is an extension of the dVMC package published in 
+[arxiv:1912.09960](https://arxiv.org/abs/1912.09960) and 
+[PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023) 
+which is itself based on the original mVMC open source package 
 [source](https://github.com/issp-center-dev/mVMC)
 and [arXiv:1711.11418](https://arxiv.org/abs/1711.11418).
 It reuse most of the previous source code. Please refer to
 the documentation of mVMC in the open source package
 as most will not be covered here. Here, we will cover the
-difference and new functions not contained in the original mVMC.
-
-This package is not as complete as the mVMC package.
-It is only a prototype used to calculate the "dvmc" method implemented
-and published in [arxiv:1912.09960](https://arxiv.org/abs/1912.09960).
-However, it is very useful and easy to reproduce some date in this
-publication.
+difference and new functions not contained in the original mVMC
+and dVMC packages.
 
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
 
@@ -22,19 +23,24 @@ publication.
 
 </div>
 
-This code implements a new feature where you can calculate the
-frequency dependent Green function (option NVMCCalMode = 3).
-For now there is a number of condition on this
-new calculation mode. It is restricted to:
+This code is a direct extension of the dvmc code availabe in 
+[PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023).
+It has essentially the same behavior but can now relax the 
+constraint of translation invariance and periodic boundary condition.
+It also offer the possibility to include bath orbitals which
+are treated differently (no calcultion of the Green function
+on these orbital). 
 
-- 1D or 2D model (easy to generalize to 3D, to be done)
-- real number calculation
-- OrbitalAntiParallel (not OrbitalGeneral or OrbitalParallel)
-- Hubbard model
+This is very important to be able to use this Hubbard model
+solution as an impurity solver that can be conjugated with
+CPT, CDMFT, etc.
 
-The present authors (Maxime Charlebois, Peter Rosenberg and Antoine de Lagrave) only work on these
-changes and not on the original mVMC package. You can find the original README
-and authors of mVMC at the end of this document.
+The present authors (Maxime Charlebois, Peter Rosenberg and Antoine de Lagrave) 
+only work on these changes and not on the original mVMC 
+package. 
+
+!!!You can find the original README of both previous implementations
+in the ./doc directory.
 
 # Table of contents
 
@@ -67,18 +73,19 @@ In order to compile and link properly the code base, the software uses
 contain a specific `CMakelists.txt` with the right instructions. This tool can be
 installed via
 
+## Linux (Ubuntu)
+
+```shell
+sudo apt install cmake
+```
+
 ### MacOS
 
 ```shell
 brew install cmake
 ```
 
-### Linux (Ubuntu)
-
-```shell
-sudo apt install cmake
-```
-
+#
 ## Parallelization
 
 The program is designed to be executed using supercomputers and is optimized
@@ -180,7 +187,8 @@ make install
 
 It is recommended to consult the original mVMC documentation to learn
 more about dependencies and parameters names and idea. Note however that
-not all the case in mVMC are covered by the present code, as stated above.
+most of the cases in mVMC are not covered by the present code, as 
+stated above.
 
 # Usage
 
@@ -188,7 +196,7 @@ not all the case in mVMC are covered by the present code, as stated above.
 
 Detailed usage is not covered here. Instead many examples can be found
 in the `./samples/` subdirectory. The easiest way to understand how to
-use it is to run these examples. Go there to read the README and run the
+use it is to run these examples. Go there to read the README.md and run the
 few examples.
 
 ## dvmc CLI
@@ -203,68 +211,20 @@ dvmc --help
 doesn't work on your machine, you should add this directory to your `$PATH` so it can
 be found as a command.
 
+!!!!!!!! ajouter au PATH, comment
+
 # Details
 
-Please email us at <maxime.charlebois@uqtr.ca> or <antoine.de.lagrave@usherbrooke.ca>
+Please email us at <maxime.charlebois@uqtr.ca>, <antoine.de.lagrave@usherbrooke.ca>
+!!!!!!!!!!!<Peter>
 if you have any question on the code. This complete the documentation of dVMC.
 
-# Original mVMC README
+# Authors
 
-A numerical solver package for a wide range of quantum lattice models based on many-variable Variational Monte Carlo method
-
-## What is mVMC ?
-
-mVMC (many-variable Variational Monte Carlo method)
-is a software for performing the highly-accurate
-variational Monte Carlo calculations
-with the simple and flexible user interface.
-mVMC also supports the large-scale parallelization.
-For the conventional models in strongly correlated electron systems such as the Hubbard model, the Heisenberg model, and the Kondo-lattice model,
-users can perform the calculation by preparing the one input files whose length is shorter than ten lines.
-
-By using the same input file, users can perform the exact diagonalization through [HPhi](https://github.com/QLMS/HPhi/releases).
-Thus, it is easy to examine the accuracy of the variational calculation for small system sizes
-and to perform the calculations
-for large system sizes that can not be treated
-by the exact diagonalization.
-A broad spectrum of users including experimental scientists is cordially welcome.
-
-## Methods
-
-many-variable variational Monte Carlo method
-
-## Target models
-
-Hubbard model, Heisenberg model, Kondo lattice model, multi-orbital Hubbard model
-
-## Available physical quantities
-
-specific heat, susceptibility, ground state energy, structure factors
-
-## Requirement
-
-- C compiler (intel, Fujitsu, GNU, etc. )
-- ScaLAPACK library (intel MKL, Fujitsu, ATLAS, etc.)
-- MPI library
-
-## Install
-
-You can install mVMC and also get a manual for mVMC from a [release note](https://github.com/issp-center-dev/mVMC/releases).
+Auteurs !!!!!!!!!!!
 
 ## Licence
 
 GNU General Public License version 3 ([GPL v3](http://www.gnu.org/licenses/gpl-3.0.en.html)).
 
-The mVMC package is developed based on the [mVMC-mini](https://github.com/fiber-miniapp/mVMC-mini) program. The license of mVMC-mini is "The BSD 3-Clause License".
-
-We would appreciate if you cite the following article in your research with mVMC:  
-mVMC - Open-source software for many-variable variational Monte Carlo method, Takahiro Misawa, Satoshi Morita, Kazuyoshi Yoshimi, Mitsuaki Kawamura, Yuichi Motoyama, Kota Ido, Takahiro Ohgoe, Masatoshi Imada, Takeo Kato, [arXiv:1711.11418](https://arxiv.org/abs/1711.11418).
-
-## Tutorials
-
-Lecture notes and sample scripts used in Hands-on
-are available at [mVMC-tutorial](https://github.com/issp-center-dev/mVMC-tutorial)
-
-## Authors
-
-Takahiro Misawa, Satoshi Morita, Takahiro Ohgoe, Kota Ido, Yuichi Motoyama, Mitsuaki Kawamura, Kazuyoshi Yoshimi, Takeo Kato, Masatoshi Imada.
+See LICENSE file for the details.
