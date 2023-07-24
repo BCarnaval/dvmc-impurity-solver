@@ -53,8 +53,6 @@ CPT, CDMFT, etc.
 
 - [Usage](#usage)
 
-- [Details](#details)
-
 - [Authors](#authors)
 
 - [License](#license)
@@ -230,7 +228,7 @@ Please email us at
 
 if you have any question on the code. This complete the documentation of dVMC.
 
-# Licence
+# License
 
 GNU General Public License version 3 ([GPL v3](http://www.gnu.org/licenses/gpl-3.0.en.html)).
 See `LICENSE` file for the details.
