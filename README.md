@@ -2,20 +2,14 @@
 
 # dvmc-impurity-solver
 
-This package compute the Variational Monte Carlo ground state
-and its associated Green function.
-
-This package is an extension of the dVMC package published in 
-[arxiv:1912.09960](https://arxiv.org/abs/1912.09960) and 
-[PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023) 
-which is itself based on the original mVMC open source package 
+This package computes the Variational Monte Carlo ground state
+and its associated Green function. This package is an extension
+of the dVMC package published in
+[arxiv:1912.09960](https://arxiv.org/abs/1912.09960)
+and [PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023)
+which is itself based on the original mVMC open source package
 [source](https://github.com/issp-center-dev/mVMC)
 and [arXiv:1711.11418](https://arxiv.org/abs/1711.11418).
-It reuse most of the previous source code. Please refer to
-the documentation of mVMC in the open source package
-as most will not be covered here. Here, we will cover the
-difference and new functions not contained in the original mVMC
-and dVMC packages.
 
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
 
@@ -23,24 +17,28 @@ and dVMC packages.
 
 </div>
 
-This code is a direct extension of the dvmc code availabe in 
+It reuses most of the previous source code. Please refer to
+the documentation of mVMC in the open source package
+as most will not be covered here. Here, we will cover the
+difference and new functions not contained in the original mVMC
+and dVMC packages. This code is a direct extension of the dvmc code availabe in
 [PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023).
-It has essentially the same behavior but can now relax the 
+It has essentially the same behavior but can now relax the
 constraint of translation invariance and periodic boundary condition.
-It also offer the possibility to include bath orbitals which
+It also offers the possibility to include bath orbitals which
 are treated differently (no calcultion of the Green function
-on these orbital). 
+on these orbitals).
 
 This is very important to be able to use this Hubbard model
 solution as an impurity solver that can be conjugated with
 CPT, CDMFT, etc.
 
-The present authors (Maxime Charlebois, Peter Rosenberg and Antoine de Lagrave) 
-only work on these changes and not on the original mVMC 
-package. 
-
-!!!You can find the original README of both previous implementations
-in the ./doc directory.
+> #### Note
+>
+> The present authors (Maxime Charlebois, Peter Rosenberg and Antoine de Lagrave)
+> only work on these changes and not on the original mVMC
+> package. You can find the original `README` of both previous implementations
+> in the `./doc` directory.
 
 # Table of contents
 
@@ -57,7 +55,9 @@ in the ./doc directory.
 
 - [Details](#details)
 
-- [Original mVMC README](#original-mvmc-readme)
+- [Authors](#authors)
+
+- [License](#license)
 
 # Requirements
 
@@ -85,7 +85,6 @@ sudo apt install cmake
 brew install cmake
 ```
 
-#
 ## Parallelization
 
 The program is designed to be executed using supercomputers and is optimized
@@ -95,16 +94,16 @@ does not need to be separately installed as it is included with the C/C++
 compiler. However, this is not the case for OpenMPI, and it can be installed
 and verified using the following commands:
 
-### MacOS
-
-```shell
-brew install open-mpi
-```
-
 ### Linux (Ubuntu)
 
 ```shell
 sudo apt install openmpi-bin openmpi-doc libopenmpi-dev
+```
+
+### MacOS
+
+```shell
+brew install open-mpi
 ```
 
 ## LAPACK and BLAS
@@ -122,16 +121,16 @@ operations.
 These two libraries are often used together to achieve high-performance linear
 algebra computations on modern computers.
 
-### MacOS
-
-```shell
-brew install openblas lapack
-```
-
 ### Linux (Ubuntu)
 
 ```shell
 sudo apt install libblas-dev liblapack-dev
+```
+
+### MacOS
+
+```shell
+brew install openblas lapack
 ```
 
 ## Python
@@ -141,12 +140,6 @@ in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
 compatible with [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/).
 The installation could be done by
 
-### MacOS
-
-```shell
-brew install python@3.10
-```
-
 ### Linux (Ubuntu)
 
 ```shell
@@ -154,6 +147,12 @@ sudo apt install wget libncursesw5-dev libssl-dev libsqlite3-dev tk-dev \
 libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 ...
 sudo apt install python3.10 python3-pip
+```
+
+### MacOS
+
+```shell
+brew install python@3.10
 ```
 
 # Installation
@@ -179,7 +178,7 @@ cmake .. -DCONFIG=<chosen_config_file.cmake>
 make
 ```
 
-4. Installing the binaries and dVMC CLI symlink (Command Line Interface)
+4. Installing the binaries and dVMC CLI (Command Line Interface)
 
 ```shell
 make install
@@ -187,7 +186,7 @@ make install
 
 It is recommended to consult the original mVMC documentation to learn
 more about dependencies and parameters names and idea. Note however that
-most of the cases in mVMC are not covered by the present code, as 
+most of the cases in mVMC are not covered by the present code, as
 stated above.
 
 # Usage
@@ -199,7 +198,7 @@ in the `./samples/` subdirectory. The easiest way to understand how to
 use it is to run these examples. Go there to read the README.md and run the
 few examples.
 
-## dvmc CLI
+## dvmc CLI (Command Line Interface)
 
 Most of the usage information is contained inside the `dvmc` command line tool
 installed by CMake inside `$HOME/.local/bin` on your system. If the command
@@ -209,22 +208,29 @@ dvmc --help
 ```
 
 doesn't work on your machine, you should add this directory to your `$PATH` so it can
-be found as a command.
+be found as a command. To temporarily add this directory to your `$PATH` you can use the
+command
 
-!!!!!!!! ajouter au PATH, comment
+```shell
+export PATH="$HOME/.local/bin:$PATH"
+```
 
-# Details
-
-Please email us at <maxime.charlebois@uqtr.ca>, <antoine.de.lagrave@usherbrooke.ca>
-!!!!!!!!!!!<Peter>
-if you have any question on the code. This complete the documentation of dVMC.
+By running this command, your shell will be able to access the scripts in `$HOME/.local/bin`
+until the current session is ended. To add it every time a shell session is
+openned, you must add the previous line to the `$HOME/.bashrc` file
 
 # Authors
 
-Auteurs !!!!!!!!!!!
+**Maxime Charlebois**, **Peter Rosenberg** and **Antoine de Lagrave**.
+Please email us at
 
-## Licence
+- <maxime.charlebois@uqtr.ca>
+- <peter.rosenberg@usherbrooke.ca>
+- <antoine.de.lagrave@usherbrooke.ca>,
+
+if you have any question on the code. This complete the documentation of dVMC.
+
+# Licence
 
 GNU General Public License version 3 ([GPL v3](http://www.gnu.org/licenses/gpl-3.0.en.html)).
-
-See LICENSE file for the details.
+See `LICENSE` file for the details.
