@@ -167,8 +167,16 @@ mkdir build && cd build
    possible configurations can be found inside the `./config/` directory
 
 ```shell
+cmake ..
+```
+
+or
+
+```shell
 cmake .. -DCONFIG=<chosen_config_file.cmake>
 ```
+
+to use a specifig configuration as explained above (see `./config/` directory).
 
 3. Compiling and linking the code with specified compiler settings
 
