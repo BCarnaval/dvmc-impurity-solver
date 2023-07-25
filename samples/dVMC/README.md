@@ -49,6 +49,16 @@ dvmc process-output output/zvo_nCHAm_nAHCm_0
 dvmc qmatrix sqrt
 ```
 
+## Note
+
+You can also use the following command to run all of these in one call
+
+```shell
+dvmc run params sqrt
+```
+
+and the program will run the 5 steps explained above.
+
 ## Post processing
 
 To clean the directory from generated files that would be overwritten by the program,

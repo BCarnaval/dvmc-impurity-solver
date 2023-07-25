@@ -13,24 +13,6 @@ environment_variables:
     default: "1"
 
 commands:
-  # -------------------
-  # GROUNDSTATE COMMAND
-  # -------------------
-  - name: groundstate
-    alias: gs
-    help: Evaluates the ground state using 'namelist.def' to access configuration files.
-
-    flags:
-      - long: --optimized
-        short: -o
-        help: |
-          Specifies to use 'zqp_opt.dat' file in which the binary finds optimized
-          dynamical parameters coefficients to proceed his calculations.
-
-    examples:
-      - dvmc groundstate
-      - dvmc gs --optimized
-
   # ----------------
   # GENERATE COMMAND
   # ----------------
@@ -59,6 +41,24 @@ commands:
     examples:
       - dvmc generate parameters.txt 1
       - dvmc gen params 3
+
+  # -------------------
+  # GROUNDSTATE COMMAND
+  # -------------------
+  - name: groundstate
+    alias: gs
+    help: Evaluates the ground state using 'namelist.def' to access configuration files.
+
+    flags:
+      - long: --optimized
+        short: -o
+        help: |
+          Specifies to use 'zqp_opt.dat' file in which the binary finds optimized
+          dynamical parameters coefficients to proceed his calculations.
+
+    examples:
+      - dvmc groundstate
+      - dvmc gs --optimized
 
   # -------------------
   # EXCITATIONS COMMAND
@@ -120,6 +120,43 @@ commands:
     examples:
       - dvmc qmatrix sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9
       - dvmc qmatrix svd --tolerance=0.75 --k_tolerance=0.8
+
+  # -----------
+  # RUN COMMAND
+  # -----------
+  - name: run
+    help: Runs all of the simulation's commands at once.
+    args:
+      - name: parameters_file
+        help: Input parameters text file defining system caracteristics.
+        required: true
+
+      - name: processing
+        help: Type of processing to do on the Q-matrix ('cond', 'sqrt', 'svd').
+        required: true
+
+    flags:
+      - long: --tolerance
+        arg: tolerance
+        help:
+          Specific tolerance that determines the number of states kept for the
+          calculations of the Q-matrix. The default value is 1e-10.
+
+      - long: --use_filter
+        arg: use_filter
+        help: If set, modifies the number of states kept for the Q-matrix calculations.
+
+      - long: --addtl_filter
+        arg: filter_value
+        help: Modifies the default value for the filter, which is 0.9.
+
+      - long: --k_tolerance
+        arg: k_tolerance
+        help: Modifies the Q-matrix calculations in the 'svd' processing case.
+
+    examples:
+      - dvmc run params sqrt
+      - dvmc run params svd --tolerance=0.75 --k_tolerance=0.8
 
   # -------------
   # CLEAN COMMAND
