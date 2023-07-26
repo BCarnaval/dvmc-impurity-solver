@@ -6,6 +6,7 @@ run () {
   # --------
   PARAMS="${args[parameters_file]}"
   if [ -f "${PARAMS}" ]; then
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Generating .def files..."
     "${DVMC_SCRIPTS_LOCATION}"/init_params.py "${PARAMS}"
   else
@@ -26,6 +27,7 @@ run () {
 
   # Script
   if [ -f "${NAMELIST}" ]; then
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Static ground state numerical evaluation..."
     mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
   else
@@ -41,6 +43,7 @@ run () {
 
   # Script
   if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Beginning dynamical VMC calculations..."
     mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
   elif [[ ! -f "${NAMELIST_G}" ]]; then
@@ -57,6 +60,7 @@ run () {
   # --------------------------
   # Processing output binaries
   # --------------------------
+  bold "--------------------------------------------------------------------------------"
   green_bold "[@] Processing ./output/zvo_nCHAm_nAHCm_0*bin files..."
   "${DVMC_SCRIPTS_LOCATION}"/mergeOutputBin.py ./output/zvo_nCHAm_nAHCm_0*bin
 
@@ -80,6 +84,9 @@ run () {
     exit 1
   fi
 
+  bold "--------------------------------------------------------------------------------"
+  green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
+
   # Options selection
   if [[ ! "${TOL}" ]]; then
     yellow_bold "[!] '--tolerance' not specified. Using default value: 1e-10."
@@ -98,7 +105,6 @@ run () {
     exit 1
   fi
 
-  green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
   if [ ! "${K_TOL}" ]; then
     "${DVMC_SCRIPTS_LOCATION}"/"${SCRIPT}" spectrumpara.def output "${TOL}" "${USE_FILTER}" "${TL_FILTER}"
   else

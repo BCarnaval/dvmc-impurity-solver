@@ -35,6 +35,7 @@ clean () {
   fi
 
   # Script
+  bold "--------------------------------------------------------------------------------"
   if [[ -z "${TRASH}" ]]; then
     yellow_bold "[!] Nothing to clean in current directory."
   else

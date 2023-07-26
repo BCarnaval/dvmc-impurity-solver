@@ -456,6 +456,7 @@ dvmc_generate_command() {
     # Generating global .def files
     PARAMS="${args[parameters_file]}"
     if [ -f "${PARAMS}" ]; then
+      bold "--------------------------------------------------------------------------------"
       green_bold "[@] Generating .def files..."
       "${DVMC_SCRIPTS_LOCATION}"/init_params.py "${PARAMS}"
     else
@@ -496,6 +497,7 @@ dvmc_groundstate_command() {
 
     # Script
     if [ -f "${NAMELIST}" ]; then
+      bold "--------------------------------------------------------------------------------"
       green_bold "[@] Static ground state numerical evaluation..."
       if [ "${OPTIMIZED}" ]; then
         if [ -f "./output/zqp_opt.dat" ]; then
@@ -529,6 +531,7 @@ dvmc_excitations_command() {
 
     # Script
     if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
+      bold "--------------------------------------------------------------------------------"
       green_bold "[@] Beginning dynamical VMC calculations..."
       mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
     elif [[ ! -f "${NAMELIST_G}" ]]; then
@@ -555,6 +558,7 @@ dvmc_process_output_command() {
     PREFIX="${args[prefix]}"
 
     # Script
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Processing ${PREFIX}*bin files..."
     "${DVMC_SCRIPTS_LOCATION}"/mergeOutputBin.py "${PREFIX}"*bin
   }
@@ -586,6 +590,9 @@ dvmc_qmatrix_command() {
       exit 1
     fi
 
+    bold "--------------------------------------------------------------------------------"
+    green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
+
     # Options selection
     if [[ ! "${TOL}" ]]; then
       yellow_bold "[!] '--tolerance' not specified. Using default value: 1e-10."
@@ -604,7 +611,6 @@ dvmc_qmatrix_command() {
       exit 1
     fi
 
-    green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
     if [ ! "${K_TOL}" ]; then
       "${DVMC_SCRIPTS_LOCATION}"/"${SCRIPT}" spectrumpara.def output "${TOL}" "${USE_FILTER}" "${TL_FILTER}"
     else
@@ -626,6 +632,7 @@ dvmc_run_command() {
     # --------
     PARAMS="${args[parameters_file]}"
     if [ -f "${PARAMS}" ]; then
+      bold "--------------------------------------------------------------------------------"
       green_bold "[@] Generating .def files..."
       "${DVMC_SCRIPTS_LOCATION}"/init_params.py "${PARAMS}"
     else
@@ -646,6 +653,7 @@ dvmc_run_command() {
 
     # Script
     if [ -f "${NAMELIST}" ]; then
+      bold "--------------------------------------------------------------------------------"
       green_bold "[@] Static ground state numerical evaluation..."
       mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST}"
     else
@@ -661,6 +669,7 @@ dvmc_run_command() {
 
     # Script
     if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
+      bold "--------------------------------------------------------------------------------"
       green_bold "[@] Beginning dynamical VMC calculations..."
       mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
     elif [[ ! -f "${NAMELIST_G}" ]]; then
@@ -677,6 +686,7 @@ dvmc_run_command() {
     # --------------------------
     # Processing output binaries
     # --------------------------
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Processing ./output/zvo_nCHAm_nAHCm_0*bin files..."
     "${DVMC_SCRIPTS_LOCATION}"/mergeOutputBin.py ./output/zvo_nCHAm_nAHCm_0*bin
 
@@ -700,6 +710,9 @@ dvmc_run_command() {
       exit 1
     fi
 
+    bold "--------------------------------------------------------------------------------"
+    green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
+
     # Options selection
     if [[ ! "${TOL}" ]]; then
       yellow_bold "[!] '--tolerance' not specified. Using default value: 1e-10."
@@ -718,7 +731,6 @@ dvmc_run_command() {
       exit 1
     fi
 
-    green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
     if [ ! "${K_TOL}" ]; then
       "${DVMC_SCRIPTS_LOCATION}"/"${SCRIPT}" spectrumpara.def output "${TOL}" "${USE_FILTER}" "${TL_FILTER}"
     else
@@ -769,6 +781,7 @@ dvmc_clean_command() {
     fi
 
     # Script
+    bold "--------------------------------------------------------------------------------"
     if [[ -z "${TRASH}" ]]; then
       yellow_bold "[!] Nothing to clean in current directory."
     else

@@ -4,6 +4,7 @@ generate () {
   # Generating global .def files
   PARAMS="${args[parameters_file]}"
   if [ -f "${PARAMS}" ]; then
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Generating .def files..."
     "${DVMC_SCRIPTS_LOCATION}"/init_params.py "${PARAMS}"
   else

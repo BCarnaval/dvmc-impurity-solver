@@ -8,6 +8,7 @@ run_dvmc () {
 
   # Script
   if [ -f "${NAMELIST}" ]; then
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Static ground state numerical evaluation..."
     if [ "${OPTIMIZED}" ]; then
       if [ -f "./output/zqp_opt.dat" ]; then

@@ -20,6 +20,9 @@ q_matrix () {
     exit 1
   fi
 
+  bold "--------------------------------------------------------------------------------"
+  green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
+
   # Options selection
   if [[ ! "${TOL}" ]]; then
     yellow_bold "[!] '--tolerance' not specified. Using default value: 1e-10."
@@ -38,7 +41,6 @@ q_matrix () {
     exit 1
   fi
 
-  green_bold "[@] Computing green function using Q-matrix using script: ${SCRIPT}..."
   if [ ! "${K_TOL}" ]; then
     "${DVMC_SCRIPTS_LOCATION}"/"${SCRIPT}" spectrumpara.def output "${TOL}" "${USE_FILTER}" "${TL_FILTER}"
   else

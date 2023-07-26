@@ -8,6 +8,7 @@ excitations () {
 
   # Script
   if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
+    bold "--------------------------------------------------------------------------------"
     green_bold "[@] Beginning dynamical VMC calculations..."
     mpirun -n "${N_PROC}" "${DVMC_SCRIPTS_LOCATION}"/dvmc.out "${NAMELIST_G}" "${OPTIMIZED}"
   elif [[ ! -f "${NAMELIST_G}" ]]; then
