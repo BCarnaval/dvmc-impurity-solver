@@ -5,7 +5,7 @@
 </div>
 
 This directory contains a direct application of the dVMC software usage to
-compute the ground state of a small 3x4 cluster then the Q-matrix representation
+compute the ground state of a small 2x2 cluster then the Q-matrix representation
 of the Green's function.
 
 ## Content
