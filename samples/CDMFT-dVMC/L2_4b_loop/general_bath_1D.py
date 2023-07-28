@@ -103,7 +103,12 @@ def main() -> None:
     pyqcm.dvmc.set_dvmc_parameters(parameters=dvmc_params)
 
     # Calling PyQCM CDMFT
-    for mu in np.arange(1, 2, 0.1):
+    mus = [
+        1.0, 1.025, 1.05, 1.075, 1.1,
+        1.15, 1.25, 1.35, 1.45, 1.55,
+        1.65, 1.75, 1.85, 2.0
+    ]
+    for mu in mus:
         latt_model.set_parameter('mu', mu)
         pyqcm.cdmft.CDMFT(model=latt_model, varia=varia, beta=25, accur=5e-3,
                           accur_E0=3e-3, miniter=15, maxiter=60, averages=True,

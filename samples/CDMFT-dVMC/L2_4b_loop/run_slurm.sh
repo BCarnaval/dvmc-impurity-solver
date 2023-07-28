@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=L2_4b_CDMFT_dVMC_loop
 #SBATCH --account=def-charleb1
-#SBATCH --mem-per-cpu=1G
-#SBATCH --ntasks=64
+#SBATCH --mem-per-cpu=4G
+#SBATCH --ntasks=32
 #SBATCH --cpus-per-task=1
-#SBATCH --time=00-00:30           # time (DD-HH:MM)
+#SBATCH --time=00-04:00           # time (DD-HH:MM)
 
 
 main () {
     # Setting env variables
-    export OMP_NUM_THREADS=1
+    export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
     export DVMC_MPI_PROC=${SLURM_NTASKS}
 
     # Setting working directory
-    RUNDIR="/home/${USER}/scratch/${SLURM_JOB_NAME}-${SLURM_JOB_ID}"
+    RUNDIR="/home/${USER}/scratch/${SLURM_JOB_NAME}_${SLURM_JOB_ID}"
 
     if [[ -d ${RUNDIR} ]]; then
         rm -rf ${RUNDIR}
