@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 def main() -> None:
     # Read data from text file using pandas
     data_ed = pd.read_csv("./cdmft_ED.tsv", sep="\t", header=0)
-    data_dvmc = pd.read_csv("./cdmft_dVMC.tsv", sep='\t', header=0)
+    data_dvmc = pd.read_csv("./cdmft.tsv", sep='\t', header=0)
 
     # Plot average density as a function of chemical potential
     plt.xlabel(r"$\mu$")
