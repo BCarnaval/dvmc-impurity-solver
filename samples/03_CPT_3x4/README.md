@@ -1,6 +1,6 @@
 <div align="center">
 
-# dVMC + CPT calculation sample
+# CPT-dVMC calculation sample
 
 </div>
 
@@ -18,14 +18,14 @@ surface of the system by calling PyQCM library.
 
 - `params`: Global dVMC solver input parameter file.
 
-- `expected/`: Directory containing expected results from the dVMC + CPT calculations.
+- `expected/`: Directory containing expected results from the CPT-dVMC calculations.
 
 ## Usage
 
 Since this example uses dVMC through PyQCM, the only thing to do is to execute
 the `fermi_surface.py` script using Python 3 (with proper PyQCM installation)
 
-#### Run script to generate A(k,w) from dVMC + CPT
+#### Run script to generate A(k,w) from CPT-dVMC
 
 ```shell
 python3 fermi_surface.py
