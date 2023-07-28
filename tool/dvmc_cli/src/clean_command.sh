@@ -39,7 +39,7 @@ clean () {
   if [[ -z "${TRASH}" ]]; then
     yellow_bold "[!] Nothing to clean in current directory."
   else
-    green_bold "[@] Removing '.def', '.dat' and '.npy' generated files..."
+    green_bold "[@] Removing .def, .dat, .npy, .pdf and .tsv generated files..."
     rm -fv ${TRASH}
   fi
 
