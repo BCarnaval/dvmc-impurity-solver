@@ -19,6 +19,8 @@ but with less statistics and sampling (see `expected/` directory).
 
 - `params`: Global dVMC solver input parameter file.
 
+- `run_slurm.sh`: [SLURM](https://slurm.schedmd.com/sbatch.html) job submission bash script.
+
 - `expected/`: Directory containing expected results from the CDMFT-dVMC calculations.
 
 ## Usage
