@@ -6,6 +6,7 @@ import pyqcm
 import pyqcm.dvmc
 import numpy as np
 from model_3x4 import model
+import matplotlib.pyplot as plt
 
 
 def main() -> None:
@@ -41,6 +42,27 @@ def main() -> None:
                        file='fermi_surface.pdf',
                        sym='RXY'
                        )
+
+    # Setup ED solver through PyQCM
+    w, A_dvmc = model_instance.cluster_spectral_function(wmax=15, color='k')
+
+    pyqcm.solver = None
+    model_instance = pyqcm.model_instance(model)
+    w, A_ed = model_instance.cluster_spectral_function(wmax=15, color='r')
+
+    # Plotting both dVMC & ED solutions for cluster spectral functions
+    dim = int(params['nelec']) // 3
+    for i in range(dim):
+        plt.plot(np.real(w), A_dvmc[:, i] + 2 *
+                 i, color='C5', lw=2, alpha=0.95)
+        plt.plot(np.real(w), A_ed[:, i] + 2 * i, color='C0')
+
+    plt.yticks(2 * np.arange(0, dim), [str(i) for i in range(1, dim + 1)])
+    plt.xlabel(r'$\omega$')
+    plt.axvline(0, ls='solid', lw=0.5)
+    plt.savefig("./spectrums.pdf", dpi=800)
+    plt.close()
+
     return
 
 

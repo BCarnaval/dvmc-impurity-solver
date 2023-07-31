@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=L2_4b_CDMFT_dVMC_loop
+#SBATCH --job-name=3x4_CPT_dVMC
 #SBATCH --account=def-charleb1
-#SBATCH --mem-per-cpu=4G
-#SBATCH --ntasks=32
+#SBATCH --mem-per-cpu=1G
+#SBATCH --ntasks=64
 #SBATCH --cpus-per-task=1
-#SBATCH --time=00-00:10           # time (DD-HH:MM)
+#SBATCH --time=00-00:30           # time (DD-HH:MM)
 
 
 main () {
