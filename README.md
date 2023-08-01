@@ -62,27 +62,23 @@ CPT, CDMFT, etc.
 
 ## Compilation
 
-The project being written in C, a C compiler (`icc`, `gcc`, `clang`) is then
-required to use this software. It also has Fortran dependencies:
-[pfapack](https://michaelwimmer.org/downloads.html) which also need to be
-compiled using Fortran compiler (`ifort`, `gfortran`).
+You must have installed at least one if the following software to compile the C code
+
+- [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) >= version 2021.9.0
+
+- [gcc](https://gcc.gnu.org/) version >= 13.1.0
+
+- [clang](https://clang.llvm.org/) version >= 13.0.0
+
+and a Fortran compiler
+
+- [ifort](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html#gs.3uuywf) (not tested)
+
+- [gfortran](https://gcc.gnu.org/wiki/GFortran) version >= 13.1.0
 
 In order to compile and link properly the code base, the software uses
 [CMake](https://cmake.org/) version >= 3.12. Most of this project's directories
-contain a specific `CMakelists.txt` with the right instructions. This tool can be
-installed via
-
-## Linux (Ubuntu)
-
-```shell
-sudo apt install cmake
-```
-
-### MacOS
-
-```shell
-brew install cmake
-```
+contain a specific `CMakelists.txt` with the right instructions.
 
 ## Parallelization
 
@@ -90,20 +86,9 @@ The program is designed to be executed using supercomputers and is optimized
 using parallel libraries such as [OpenMP](https://www.openmp.org/) and
 [OpenMPI](https://www.open-mpi.org/). OpenMP is a compiler dependency, so it
 does not need to be separately installed as it is included with the C/C++
-compiler. However, this is not the case for OpenMPI, and it can be installed
-and verified using the following commands:
+compiler. However, this is not the case for OpenMPI, it must be installed separately
 
-### Linux (Ubuntu)
-
-```shell
-sudo apt install openmpi-bin openmpi-doc libopenmpi-dev
-```
-
-### MacOS
-
-```shell
-brew install open-mpi
-```
+- [OpenMPI](https://www.open-mpi.org/) version >= 4.1.5
 
 ## LAPACK and BLAS
 
@@ -120,39 +105,12 @@ operations.
 These two libraries are often used together to achieve high-performance linear
 algebra computations on modern computers.
 
-### Linux (Ubuntu)
-
-```shell
-sudo apt install libblas-dev liblapack-dev
-```
-
-### MacOS
-
-```shell
-brew install openblas lapack
-```
-
 ## Python
 
 The interface tools of this project found inside `./tool/dvmc/` are written
 in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
 compatible with [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/).
 The installation could be done by
-
-### Linux (Ubuntu)
-
-```shell
-sudo apt install wget libncursesw5-dev libssl-dev libsqlite3-dev tk-dev \
-libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
-...
-sudo apt install python3.10 python3-pip
-```
-
-### MacOS
-
-```shell
-brew install python@3.10
-```
 
 ## PyQCM
 
@@ -168,6 +126,8 @@ brew install python@3.10
 > --David Sénéchal
 >
 > (<https://qcm-wed.readthedocs.io/en/latest/intro.html#what-is-pyqcm>)
+
+The minimal version for PyQCM is >= 2.2.1 for the samples to be compatible with the interface.
 
 # Installation
 
