@@ -13,10 +13,14 @@ This sample is meant to be executed by a supercomputer using `run_slurm.sh` shel
 script as the job submission script. It roughly reproduces the figure 2 of the article
 but with less statistics and sampling (see `expected/` directory).
 
+> ### Note
+>
+> It takes approximately 3.5 hours to run on [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
+> supercomputer.
+
 ## Content
 
 - `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances.
-
 - `dvmc.py`: Python module defining the impurity solver (dVMC) set by PyQCM
   `pyqcm.solver` global variable.
 

@@ -17,6 +17,19 @@ def plot_results() -> None:
     pyqcm.solver = None
     params = dict(np.genfromtxt('./params', encoding='utf8', dtype=None))
 
+    # Setting model parameters
+    sector = f"R0:N{params['nelec']}:S0"
+    model.set_target_sectors([sector])
+    model.set_parameters(
+        f"""
+        U={params['U']}
+        t={params['t']}
+        tp={params['tp']}
+        tpp={params['tpp']}
+        mu={params['mu']}
+        """
+    )
+
     # dVMC part
     model_dvmc = pyqcm.model_instance(model)
     with open('./output/qmatrix.def') as qmatrix:
@@ -24,18 +37,18 @@ def plot_results() -> None:
         qmatrix.close()
 
     model_dvmc.read(dvmc_sol, 0)
-    w, A_dvmc = model_dvmc.cluster_spectral_function(wmax=15, eta=0.1)
+    w_dvmc, A_dvmc = model_dvmc.cluster_spectral_function(wmax=15, eta=0.1)
 
     # ED part
     model_ed = pyqcm.model_instance(model)
-    w, A_ed = model_ed.cluster_spectral_function(wmax=15)
+    w_ed, A_ed = model_ed.cluster_spectral_function(wmax=15)
 
     # Plotting both dVMC & ED solutions for cluster spectral functions
     dim = int(params['nelec']) // 3
     for i in range(dim):
-        plt.plot(np.real(w), A_dvmc[:, i] + 2 *
+        plt.plot(np.real(w_dvmc), A_dvmc[:, i] + 2 *
                  i, color='C5', lw=2, alpha=0.95)
-        plt.plot(np.real(w), A_ed[:, i] + 2 * i, color='C0')
+        plt.plot(np.real(w_ed), A_ed[:, i] + 2 * i, color='C0')
 
     plt.yticks(2 * np.arange(0, dim), [str(i) for i in range(1, dim + 1)])
     plt.xlabel(r'$\omega$')
@@ -83,5 +96,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    # main()
     plot_results()

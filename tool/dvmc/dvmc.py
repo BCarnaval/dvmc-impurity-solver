@@ -11,22 +11,15 @@ import numpy as np
 # dVMC default parameters
 dvmc_parameters = {
     "nproc": 1, "gs_only": False, "exc_only": False, "read_soln": False,
-    "read_gs": True, "tol": 1e-10, "save_iters": False,
+    "read_gs": False, "tol": 1e-10, "save_iters": False,
     "reset_params": False, "skip_gs_iter1": False, "addtl_filter": 0,
     "pct_filter": 0.9, "cond_number": False, "use_SVD": False, "k_tol": 3,
     "const_cutoff": False, "iters_to_set_cutoff": 0, "CPT_flg": True,
     "cluster_label": 0
 }
 
-# dVMC-CDMFT default parameters
-dvmc_cdmft_parameters = {
-    'iter_for_vmc': 0, 'E0_VMC': 0.0, 'E0_err_VMC': 0.0,
-    'min_iter_E0': 5
-}
 
-
-def set_dvmc_parameters(parameters: dict,
-                        cdmft_dvmc_params: dict = None) -> None:
+def set_dvmc_parameters(parameters: dict) -> None:
     """Updates the dVMC solver parameters using input dictionnary.
 
     Parameters
@@ -48,13 +41,6 @@ def set_dvmc_parameters(parameters: dict,
                 dvmc_parameters[key] = val
             else:
                 pass
-        # Setting user's dVMC-CDMFT parameters if given
-        if cdmft_dvmc_params is not None:
-            for key, val in cdmft_dvmc_params.items():
-                if key in dvmc_cdmft_parameters.keys():
-                    dvmc_cdmft_parameters[key] = val
-                else:
-                    pass
     return
 
 
@@ -67,9 +53,8 @@ def verify_dvmc_installation() -> None:
         print("dVMC is not properly installed on your system. Exiting...")
         exit(0)
     else:
-        version = subprocess.getoutput(["dvmc --version"])
+        version = subprocess.getoutput("dvmc --version")
         print(f"Found dVMC CLI version: {version}")
-        pyqcm.dvmc_installation = True
     return
 
 
@@ -86,10 +71,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         The PyQCM model that defines the model to solve for GS.
     """
     # Verifying dVMC installation before any further calculation
-    if not pyqcm.dvmc_installation:
-        verify_dvmc_installation()
-    else:
-        pass
+    verify_dvmc_installation()
 
     # Trying to get SLURM properties
     try:
@@ -151,35 +133,25 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         print("Param files not written properly")
         exit()
 
-    if dvmc_parameters['CPT_flg']:
-        iter_for_vmc = 0
-    else:
-        iter_for_vmc = pyqcm.cdmft.iter_for_vmc
-
     # Calling the dVMC solver
+    iter_for_vmc = 0
     if not dvmc_parameters['exc_only'] and not dvmc_parameters['read_soln']:
         if iter_for_vmc > 0 or not dvmc_parameters['skip_gs_iter1']:
             # Ground state calculation
             if dvmc_parameters['read_gs']:
                 p = subprocess.run(
-                    ["dvmc", "groundstate", "namelist.def", "./output/zqp_opt.dat"])
+                    ["dvmc", "groundstate", "--optimized"])
             else:
-                p = subprocess.run(["dvmc", "groundstate", "namelist.def"])
+                p = subprocess.run(["dvmc", "groundstate"])
 
     if p.returncode != 0:
         print("VMC GS calculation failed")
         exit()
 
-    if not dvmc_parameters['CPT_flg']:
-        E0_VMC, E0_err_VMC = np.loadtxt('./output/zqp_opt.dat', usecols=(0, 2))
-        dvmc_cdmft_parameters['E0_VMC'] = E0_VMC
-        dvmc_cdmft_parameters['E0_err_VMC'] = E0_err_VMC
-
     # Make excitation list
     if not dvmc_parameters['gs_only'] and not dvmc_parameters['read_soln']:
         # Dynamical calculation
-        p = subprocess.run(
-            ["dvmc", "excitations", "namelist_G.def", "./output/zqp_opt.dat"])
+        p = subprocess.run(["dvmc", "excitations"])
         if p.returncode != 0:
             print("Calculation of excitations failed")
             exit()
@@ -193,6 +165,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
 
         # Compute and output Green's functions
         tol = dvmc_parameters['tol']
+        k_tol = dvmc_parameters['k_tol']
         tl_filter = dvmc_parameters['addtl_filter']
         pct_filter = dvmc_parameters['pct_filter']
         if dvmc_parameters['cond_number']:
@@ -200,28 +173,28 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
                 "dvmc",
                 "qmatrix",
                 "cond",
-                repr(tol),
-                repr(tl_filter),
-                repr(pct_filter)
+                f"--tolerance={tol}",
+                f"--use_filter={tl_filter}"
+                f"--addtl_filter={pct_filter}"
             ])
         elif dvmc_parameters['use_SVD']:
             p = subprocess.run([
                 "dvmc",
                 "qmatrix",
                 "svd",
-                repr(tol),
-                repr(tl_filter),
-                repr(pct_filter),
-                repr(dvmc_parameters['k_tol'])
+                f"--tolerance={tol}",
+                f"--use_filter={tl_filter}",
+                f"--addtl_filter={tl_filter}",
+                f"--k_tolerance={k_tol}"
             ])
         else:
             p = subprocess.run([
                 "dvmc",
                 "qmatrix",
                 "sqrt",
-                repr(tol),
-                repr(tl_filter),
-                repr(pct_filter)
+                f"--tolerance={tol}",
+                f"--use_filter={tl_filter}",
+                f"--addtl_filter={pct_filter}"
             ])
         if p.returncode != 0:
             print("Failed to write Q-matrix")
@@ -239,21 +212,5 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         model_instance.read(solution, 0)
 
     print('Done reading dVMC solution')
-
-    if dvmc_parameters['save_iters']:
-        subprocess.run(["mv", "output/zqp_opt.dat",
-                       "output/zqp_opt_iter"+str(iter_for_vmc)+".dat"])
-        subprocess.run(["mv", "output/qmatrix.def",
-                       "output/qmatrix_iter"+str(iter_for_vmc)+".def"])
-        subprocess.run(["mv", "output/zbo_var_001.dat",
-                       "output/zbo_var_001_iter"+str(iter_for_vmc)+".dat"])
-        subprocess.run(
-            ["cp", "output/S_AC.npy", "output/S_AC_"+str(iter_for_vmc)+".npy"])
-        subprocess.run(
-            ["cp", "output/S_CA.npy", "output/S_CA_"+str(iter_for_vmc)+".npy"])
-        subprocess.run(
-            ["cp", "output/H_AC.npy", "output/H_AC_"+str(iter_for_vmc)+".npy"])
-        subprocess.run(
-            ["cp", "output/H_CA.npy", "output/H_CA_"+str(iter_for_vmc)+".npy"])
 
     return
