@@ -17,23 +17,17 @@ To install everything required for the proper functioning of the program, it is 
 
 Ubuntu already comes with a fairly convenient package manager called `apt` (Advanced Package Tool). It should already be available on the system. It is also essential to update the list of available packages so that the latest version is used during installation. This can be achieved with the following command:
 
-shell
-
 ```shell
 apt update
 ```
 
 However, the `sudo` command, which allows the execution of commands with administrative privileges, may not be present by default. You can install it using:
 
-shell
-
 ```shell
 apt install sudo
 ```
 
 Once `sudo` is installed, you can update all the installed packages on the system using the command:
-
-shell
 
 ```shell
 sudo apt update && sudo apt upgrade
@@ -42,8 +36,6 @@ sudo apt update && sudo apt upgrade
 ### MacOS
 
 The easiest way to install these tools on MacOS is through [Homebrew](https://brew.sh/), the best package manager for MacOS. The following command will install Homebrew:
-
-shell
 
 ```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -55,16 +47,12 @@ If Homebrew is not already installed, it will prompt you during the installation
 >
 > To complete the installation of Homebrew, you need to add it to the `$PATH` using the following commands:
 
-shell
-
 ```shell
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
 In any case, it is good practice to check the installation of Homebrew:
-
-shell
 
 ```shell
 brew doctor
@@ -84,15 +72,11 @@ To access the program and obtain the project's history, the user needs [git](htt
 
 ### Linux (Ubuntu)
 
-shell
-
 ```shell
 sudo apt install git
 ```
 
 ### MacOS
-
-shell
 
 ```shell
 brew install git
@@ -112,15 +96,11 @@ For Linux, an equivalent to the `Xcode Command Line Tools` is a collection of co
 
 To install all these tools, Ubuntu recommends the following command:
 
-shell
-
 ```shell
 sudo apt install build-essential
 ```
 
 However, these tools do not include a Fortran compiler, which is necessary for compiling the project. Therefore, you can install it using:
-
-shell
 
 ```shell
 sudo apt install gfortran
@@ -128,15 +108,11 @@ sudo apt install gfortran
 
 Next, it is important to test the installation of these compilers. This can be done using the following commands:
 
-shell
-
 ```shell
 g++ -v && gcc -v && make -v
 ```
 
 The last tool to install, and not the least, is [CMake](https://cmake.org/). CMake allows the generation of build files like `makefile` in a general way on different operating systems, programming languages, and project types. In our case, this tool facilitates the overall compilation of the program and the integration of parallelization libraries. To install CMake on Ubuntu:
-
-shell
 
 ```shell
 sudo apt install cmake
@@ -146,23 +122,17 @@ sudo apt install cmake
 
 For working on C/C++ projects, it is strongly recommended to install the `Xcode Command Line Tools` (a collection of tools for MacOS developers such as c++, cc, clang, clang++, cpp, g++, gcc, git, ld, llvm-, make, python3.8, pip3, etc.). Install the `Xcode Command Line Tools` using:
 
-shell
-
 ```shell
 xcode-select --install
 ```
 
 or update these tools (and others recommended by the system) using:
 
-shell
-
 ```shell
 softwareupdate -i -r
 ```
 
 The last tool to install, and not the least, is [CMake](https://cmake.org/). CMake allows the generation of build files like `makefile` in a general way on different operating systems, programming languages, and project types. In our case, this tool facilitates the overall compilation of the program and the integration of parallelization libraries. To install CMake on MacOS, simply use the Homebrew package manager:
-
-shell
 
 ```shell
 brew install cmake
@@ -174,15 +144,11 @@ The program is designed to be executed using supercomputers, and it is optimized
 
 ### Linux (Ubuntu)
 
-shell
-
 ```shell
 sudo apt install openmpi-bin openmpi-doc libopenmpi-dev checkinstall
 ```
 
 ### MacOS
-
-shell
 
 ```shell
 brew install open-mpi
@@ -200,8 +166,6 @@ These two libraries are often used together to provide high-performance linear a
 
 Installation is done as follows:
 
-shell
-
 ```shell
 sudo apt install libblas-dev liblapack-dev
 ```
@@ -209,8 +173,6 @@ sudo apt install libblas-dev liblapack-dev
 ### MacOS
 
 These two libraries can be installed using Homebrew:
-
-shell
 
 ```shell
 brew install openblas lapack
@@ -228,15 +190,11 @@ brew install openblas lapack
 
 To proceed with this type of installation, you need to have Python (>=3.7) installed. A recommended version at the time of writing this text is Python3.10 since Python3.11 is not yet stable. To install Python 3.10 on MacOS, use Homebrew:
 
-shell
-
 ```shell
 brew install python@3.10
 ```
 
 For Linux (Ubuntu), you need to install some necessary libraries for Python to function correctly:
-
-shell
 
 ```shell
 sudo apt install wget libncursesw5-dev libssl-dev libsqlite3-dev tk-dev \
@@ -245,15 +203,11 @@ libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 Then install Python and its package manager `pip` (which is not included by default in the `apt` installation):
 
-shell
-
 ```shell
 sudo apt install python3.10 python3-pip
 ```
 
 Assuming that Python and `pip` are correctly installed on the system, the PyQCM library depends on a few Python libraries that are essential to install:
-
-shell
 
 ```shell
 pip3 install numpy scipy matplotlib
@@ -261,15 +215,11 @@ pip3 install numpy scipy matplotlib
 
 The user can now install PyQCM by first cloning the project to the system using `git`:
 
-shell
-
 ```shell
 git clone https://bitbucket.org/dsenechQCM/qcm_wed.git
 ```
 
 Then go to the project directory and proceed with the installation:
-
-shell
 
 ```shell
 cd ./qcm_wed && pip install .
@@ -281,21 +231,15 @@ cd ./qcm_wed && pip install .
 
 The user can also choose to use optional libraries during the installation to improve the performance of PyQCM. These libraries are: [CUBA](https://feynarts.de/cuba/), [PRIMME](https://www.cs.wm.edu/~andreas/software/), and [Eigen](https://gitlab.com/libeigen/eigen). To use these dependencies, provide the following directives to the `cmake` build tool during installation:
 
-shell
-
 ```shell
 export CMAKE_ARGS="-DDOWNLOAD_CUBA=1 -DEIGEN_HAMILTONIAN=1 -DWITH_PRIMME=1 -DDOWNLOAD_PRIMME=1"
 ```
 
 just before proceeding with the `pip` installation. Don't forget to install the Eigen library separately on MacOS and Linux (Ubuntu):
 
-shell
-
 ```shell
 brew install eigen
 ```
-
-shell
 
 ```shell
 sudo apt install libeigen3-dev
@@ -307,23 +251,17 @@ sudo apt install libeigen3-dev
 
 This type of installation is more _local_, meaning that the library will not be installed within a Python environment but rather compiled directly in the source code folder. To do this, access the source code using `git`:
 
-shell
-
 ```shell
 git clone https://bitbucket.org/dsenechQCM/qcm_wed.git
 ```
 
 Next, you need to compile the library. Conventionally, with `CMake`, you proceed in a `build` directory:
 
-shell
-
 ```shell
 cd qcm_wed && mkdir build && cd build
 ```
 
 In this directory, you configure the compilation options to use high-performance external libraries: [CUBA](https://feynarts.de/cuba/), [PRIMME](https://www.cs.wm.edu/~andreas/software/), and [Eigen](https://gitlab.com/libeigen/eigen)
-
-shell
 
 ```shell
 cmake .. -DDOWNLOAD_CUBA=1 -DEIGEN_HAMILTONIAN=1 -DWITH_PRIMME=1 -DDOWNLOAD_PRIMME=1
@@ -334,8 +272,6 @@ cp ./qcm* ../pyqcm/.
 ```
 
 Alternatively, you can manually add the library to the general Python library path of your system:
-
-shell
 
 ```shell
 export PYTHONPATH="$HOME/qcm_wed:$PYTHONPATH"
