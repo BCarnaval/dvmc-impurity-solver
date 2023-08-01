@@ -15,10 +15,10 @@ NMPTrans    1
 NSPGaussLeg    16
 complextype    0
 NSplitSize    1
-NSROptItrStep    3000
+NSROptItrStep    1000
 NSROptItrSmp    50
 NVMCWarmUp    100
-NVMCSample    1000
+NVMCSample    500
 NExUpdatePath    1
 NDataQtySmp    30
 2Sz    0
@@ -30,7 +30,7 @@ NStore    1
 opt_fij    all
 opt_jastrow    all
 opt_gutz    all
-nh	    1
+nh	    3
 input_fij    0
 add_noise_fij    0
 readhop    0

@@ -2,9 +2,9 @@
 solver at each iteration of the PyQCM CDMFT loop.
 """
 import pyqcm
-import pyqcm.dvmc
 import pyqcm.cdmft
 import numpy as np
+from dvmc import dvmc_solver, set_dvmc_parameters
 
 
 def model1D(ns: int, nb: int, S: list) -> pyqcm.lattice_model:
@@ -95,16 +95,16 @@ def main() -> None:
         ['tb{:d}_1'.format(i+1) for i in range(nb)]
 
     # dVMC parameters
-    dvmc_params = {'use_SVD': True, 'k_tol': 6}
-    pyqcm.dvmc.dvmc_cdmft_parameters['min_iter_E0'] = 25
+    dvmc_params = {'use_SVD': True, 'k_tol': 6, 'CPT_flg': False}
+    # pyqcm.dvmc.dvmc_cdmft_parameters['min_iter_E0'] = 25
 
     # Specify PyQCM solver
-    pyqcm.solver = pyqcm.dvmc.dvmc_solver
-    pyqcm.dvmc.set_dvmc_parameters(parameters=dvmc_params)
+    pyqcm.solver = dvmc_solver
+    set_dvmc_parameters(parameters=dvmc_params)
 
     # Calling PyQCM CDMFT
     pyqcm.cdmft.CDMFT(model=latt_model, varia=varia, beta=25, accur=5e-3,
-                      accur_E0=3e-3, miniter=15, maxiter=60, averages=True,
+                      miniter=15, maxiter=60, averages=True,
                       compute_potential_energy=True, SEF=True)
     return
 

@@ -16,6 +16,9 @@ surface of the system by calling PyQCM library.
 - `fermi_surface.py`: Uses PyQCM dVMC interface to find the groundstate then
   CPT method to output the Fermi surface.
 
+- `dvmc.py`: Python module defining the impurity solver (dVMC) set by PyQCM
+  `pyqcm.solver` global variable.
+
 - `params`: Global dVMC solver input parameter file.
 
 - `expected/`: Directory containing expected results from the CPT-dVMC calculations.

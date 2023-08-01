@@ -3,9 +3,9 @@ Python module using PyQCM library to invoke dVMC solver instead
 of exact diagonalization.
 """
 import pyqcm
-import pyqcm.dvmc
 import numpy as np
 from model_2x2 import model
+from dvmc import dvmc_solver
 
 
 def main() -> None:
@@ -30,7 +30,7 @@ def main() -> None:
     f.close()
 
     # Setup dVMC solver through PyQCM
-    pyqcm.solver = pyqcm.dvmc.dvmc_solver
+    pyqcm.solver = dvmc_solver
 
     model_instance = pyqcm.model_instance(model)
 
