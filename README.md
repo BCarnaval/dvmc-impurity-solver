@@ -64,7 +64,7 @@ CPT, CDMFT, etc.
 
 You must have installed at least one if the following software to compile the C code
 
-- [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) >= version 2021.9.0
+- [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) version >= 2021.9.0
 
 - [gcc](https://gcc.gnu.org/) version >= 13.1.0
 
@@ -77,30 +77,36 @@ and a Fortran compiler
 - [gfortran](https://gcc.gnu.org/wiki/GFortran) version >= 13.1.0
 
 In order to compile and link properly the code base, the software uses
-[CMake](https://cmake.org/) version >= 3.12. Most of this project's directories
+CMake. Most of this project's directories
 contain a specific `CMakelists.txt` with the right instructions.
+
+- [CMake](https://cmake.org/) version >= 3.12
 
 ## Parallelization
 
 The program is designed to be executed using supercomputers and is optimized
 using parallel libraries such as [OpenMP](https://www.openmp.org/) and
-[OpenMPI](https://www.open-mpi.org/). OpenMP is a compiler dependency, so it
-does not need to be separately installed as it is included with the C/C++
-compiler. However, this is not the case for OpenMPI, it must be installed separately
+OpenMPI. OpenMP is a compiler dependency, so it does not need to be separately
+installed as it is included with the C/C++ compiler. However, this is not the
+case for OpenMPI, it must be installed separately
 
 - [OpenMPI](https://www.open-mpi.org/) version >= 4.1.5
 
 ## LAPACK and BLAS
 
-[LAPACK](https://www.netlib.org/lapack/) (Linear Algebra PACKage) is a software
+LAPACK (Linear Algebra PACKage) is a software
 library for numerical computation that provides routines for solving linear
 algebra problems, such as linear system solving, eigenvalue and eigenvector
 computations, and matrix factorizations.
 
-[BLAS](https://www.netlib.org/blas/) (Basic Linear Algebra Subprograms), on the
+- [LAPACK](https://www.netlib.org/lapack/) version >= 3.11
+
+BLAS (Basic Linear Algebra Subprograms), on the
 other hand, is a library of basic functions for linear algebra operations, such
 as matrix multiplication, vector operations, and discrete Fourier transform
 operations.
+
+- [BLAS](https://www.netlib.org/blas/) version >= 0.3.23
 
 These two libraries are often used together to achieve high-performance linear
 algebra computations on modern computers.
@@ -109,8 +115,9 @@ algebra computations on modern computers.
 
 The interface tools of this project found inside `./tool/dvmc/` are written
 in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
-compatible with [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/).
-The installation could be done by
+compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
+
+- [Python](https://www.python.org/) version >= 3.7
 
 ## PyQCM
 
@@ -127,7 +134,7 @@ The installation could be done by
 >
 > (<https://qcm-wed.readthedocs.io/en/latest/intro.html#what-is-pyqcm>)
 
-The minimal version for PyQCM is >= 2.2.1 for the samples to be compatible with the interface.
+- [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) version >= 2.2.1
 
 # Installation
 
