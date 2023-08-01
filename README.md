@@ -48,6 +48,7 @@ CPT, CDMFT, etc.
   - [Parallelization](#parallelization)
   - [LAPACK and BLAS](#lapack-and-blas)
   - [Python](#python)
+  - [PyQCM](#pyqcm)
 
 - [Installation](#installation)
 
@@ -152,6 +153,21 @@ sudo apt install python3.10 python3-pip
 ```shell
 brew install python@3.10
 ```
+
+## PyQCM
+
+> PyQCM is a python module that interfaces with a library written in C++ : qcm.
+> This library provide a collection of functions that help implement quantum
+> cluster methods. Specifically, it provides an exact diagonalization solver for
+> small clusters on which a Hubbard-like model is defined and provides functions
+> to define infinite-lattice models and to embed the clusters into the lattice
+> via Cluster Pertrubation Theory (CPT). Methods like the Variational Cluster
+> Approximation (VCA) and Cluster Dynamical Mean Field Theory (CDMFT) are then
+> imple- mented from qcm by the `pyqcm` module, which is written in Python only.
+>
+> --David Sénéchal
+>
+> (<https://qcm-wed.readthedocs.io/en/latest/intro.html#what-is-pyqcm>)
 
 # Installation
 
