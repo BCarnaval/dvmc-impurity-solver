@@ -63,7 +63,7 @@ CPT, CDMFT, etc.
 
 You must have installed at least one if the following software to compile the C code
 
-|                                              Tool/Library                                               | Version (>=) |                                                                                            Description                                                                                            |
+|                                              Tool/Library                                               | Version |                                                                                            Description                                                                                            |
 | :-----------------------------------------------------------------------------------------------------: | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |                                       [gcc](https://gcc.gnu.org/)                                       |    13.1.0    |                    The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...).                    |
 |         [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)         |   2021.9.0   |                                     This is a highly optimizing C (icc) and C++ (icpc) compiler. The standalone version has been superceded by Intel OneAPI.                                      |
@@ -80,7 +80,7 @@ OpenMPI. OpenMP is a compiler dependency, so it does not need to be separately
 installed as it is included with the C/C++ compiler. However, this is not the
 case for OpenMPI, it must be installed separately
 
-|             Tool/Library             | Version (>=) |                                   Description                                   |
+|             Tool/Library             | Version |                                   Description                                   |
 | :----------------------------------: | :----------: | :-----------------------------------------------------------------------------: |
 | [OpenMPI](https://www.open-mpi.org/) |    4.1.5     | The Open MPI Project is an open source Message Passing Interface implementation |
 
@@ -97,7 +97,7 @@ The interface tools of this project found inside `./tool/dvmc/` are written
 in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
 compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
 
-|                         Tool/Library                          | Version (>=) |                                                                                Description                                                                                 |
+|                         Tool/Library                          | Version |                                                                                Description                                                                                 |
 | :-----------------------------------------------------------: | :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |               [Python](https://www.python.org/)               |     3.7      |                               Python is a programming language that lets you work more quickly and integrate your systems more effectively.                                |
 | [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) |    2.2.1     | PyQCM is a python module that interfaces with a library written in C++ : qcm. This library provide a collection of functions that help implement quantum cluster methods.  |
