@@ -48,7 +48,6 @@ CPT, CDMFT, etc.
   - [Parallelization](#parallelization)
   - [LAPACK and BLAS](#lapack-and-blas)
   - [Python](#python)
-  - [PyQCM](#pyqcm)
 
 - [Installation](#installation)
 
@@ -64,23 +63,14 @@ CPT, CDMFT, etc.
 
 You must have installed at least one if the following software to compile the C code
 
-- [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) version >= 2021.9.0
-
-- [gcc](https://gcc.gnu.org/) version >= 13.1.0
-
-- [clang](https://clang.llvm.org/) version >= 13.0.0
-
-and a Fortran compiler
-
-- [ifort](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html#gs.3uuywf) (not tested)
-
-- [gfortran](https://gcc.gnu.org/wiki/GFortran) version >= 13.1.0
-
-In order to compile and link properly the code base, the software uses
-CMake. Most of this project's directories
-contain a specific `CMakelists.txt` with the right instructions.
-
-- [CMake](https://cmake.org/) version >= 3.12
+|                                              Tool/Library                                               | Version (>=) |                                                                                            Description                                                                                            |
+| :-----------------------------------------------------------------------------------------------------: | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                       [gcc](https://gcc.gnu.org/)                                       |    13.1.0    |                    The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...).                    |
+|         [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)         |   2021.9.0   |                                     This is a highly optimizing C (icc) and C++ (icpc) compiler. The standalone version has been superceded by Intel OneAPI.                                      |
+|                                    [clang](https://clang.llvm.org/)                                     |    13.0.0    | The Clang project provides a language front-end and tooling infrastructure for languages in the C language family (C, C++, Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project. |
+| [ifort](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html#gs.3uuywf) |  Not tested  |                                                    The Intel Fortran compiler (ifort) is a highly optimizing Fortran compiler for Intel CPUs.                                                     |
+|                              [gfortran](https://gcc.gnu.org/wiki/GFortran)                              |    13.1.0    |                            Gfortran is the name of the GNU Fortran project, developing a free Fortran 95/2003/2008/2018 compiler for GCC, the GNU Compiler Collection.                            |
+|                                       [CMake](https://cmake.org/)                                       |     3.12     |                                               CMake is an open-source, cross-platform family of tools designed to build, test and package software.                                               |
 
 ## Parallelization
 
@@ -90,26 +80,16 @@ OpenMPI. OpenMP is a compiler dependency, so it does not need to be separately
 installed as it is included with the C/C++ compiler. However, this is not the
 case for OpenMPI, it must be installed separately
 
-- [OpenMPI](https://www.open-mpi.org/) version >= 4.1.5
+|             Tool/Library             | Version (>=) |                                   Description                                   |
+| :----------------------------------: | :----------: | :-----------------------------------------------------------------------------: |
+| [OpenMPI](https://www.open-mpi.org/) |    4.1.5     | The Open MPI Project is an open source Message Passing Interface implementation |
 
 ## LAPACK and BLAS
 
-LAPACK (Linear Algebra PACKage) is a software
-library for numerical computation that provides routines for solving linear
-algebra problems, such as linear system solving, eigenvalue and eigenvector
-computations, and matrix factorizations.
-
-- [LAPACK](https://www.netlib.org/lapack/) version >= 3.11
-
-BLAS (Basic Linear Algebra Subprograms), on the
-other hand, is a library of basic functions for linear algebra operations, such
-as matrix multiplication, vector operations, and discrete Fourier transform
-operations.
-
-- [BLAS](https://www.netlib.org/blas/) version >= 0.3.23
-
-These two libraries are often used together to achieve high-performance linear
-algebra computations on modern computers.
+|               Tool/Library               | Version (>=) |                                                                                                                  Description                                                                                                                   |
+| :--------------------------------------: | :----------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [LAPACK](https://www.netlib.org/lapack/) |     3.11     | LAPACK (Linear Algebra PACKage) is a software library for numerical computation that provides routines for solving linear algebra problems, such as linear system solving, eigenvalue and eigenvector computations, and matrix factorizations. |
+|   [BLAS](https://www.netlib.org/blas/)   |    0.3.23    |            BLAS (Basic Linear Algebra Subprograms), on the other hand, is a library of basic functions for linear algebra operations, such as matrix multiplication, vector operations, and discrete Fourier transform operations.             |
 
 ## Python
 
@@ -117,24 +97,13 @@ The interface tools of this project found inside `./tool/dvmc/` are written
 in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
 compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
 
-- [Python](https://www.python.org/) version >= 3.7
-
-## PyQCM
-
-> PyQCM is a python module that interfaces with a library written in C++ : qcm.
-> This library provide a collection of functions that help implement quantum
-> cluster methods. Specifically, it provides an exact diagonalization solver for
-> small clusters on which a Hubbard-like model is defined and provides functions
-> to define infinite-lattice models and to embed the clusters into the lattice
-> via Cluster Pertrubation Theory (CPT). Methods like the Variational Cluster
-> Approximation (VCA) and Cluster Dynamical Mean Field Theory (CDMFT) are then
-> imple- mented from qcm by the `pyqcm` module, which is written in Python only.
->
-> --David Sénéchal
->
-> (<https://qcm-wed.readthedocs.io/en/latest/intro.html#what-is-pyqcm>)
-
-- [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) version >= 2.2.1
+|                         Tool/Library                          | Version (>=) |                                                                                Description                                                                                 |
+| :-----------------------------------------------------------: | :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|               [Python](https://www.python.org/)               |     3.7      |                               Python is a programming language that lets you work more quickly and integrate your systems more effectively.                                |
+| [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) |    2.2.1     | PyQCM is a python module that interfaces with a library written in C++ : qcm. This library provide a collection of functions that help implement quantum cluster methods.  |
+|                  [Numpy](https://numpy.org/)                  |      NA      |                                                       The fundamental package for scientific computing with Python.                                                        |
+|                  [Scipy](https://scipy.org/)                  |      NA      |                                                         Fundamental algorithms for scientific computing in Python.                                                         |
+|             [Matplotlib](https://matplotlib.org/)             |      NA      | Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. Matplotlib makes easy things easy and hard things possible. |
 
 # Installation
 
@@ -184,7 +153,7 @@ stated above.
 
 Detailed usage is not covered here. Instead many examples can be found
 in the `./samples/` subdirectory. The easiest way to understand how to
-use it is to run these examples. Go there to read the README.md and run the
+use it is to run these examples. Go there to read the `README.md` and run the
 few examples.
 
 ## dvmc CLI (Command Line Interface)
