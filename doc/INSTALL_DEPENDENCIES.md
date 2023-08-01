@@ -82,7 +82,7 @@ sudo apt install git
 brew install git
 ```
 
-# Compilation (make, cmake, gcc)
+# Compilers
 
 ### Linux (Ubuntu)
 
