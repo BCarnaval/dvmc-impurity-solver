@@ -17,19 +17,6 @@ def plot_results() -> None:
     pyqcm.solver = None
     params = dict(np.genfromtxt('./params', encoding='utf8', dtype=None))
 
-    # Setting model parameters
-    sector = f"R0:N{params['nelec']}:S0"
-    model.set_target_sectors([sector])
-    model.set_parameters(
-        f"""
-        U={params['U']}
-        t={params['t']}
-        tp={params['tp']}
-        tpp={params['tpp']}
-        mu={params['mu']}
-        """
-    )
-
     # dVMC part
     model_dvmc = pyqcm.model_instance(model)
     with open('./output/qmatrix.def') as qmatrix:
@@ -92,16 +79,17 @@ def main() -> None:
     model_instance = pyqcm.model_instance(model)
 
     # CPT DoS
-    model_instance.mdc(eta=0.12,
+    model_instance.mdc(eta=0.1,
                        quadrant=False,
                        freq=1.5970819385867554,
                        file='fermi_surface.pdf',
                        sym='RXY'
                        )
 
+    plot_results()
+
     return
 
 
 if __name__ == "__main__":
-    # main()
-    plot_results()
+    main()

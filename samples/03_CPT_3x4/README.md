@@ -9,6 +9,11 @@ compute the ground state of a small 3x4 cluster then using the Q-matrix
 representation in cluster perturbation theory (CPT) to output the Fermi
 surface of the system by calling PyQCM library.
 
+> ### Note
+>
+> It takes approximately 45 minutes to run [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
+> supercomputer.
+
 ## Content
 
 - `model_3x4.py`: Defines the lattice model using PyQCM library instances.
@@ -25,7 +30,7 @@ surface of the system by calling PyQCM library.
 Since this example uses dVMC through PyQCM, the only thing to do is to execute
 the `fermi_surface.py` script using Python 3 (with proper PyQCM installation)
 
-#### Run script to generate A(k,w) from CPT-dVMC
+#### Run script to generate cluster A(k,w) from CPT-dVMC
 
 ```shell
 python3 fermi_surface.py

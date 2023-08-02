@@ -4,7 +4,7 @@
 #SBATCH --mem-per-cpu=1G
 #SBATCH --ntasks=64
 #SBATCH --cpus-per-task=1
-#SBATCH --time=00-00:30           # time (DD-HH:MM)
+#SBATCH --time=00-00:45           # time (DD-HH:MM)
 
 
 main () {

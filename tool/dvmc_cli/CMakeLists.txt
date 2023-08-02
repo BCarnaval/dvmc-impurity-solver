@@ -14,3 +14,5 @@ install(
   COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/dvmc $ENV{HOME}/.local/bin/dvmc
 )"
   message ("-- dvmc symbolic link installed in: $HOME/.local/bin/dvmc"))
+
+execute_process(COMMAND bash -c "export PATH=$ENV{HOME}/.local/bin:$PATH")
