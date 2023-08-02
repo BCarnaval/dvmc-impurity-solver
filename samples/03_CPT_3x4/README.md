@@ -11,7 +11,7 @@ surface of the system by calling PyQCM library.
 
 > ### Note
 >
-> It takes approximately 45 minutes to run [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
+> It takes approximately 40 minutes to run [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
 > supercomputer.
 
 ## Content
