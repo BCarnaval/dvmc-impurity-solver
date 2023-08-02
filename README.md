@@ -44,7 +44,7 @@ CPT, CDMFT, etc.
 
 - [Requirements](#requirements)
 
-  - [Compilation](#compilation)
+  - [Compilation tools](#compilation-tools)
   - [Parallelization](#parallelization)
   - [LAPACK and BLAS](#lapack-and-blas)
   - [Python](#python)
@@ -59,17 +59,31 @@ CPT, CDMFT, etc.
 
 # Requirements
 
-## Compilation
+## Compilation tools
 
-You must have installed at least one if the following software to compile the C code
+### C compiler
+
+You must have installed at least one of the following C compilers
 
 |                                              Tool/Library                                               | Version |                                                                                            Description                                                                                            |
 | :-----------------------------------------------------------------------------------------------------: | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |                                       [gcc](https://gcc.gnu.org/)                                       |    13.1.0    |                    The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...).                    |
 |         [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)         |   2021.9.0   |                                     This is a highly optimizing C (icc) and C++ (icpc) compiler. The standalone version has been superceded by Intel OneAPI.                                      |
 |                                    [clang](https://clang.llvm.org/)                                     |    13.0.0    | The Clang project provides a language front-end and tooling infrastructure for languages in the C language family (C, C++, Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project. |
+
+### Fortran compiler
+
+You must have installed at least one of the following Fortran compilers
+
+|                                              Tool/Library                                               | Version |                                                                                            Description                                                                                            |
+| :-----------------------------------------------------------------------------------------------------: | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | [ifort](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html#gs.3uuywf) |  Not tested  |                                                    The Intel Fortran compiler (ifort) is a highly optimizing Fortran compiler for Intel CPUs.                                                     |
 |                              [gfortran](https://gcc.gnu.org/wiki/GFortran)                              |    13.1.0    |                            Gfortran is the name of the GNU Fortran project, developing a free Fortran 95/2003/2008/2018 compiler for GCC, the GNU Compiler Collection.                            |
+
+### General tools
+
+|                                              Tool/Library                                               | Version |                                                                                            Description                                                                                            |
+| :-----------------------------------------------------------------------------------------------------: | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |                                       [CMake](https://cmake.org/)                                       |     3.12     |                                               CMake is an open-source, cross-platform family of tools designed to build, test and package software.                                               |
 
 ## Parallelization
