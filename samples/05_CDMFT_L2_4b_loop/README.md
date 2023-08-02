@@ -21,8 +21,6 @@ but with less statistics and sampling (see `expected/` directory).
 ## Content
 
 - `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances.
-- `dvmc.py`: Python module defining the impurity solver (dVMC) set by PyQCM
-  `pyqcm.solver` global variable.
 
 - `params`: Global dVMC solver input parameter file.
 

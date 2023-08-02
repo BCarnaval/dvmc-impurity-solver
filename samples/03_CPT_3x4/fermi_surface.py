@@ -46,13 +46,20 @@ def plot_results() -> None:
     # Plotting both dVMC & ED solutions for cluster spectral functions
     dim = int(params['nelec']) // 3
     for i in range(dim):
-        plt.plot(np.real(w_dvmc), A_dvmc[:, i] + 2 *
-                 i, color='C5', lw=2, alpha=0.95)
-        plt.plot(np.real(w_ed), A_ed[:, i] + 2 * i, color='C0')
+        plt.plot(np.real(w_dvmc), A_dvmc[:, i] + 1.5 *
+                 i, color='C5', lw=2.5, alpha=0.97,
+                 label='dVMC' if i == 0 else '_nolabel_')
+        plt.plot(np.real(w_ed), A_ed[:, i] + 1.5 * i,
+                 color='C0', label='ED' if i == 0 else '_nolabel_')
 
-    plt.yticks(2 * np.arange(0, dim), [str(i) for i in range(1, dim + 1)])
+    # V/H lines setup
+    [plt.axhline(y=i, ls='solid', color='k')
+     for i in 1.5 * np.array([0, 1, 2, 3])]
+    plt.axvline(0, ls='dashed', lw=0.5, color='k')
+
+    plt.yticks(1.5 * np.arange(0, dim), [str(i) for i in range(1, dim + 1)])
     plt.xlabel(r'$\omega$')
-    plt.axvline(0, ls='solid', lw=0.5)
+    plt.legend()
     plt.savefig("./spectrums.pdf", dpi=800)
     plt.close()
 

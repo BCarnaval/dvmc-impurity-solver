@@ -12,6 +12,5 @@ endif(${CMAKE_PROJECT_NAME} STREQUAL "Project")
 install(
   CODE "execute_process(
   COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/dvmc $ENV{HOME}/.local/bin/dvmc
-)")
-
-message("-- dvmc symbolic link installed in: $HOME/.local/bin/dvmc")
+)"
+  message ("-- dvmc symbolic link installed in: $HOME/.local/bin/dvmc"))

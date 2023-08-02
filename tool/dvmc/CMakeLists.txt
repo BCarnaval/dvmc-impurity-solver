@@ -45,6 +45,13 @@ set(SCRIPTS
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${SCRIPTS} DESTINATION .)
 
+set(PYTHON_DVMC_SRC "$ENV{HOME}/.local/share/dvmc:$PYTHONPATH")
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+  file(APPEND $ENV{HOME}/.zshrc "export PYTHONPATH=${PYTHON_DVMC_SRC}")
+else()
+  file(APPEND $ENV{HOME}/.bashrc "export PYTHONPATH=${PYTHON_DVMC_SRC}")
+endif()
+
 install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/${SCRIPTS}
   DESTINATION $ENV{HOME}/.local/share/dvmc
