@@ -115,9 +115,6 @@ compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
 | :-----------------------------------------------------------: | :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |               [Python](https://www.python.org/)               |     3.7      |                               Python is a programming language that lets you work more quickly and integrate your systems more effectively.                                |
 | [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) |    2.2.1     | PyQCM is a python module that interfaces with a library written in C++ : qcm. This library provide a collection of functions that help implement quantum cluster methods.  |
-|                  [Numpy](https://numpy.org/)                  |      NA      |                                                       The fundamental package for scientific computing with Python.                                                        |
-|                  [Scipy](https://scipy.org/)                  |      NA      |                                                         Fundamental algorithms for scientific computing in Python.                                                         |
-|             [Matplotlib](https://matplotlib.org/)             |      NA      | Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. Matplotlib makes easy things easy and hard things possible. |
 
 # Installation
 
