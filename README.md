@@ -59,7 +59,7 @@ CPT, CDMFT, etc.
 
 # Requirements
 
-For more details about the **installation** of required tools and libraries, please see `./docs/INSTALL_DEPENDENCIES.md` documentation file.
+For more details about the **installation** of required tools and libraries, please see `./doc/INSTALL_DEPENDENCIES.md` file.
 It contains support for both Linux (Ubuntu) and MacOS.
 
 ## Compilation tools
