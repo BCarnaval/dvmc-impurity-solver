@@ -6,15 +6,15 @@
 
 This directory contains a direct application of the dVMC software usage to
 compute the ground state of a small 2x2 cluster then using the Q-matrix
-representation in cluster perturbation theory (CPT) to output the Fermi
-surface of the system by calling PyQCM library.
+representation in cluster perturbation theory (CPT) to output the cluster
+spectral function of the system by calling PyQCM library.
 
 ## Content
 
 - `model_2x2.py`: Defines the lattice model using PyQCM library instances.
 
-- `fermi_surface.py`: Uses PyQCM dVMC interface to find the groundstate then
-  CPT method to output the Fermi surface.
+- `cluster_spectral.py`: Uses PyQCM dVMC interface to find the groundstate then
+  CPT method to output the cluster spectral function.
 
 - `params`: Global dVMC solver input parameter file.
 
@@ -23,12 +23,12 @@ surface of the system by calling PyQCM library.
 ## Usage
 
 Since this example uses dVMC through PyQCM, the only thing to do is to execute
-the `fermi_surface.py` script using Python 3 (with proper PyQCM installation)
+the `cluster_spectral.py` script using Python 3 (with proper PyQCM installation)
 
-#### Run script to generate A(k,w) from CPT-dVMC
+#### Run script to generate cluster spectral function from CPT-dVMC
 
 ```shell
-python3 fermi_surface.py
+python3 cluster_spectral.py
 ```
 
 ## Post processing

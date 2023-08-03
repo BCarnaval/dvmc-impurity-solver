@@ -1,4 +1,4 @@
-"""Plots the Fermi surface of the model defined in 'model_3x4'
+"""Plots the cluster spectral function of the model defined in 'model_2x2'
 Python module using PyQCM library to invoke dVMC solver instead
 of exact diagonalization.
 """
@@ -33,14 +33,9 @@ def main() -> None:
     pyqcm.solver = dvmc_solver
 
     model_instance = pyqcm.model_instance(model)
+    model_instance.cluster_spectral_function(
+        wmax=15, eta=0.1, file='cluster_spectral.pdf')
 
-    # CPT DoS
-    model_instance.mdc(eta=0.12,
-                       quadrant=False,
-                       freq=1.5970819385867554,
-                       file='fermi_surface.pdf',
-                       sym='RXY'
-                       )
     return
 
 
