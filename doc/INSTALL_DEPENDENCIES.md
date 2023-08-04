@@ -271,7 +271,7 @@ cmake --build .
 cp ./qcm* ../pyqcm/.
 ```
 
-Alternatively, you can manually add the library to the general Python library path of your system:
+You should manually add the library to the general Python library path of your system:
 
 ```shell
 export PYTHONPATH="$HOME/qcm_wed:$PYTHONPATH"
