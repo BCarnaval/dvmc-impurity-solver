@@ -30,7 +30,7 @@ apt install sudo
 Once `sudo` is installed, you can update all the installed packages on the system using the command:
 
 ```shell
-sudo apt update && sudo apt upgrade
+sudo apt update
 ```
 
 ### MacOS
