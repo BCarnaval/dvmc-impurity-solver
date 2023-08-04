@@ -10,7 +10,7 @@ the Q-matrix representation in cluster dynamical mean field theory (CDMFT)
 from PyQCM library.
 
 This sample is meant to be executed by a supercomputer using `run_slurm.sh` shell
-script as the job submission script. It roughly reproduces the figure 2 of the article
+script as the job submission script. It roughly reproduces the figure 2 of the [article](https://arxiv.org/abs/2307.15738)
 but with less statistics and sampling (see `expected/` directory).
 
 > ### Note
