@@ -16,7 +16,7 @@ but with less statistics and sampling (see `expected/` directory).
 > ### Note
 >
 > It takes approximately 3.5 hours to run on [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
-> supercomputer using 32 MPI processes with 1 CPU per task with 4G of memory.
+> supercomputer using 32 MPI processes with 1 CPU per task and 4G of memory.
 
 ## Content
 
