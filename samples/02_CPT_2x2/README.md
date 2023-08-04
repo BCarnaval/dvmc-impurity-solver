@@ -9,6 +9,9 @@ compute the ground state of a small 2x2 cluster then using the Q-matrix
 representation in cluster perturbation theory (CPT) to output the cluster
 spectral function of the system by calling PyQCM library.
 
+This model is the same as the example contained in sample `01_dVMC`, but with
+more options due to the pyqcm machinery (dos, mdc and spectrum).
+
 ## Content
 
 - `model_2x2.py`: Defines the lattice model using PyQCM library instances.
