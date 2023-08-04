@@ -12,7 +12,8 @@ spectral function of the system by calling PyQCM library.
 > ### Note
 >
 > It takes approximately 40 minutes to run [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
-> supercomputer. It roughly reproduces the third graph of figure 3 in the paper: **PhysRevB.106.245132**
+> supercomputer using 64 MPI processes with 1 CPU per task and 1G of memory. It roughly reproduces the
+>  third graph of figure 3 in the paper: **PhysRevB.106.245132**
 
 ## Content
 
