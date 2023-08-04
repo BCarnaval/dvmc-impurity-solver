@@ -9,6 +9,8 @@ compute the ground state of a 1D cluster of 2 sites with 4 bath sites then using
 the Q-matrix representation in cluster dynamical mean field theory (CDMFT)
 from PyQCM library.
 
+It roughly reproduces the figure 2 of the [article](https://arxiv.org/abs/2307.15738) but with less statistics and sampling (see expected/ directory).
+
 ## Content
 
 - `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances.
