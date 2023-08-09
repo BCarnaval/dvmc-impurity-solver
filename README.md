@@ -156,19 +156,20 @@ make
 make install
 ```
 
+5. Modifying `$PYTHONPATH` variable to make `dvmc.py` accessible as a module
+
+```shell
+export PYTHONPATH="$HOME/.local/share/dvmc:$PYTHONPATH"
+```
+
+(Note: Add this last line to your `.bashrc` to make dVMC always accessible)
+
 It is recommended to consult the original mVMC documentation to learn
 more about dependencies and parameters names and idea. Note however that
 most of the cases in mVMC are not covered by the present code, as
 stated above.
 
 # Usage
-
-## Samples
-
-Detailed usage is not covered here. Instead many examples can be found
-in the `./samples/` subdirectory. The easiest way to understand how to
-use it is to run these examples. Go there to read the `README.md` and run the
-few examples.
 
 ## dvmc CLI (Command Line Interface)
 
@@ -190,6 +191,13 @@ export PATH="$HOME/.local/bin:$PATH"
 By running this command, your shell will be able to access the scripts in `$HOME/.local/bin`
 until the current session is ended. To add it every time a shell session is
 openned, you must add the previous line to the `$HOME/.bashrc` file.
+
+## Samples
+
+Detailed usage is not covered here. Instead many examples can be found
+in the `./samples/` subdirectory. The easiest way to understand how to
+use it is to run these examples. Go there to read the `README.md` and run the
+few examples.
 
 # Authors
 
