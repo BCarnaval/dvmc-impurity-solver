@@ -34,10 +34,10 @@ def plot_results() -> None:
     dim = int(params['nelec']) // 3
     for i in range(dim):
         plt.plot(np.real(w_dvmc), A_dvmc[:, i] + 1.5 *
-                 i, color='C5', lw=2.5, alpha=0.97,
+                 i, lw=2.5, alpha=1,
                  label='dVMC' if i == 0 else '_nolabel_')
         plt.plot(np.real(w_ed), A_ed[:, i] + 1.5 * i,
-                 color='C0', label='ED' if i == 0 else '_nolabel_')
+                 color='k', label='ED' if i == 0 else '_nolabel_')
 
     # V/H lines setup
     [plt.axhline(y=i, ls='solid', color='k')
@@ -76,7 +76,7 @@ def main() -> None:
 
     # Setup dVMC solver through PyQCM
     pyqcm.solver = dvmc_solver
-    pyqcm.model_instance(model)
+    # pyqcm.model_instance(model)
 
     plot_results()
 

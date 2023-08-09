@@ -26,14 +26,18 @@ import sys
 import numpy as np
 from ctypes import cdll, c_int, c_float, c_char_p
 
+verbose = 0
 full_path = os.path.realpath(__file__)
 pythonPathCode, file1 = os.path.split(full_path)
 
-print(pythonPathCode)
+if verbose:
+    print(pythonPathCode)
 
 Excitation = open('excitation.def').read().replace(' ', '')
 n_exc = int(re.compile('NExcitation([0-9]*)').findall(Excitation)[0])
-print(n_exc)
+
+if verbose:
+    print(n_exc)
 
 Nc, Nb = 0, 0
 if os.path.isfile('params'):
@@ -56,19 +60,22 @@ def main():
     fileIn = []
     n_file = len(sys.argv[:])-1
     n_file2 = 0
-    print(sys.argv[:])
-    print(n_file)
+
+    if verbose:
+        print(sys.argv[:])
+        print(n_file)
 
     for nn in range(0, n_file):
         n_file2 += 1
         fileIn.append(sys.argv[1+nn])
 
-    print(fileIn)
+    if verbose:
+        print(fileIn)
     if (n_file < 1):
         print('error: no input files.\nexample\n$ mergeOutputBin.py output/zvo_nCHAm_nAHCm_00*\n')
         exit()
 
-    Nsite = Nc+Nb
+    Nsite = Nc + Nb
     print("Nsite = ", Nsite)
     is_so = True
     # use compiled version if present:
@@ -92,8 +99,10 @@ def main():
     for i in range(len(fileIn)):
         fileIn[i] = fileIn[i].encode('utf-8')
     argList[:] = fileIn
-    print('***************')
-    print(phys_CA_averaged[:10])
+
+    if verbose:
+        print('***************')
+        print(phys_CA_averaged[:10])
 
     # Loading and using our home made module:
     if is_so:
@@ -101,9 +110,7 @@ def main():
     else:
         lib1 = cdll.LoadLibrary(pythonPathCode+'/libdvmc_speedup.dylib')
     lib1.mergeOutputBin(len(fileIn), argList, c_NExcitation, c_Nsite, c_dummy,
-                        phys_CA_averaged, phys_AC_averaged, phys_CHA_averaged, phys_AHC_averaged, 1)
-
-    print('after read')
+                        phys_CA_averaged, phys_AC_averaged, phys_CHA_averaged, phys_AHC_averaged, 0)
 
     def convert_c2numpy(phys_averaged):
         numpy_averaged = np.zeros(n_exc*n_exc*Nsite*Nsite)
@@ -125,7 +132,6 @@ def main():
     print(nAHCm_up)
     print('\nH_CA')
     print(nCHAm_up)
-    print('')
 
     np.save(dirOutput+'S_CA', nCAm_up)
     np.save(dirOutput+'S_AC', nACm_up)

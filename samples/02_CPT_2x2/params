@@ -18,7 +18,7 @@ NSplitSize    1
 NSROptItrStep    1000
 NSROptItrSmp    50
 NVMCWarmUp    50
-NVMCSample    200
+NVMCSample    500
 NExUpdatePath    1
 NDataQtySmp    30
 2Sz    0

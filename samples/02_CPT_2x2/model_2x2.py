@@ -1,7 +1,6 @@
 """This module aims to test the link(s) between dVMC and PyQCM
 by using the new interface of PyQCM for CPT calculation.
 """
-
 import pyqcm
 
 
