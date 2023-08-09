@@ -186,7 +186,7 @@ brew install openblas lapack
 >
 > ([https://qcm-wed.readthedocs.io/en/latest/intro.html#what-is-pyqcm](https://qcm-wed.readthedocs.io/en/latest/intro.html#what-is-pyqcm))
 
-### Default `pip` Installation
+## Dependencies installation
 
 To proceed with this type of installation, you need to have Python (>=3.7) installed. A recommended version at the time of writing this text is Python3.10 since Python3.11 is not yet stable. To install Python 3.10 on MacOS, use Homebrew:
 
@@ -213,6 +213,8 @@ Assuming that Python and `pip` are correctly installed on the system, the PyQCM 
 pip3 install numpy scipy matplotlib
 ```
 
+## Performance '_from_source_' Installation
+
 The user can now install PyQCM by first cloning the project to the system using `git`:
 
 ```shell
@@ -222,49 +224,19 @@ git clone https://bitbucket.org/dsenechQCM/qcm_wed.git
 Then go to the project directory and proceed with the installation:
 
 ```shell
-cd ./qcm_wed && pip install .
-```
-
----
-
-**NOTE:**
-
-The user can also choose to use optional libraries during the installation to improve the performance of PyQCM. These libraries are: [CUBA](https://feynarts.de/cuba/), [PRIMME](https://www.cs.wm.edu/~andreas/software/), and [Eigen](https://gitlab.com/libeigen/eigen). To use these dependencies, provide the following directives to the `cmake` build tool during installation:
-
-```shell
-export CMAKE_ARGS="-DDOWNLOAD_CUBA=1 -DEIGEN_HAMILTONIAN=1 -DWITH_PRIMME=1 -DDOWNLOAD_PRIMME=1"
-```
-
-just before proceeding with the `pip` installation. Don't forget to install the Eigen library separately on MacOS and Linux (Ubuntu):
-
-```shell
-brew install eigen
-```
-
-```shell
-sudo apt install libeigen3-dev
-```
-
----
-
-### Performance '_from_source_' Installation
-
-This type of installation is more _local_, meaning that the library will not be installed within a Python environment but rather compiled directly in the source code folder. To do this, access the source code using `git`:
-
-```shell
-git clone https://bitbucket.org/dsenechQCM/qcm_wed.git
+cd ./qcm_wed && git checkout 97610a0128e015fbbfbfa2f6de2aa1c6096c8f6b
 ```
 
 Next, you need to compile the library. Conventionally, with `CMake`, you proceed in a `build` directory:
 
 ```shell
-cd qcm_wed && mkdir build && cd build
+mkdir build && cd build
 ```
 
-In this directory, you configure the compilation options to use high-performance external libraries: [CUBA](https://feynarts.de/cuba/), [PRIMME](https://www.cs.wm.edu/~andreas/software/), and [Eigen](https://gitlab.com/libeigen/eigen)
+In this directory, you configure the compilation options to use high-performance external libraries such as [CUBA](https://feynarts.de/cuba/)
 
 ```shell
-cmake .. -DDOWNLOAD_CUBA=1 -DEIGEN_HAMILTONIAN=1 -DWITH_PRIMME=1 -DDOWNLOAD_PRIMME=1
+cmake .. -DDOWNLOAD_CUBA=1
 ...
 cmake --build .
 ...
@@ -274,7 +246,12 @@ cp ./qcm* ../pyqcm/.
 You should manually add the library to the general Python library path of your system:
 
 ```shell
-export PYTHONPATH="$HOME/qcm_wed:$PYTHONPATH"
+cd .. && export PYTHONPATH="$(pwd):$PYTHONPATH"
 ```
 
 This way, Python scripts executed with the default Python interpreter (excluding virtual environments) will be able to access and recognize the PyQCM modules.
+You can also add this line directly to your `.bashrc` with proper path to `qcm_wed` directory so PyQCM is always accessible within your global Python installation
+
+```shell
+echo 'export PYTHONPATH="<insert_path_to_qcm_wed>:$PYTHONPATH"' >> $HOME/.bashrc
+```
