@@ -31,10 +31,17 @@ def main() -> None:
 
     # Setup dVMC solver through PyQCM
     pyqcm.solver = dvmc_solver
-
     model_instance = pyqcm.model_instance(model)
+
+    # Computing cluster spectral functions
     model_instance.cluster_spectral_function(
         wmax=15, eta=0.1, file='cluster_spectral.pdf')
+
+    # Computing DOS at w=0
+    model_instance.plot_DoS(w=15, file='dos.pdf')
+
+    # Computing Fermi surface
+    model_instance.mdc(nk=800, file='spectral_weight.pdf', sym='RXY')
 
     return
 
