@@ -15,17 +15,14 @@ install(TARGETS dvmc_gnuplot RUNTIME DESTINATION $ENV{HOME}/.local/share/dvmc)
 install(TARGETS dvmc_speedup DESTINATION $ENV{HOME}/.local/share/dvmc)
 
 set(SCRIPTS
-    filter_bin.sh
     dvmc.py
     fij_sym.py
-    averageOhgoe.py
     cluster.py
     dos_analysis.py
     dvmc_spectrum.py
     dvmc_spectrum_eigh_w_sqrtS.py
     dvmc_spectrum_w_SVD.py
     dvmc_spectrum_w_cond_number.py
-    generate_template_gnuplot.py
     init_groundstate.py
     init_params.py
     makeDH4.py
@@ -34,13 +31,7 @@ set(SCRIPTS
     makeExcitation.py
     convertOutputBin.py
     mergeOutputBin.py
-    postprocess_dVMC.sh
-    preprocess_dVMC.sh
     selectExcitation.py
-    select_kPath.py
-    template_plot_Akw.gp
-    template_plot_allAkw.gp
-    template_plot_dos.gp
     hopping.py)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${SCRIPTS} DESTINATION .)
