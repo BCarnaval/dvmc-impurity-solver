@@ -34,7 +34,7 @@ dvmc groundstate
 #### Get Q-matrix by computing Green's function
 
 ```shell
-dvmc qmatrix sqrt
+dvmc green sqrt
 ```
 
 ## Note
