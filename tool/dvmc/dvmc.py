@@ -150,19 +150,6 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
 
     # Make excitation list
     if not dvmc_parameters['gs_only'] and not dvmc_parameters['read_soln']:
-        # Dynamical calculation
-        p = subprocess.run(["dvmc", "excitations"])
-        if p.returncode != 0:
-            print("Calculation of excitations failed")
-            exit()
-
-        # Merge binary outputs
-        p = subprocess.run(
-            ["dvmc", "process-output", "output/zvo_nCHAm_nAHCm_0"])
-        if p.returncode != 0:
-            print("Failed to merge binary files")
-            exit()
-
         # Compute and output Green's functions
         tol = dvmc_parameters['tol']
         k_tol = dvmc_parameters['k_tol']
@@ -171,7 +158,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         if dvmc_parameters['cond_number']:
             p = subprocess.run([
                 "dvmc",
-                "qmatrix",
+                "green",
                 "cond",
                 f"--tolerance={tol}",
                 f"--use_filter={tl_filter}"
@@ -180,7 +167,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         elif dvmc_parameters['use_SVD']:
             p = subprocess.run([
                 "dvmc",
-                "qmatrix",
+                "green",
                 "svd",
                 f"--tolerance={tol}",
                 f"--use_filter={tl_filter}",
@@ -190,7 +177,7 @@ def dvmc_solver(model_instance: pyqcm.model_instance) -> None:
         else:
             p = subprocess.run([
                 "dvmc",
-                "qmatrix",
+                "green",
                 "sqrt",
                 f"--tolerance={tol}",
                 f"--use_filter={tl_filter}",
