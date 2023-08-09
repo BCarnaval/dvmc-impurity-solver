@@ -15,7 +15,7 @@ NMPTrans    1
 NSPGaussLeg    16
 complextype    0
 NSplitSize    1
-NSROptItrStep    500
+NSROptItrStep    1000
 NSROptItrSmp    100
 NVMCWarmUp    100
 NVMCSample    1000

@@ -60,37 +60,10 @@ commands:
       - dvmc groundstate
       - dvmc gs --optimized
 
-  # -------------------
-  # EXCITATIONS COMMAND
-  # -------------------
-  - name: excitations
-    alias: excs
-    help: Proceeds to dynamical calculations via optimized parameters.
-
-    examples:
-      - dvmc excitations
-      - dvmc excs
-
-  # ----------------------
-  # PROCESS-OUTPUT COMMAND
-  # ----------------------
-  - name: process-output
-    help: Merges binary output files based on given prefix.
-    args:
-      - name: prefix
-        required: true
-        help: |
-          Prefix of all the input files to be process and save in './output'
-          directory. The command uses this prefix to grep all of the prefix*bin
-          files and process them.
-
-    examples:
-      - dvmc process-output ./output/zvo_nCHAm_nAHCm_0*bin
-
   # ---------------
-  # QMATRIX COMMAND
+  # GREEN COMMAND
   # ---------------
-  - name: qmatrix
+  - name: green
     help: Computes the Green's function using Q-matrix representation.
     args:
       - name: processing
@@ -118,8 +91,8 @@ commands:
         help: Modifies the Q-matrix calculations in the 'svd' processing case.
 
     examples:
-      - dvmc qmatrix sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9
-      - dvmc qmatrix svd --tolerance=0.75 --k_tolerance=0.8
+      - dvmc green sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9
+      - dvmc green svd --tolerance=0.75 --k_tolerance=0.8
 
   # -----------
   # RUN COMMAND

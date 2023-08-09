@@ -8,7 +8,7 @@
 # Modifying it manually is not recommended
 
 version_command() {
-  cyan_bold "[~] $version, BCarnaval"
+  echo "$version"
 }
 
 dvmc_usage() {
@@ -29,13 +29,11 @@ dvmc_usage() {
   echo
 
   printf "%s\n" "$(bold "Commands:")"
-  printf "  %s   Generates configuration files needed based on a global parameters input.\n" "$(green "generate")      "
-  printf "  %s   Evaluates the ground state using 'namelist.def' to access configuration files.\n" "$(green "groundstate")   "
-  printf "  %s   Proceeds to dynamical calculations via optimized parameters.\n" "$(green "excitations")   "
-  printf "  %s   Merges binary output files based on given prefix.\n" "$(green "process-output")"
-  printf "  %s   Computes the Green's function using Q-matrix representation.\n" "$(green "qmatrix")       "
-  printf "  %s   Runs all of the simulation's commands at once.\n" "$(green "run")           "
-  printf "  %s   Cleans directory by removing generated configuration/output files.\n" "$(green "clean")         "
+  printf "  %s   Generates configuration files needed based on a global parameters input.\n" "$(green "generate")   "
+  printf "  %s   Evaluates the ground state using 'namelist.def' to access configuration files.\n" "$(green "groundstate")"
+  printf "  %s   Computes the Green's function using Q-matrix representation.\n" "$(green "green")      "
+  printf "  %s   Runs all of the simulation's commands at once.\n" "$(green "run")        "
+  printf "  %s   Cleans directory by removing generated configuration/output files.\n" "$(green "clean")      "
   echo
 
   if [[ -n $long_usage ]]; then
@@ -145,90 +143,20 @@ dvmc_groundstate_usage() {
   fi
 }
 
-dvmc_excitations_usage() {
+dvmc_green_usage() {
   if [[ -n $long_usage ]]; then
-    printf "dvmc excitations - Proceeds to dynamical calculations via optimized parameters.\n"
+    printf "dvmc green - Computes the Green's function using Q-matrix representation.\n"
     echo
 
   else
-    printf "dvmc excitations - Proceeds to dynamical calculations via optimized parameters.\n"
-    echo
-
-  fi
-
-  printf "Alias: excs\n"
-  echo
-
-  printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc excitations\n"
-  printf "  dvmc excitations --help | -h\n"
-  echo
-
-  if [[ -n $long_usage ]]; then
-    printf "%s\n" "$(bold "Options:")"
-
-    printf "  %s\n" "$(magenta "--help, -h")"
-    printf "    Show this help\n"
-    echo
-
-    printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc excitations\n"
-    printf "  dvmc excs\n"
-    echo
-
-  fi
-}
-
-dvmc_process_output_usage() {
-  if [[ -n $long_usage ]]; then
-    printf "dvmc process-output - Merges binary output files based on given prefix.\n"
-    echo
-
-  else
-    printf "dvmc process-output - Merges binary output files based on given prefix.\n"
+    printf "dvmc green - Computes the Green's function using Q-matrix representation.\n"
     echo
 
   fi
 
   printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc process-output PREFIX\n"
-  printf "  dvmc process-output --help | -h\n"
-  echo
-
-  if [[ -n $long_usage ]]; then
-    printf "%s\n" "$(bold "Options:")"
-
-    printf "  %s\n" "$(magenta "--help, -h")"
-    printf "    Show this help\n"
-    echo
-
-    printf "%s\n" "$(bold "Arguments:")"
-
-    printf "  %s\n" "$(blue "PREFIX")"
-    printf "    Prefix of all the input files to be process and save in './output'\n    directory. The command uses this prefix to grep all of the prefix*bin\n    files and process them.\n"
-    echo
-
-    printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc process-output ./output/zvo_nCHAm_nAHCm_0*bin\n"
-    echo
-
-  fi
-}
-
-dvmc_qmatrix_usage() {
-  if [[ -n $long_usage ]]; then
-    printf "dvmc qmatrix - Computes the Green's function using Q-matrix representation.\n"
-    echo
-
-  else
-    printf "dvmc qmatrix - Computes the Green's function using Q-matrix representation.\n"
-    echo
-
-  fi
-
-  printf "%s\n" "$(bold "Usage:")"
-  printf "  dvmc qmatrix PROCESSING [OPTIONS]\n"
-  printf "  dvmc qmatrix --help | -h\n"
+  printf "  dvmc green PROCESSING [OPTIONS]\n"
+  printf "  dvmc green --help | -h\n"
   echo
 
   if [[ -n $long_usage ]]; then
@@ -261,8 +189,8 @@ dvmc_qmatrix_usage() {
     echo
 
     printf "%s\n" "$(bold "Examples:")"
-    printf "  dvmc qmatrix sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9\n"
-    printf "  dvmc qmatrix svd --tolerance=0.75 --k_tolerance=0.8\n"
+    printf "  dvmc green sqrt --tolerance=0.75 --use_filter=1 --addtl_filter=0.9\n"
+    printf "  dvmc green svd --tolerance=0.75 --k_tolerance=0.8\n"
     echo
 
   fi
@@ -520,16 +448,26 @@ dvmc_groundstate_command() {
 
 }
 
-dvmc_excitations_command() {
-  # Excitations command script
+dvmc_green_command() {
+  # Green command script
 
-  excitations () {
+  green_function () {
+    # ---------
     # Constants
+    # ---------
     N_PROC="${DVMC_MPI_PROC}"
+    PROCESS="${args[processing]}"
+    TOL="${args[--tolerance]}"
+    USE_FILTER="${args[--use_filter]}"
+    TL_FILTER="${args[--addtl_filter]}"
+    K_TOL="${args[--k_tolerance]}"
+
+    # ----------------------
+    # Dynamical calculations
+    # ----------------------
     NAMELIST_G=$(find . -name "namelist_G.def" -type f)
     OPTIMIZED=$(find ./output -name "zqp_opt.dat" -type f)
 
-    # Script
     if [[ -f "${NAMELIST_G}" ]] && [[ -f "${OPTIMIZED}" ]]; then
       bold "--------------------------------------------------------------------------------"
       green_bold "[@] Beginning dynamical VMC calculations..."
@@ -544,39 +482,18 @@ dvmc_excitations_command() {
       red_bold "[X] Neither './output/zqp_opt.dat' and 'namelist_G.def' have been found."
       exit 1
     fi
-  }
 
-  excitations
-
-}
-
-dvmc_process_output_command() {
-  # Process-output command script
-
-  process_output () {
-    # Constants
-    PREFIX="${args[prefix]}"
-
-    # Script
+    # ---------------------
+    # Processing the output
+    # ---------------------
+    PREFIX="output/zvo_nCHAm_nAHCm_0"
     bold "--------------------------------------------------------------------------------"
     green_bold "[@] Processing ${PREFIX}*bin files..."
     "${DVMC_SCRIPTS_LOCATION}"/mergeOutputBin.py "${PREFIX}"*bin
-  }
 
-  process_output
-
-}
-
-dvmc_qmatrix_command() {
-  # Q-matrix command script
-
-  q_matrix () {
-    # Constants
-    PROCESS="${args[processing]}"
-    TOL="${args[--tolerance]}"
-    USE_FILTER="${args[--use_filter]}"
-    TL_FILTER="${args[--addtl_filter]}"
-    K_TOL="${args[--k_tolerance]}"
+    # --------------------------
+    # Computing Green's function
+    # --------------------------
 
     # Script selection
     if [ "${PROCESS}" == "cond" ]; then
@@ -619,7 +536,7 @@ dvmc_qmatrix_command() {
     green_bold "[@] Green's function calculations done."
   }
 
-  q_matrix
+  green_function
 
 }
 
@@ -857,24 +774,10 @@ parse_requirements() {
       shift $#
       ;;
 
-    excitations | excs)
-      action="excitations"
+    green)
+      action="green"
       shift
-      dvmc_excitations_parse_requirements "$@"
-      shift $#
-      ;;
-
-    process-output)
-      action="process-output"
-      shift
-      dvmc_process_output_parse_requirements "$@"
-      shift $#
-      ;;
-
-    qmatrix)
-      action="qmatrix"
-      shift
-      dvmc_qmatrix_parse_requirements "$@"
+      dvmc_green_parse_requirements "$@"
       shift $#
       ;;
 
@@ -1026,13 +929,13 @@ dvmc_groundstate_parse_requirements() {
 
 }
 
-dvmc_excitations_parse_requirements() {
+dvmc_green_parse_requirements() {
 
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       --help | -h)
         long_usage=yes
-        dvmc_excitations_usage
+        dvmc_green_usage
         exit
         ;;
 
@@ -1043,98 +946,7 @@ dvmc_excitations_parse_requirements() {
     esac
   done
 
-  action="excitations"
-
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
-
-        ;;
-
-    esac
-  done
-
-}
-
-dvmc_process_output_parse_requirements() {
-
-  while [[ $# -gt 0 ]]; do
-    case "${1:-}" in
-      --help | -h)
-        long_usage=yes
-        dvmc_process_output_usage
-        exit
-        ;;
-
-      *)
-        break
-        ;;
-
-    esac
-  done
-
-  action="process-output"
-
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-
-        if [[ -z ${args['prefix']+x} ]]; then
-
-          args['prefix']=$1
-          shift
-        else
-          printf "invalid argument: %s\n" "$key" >&2
-          exit 1
-        fi
-
-        ;;
-
-    esac
-  done
-
-  if [[ -z ${args['prefix']+x} ]]; then
-    printf "missing required argument: PREFIX\nusage: dvmc process-output PREFIX\n" >&2
-    exit 1
-  fi
-
-}
-
-dvmc_qmatrix_parse_requirements() {
-
-  while [[ $# -gt 0 ]]; do
-    case "${1:-}" in
-      --help | -h)
-        long_usage=yes
-        dvmc_qmatrix_usage
-        exit
-        ;;
-
-      *)
-        break
-        ;;
-
-    esac
-  done
-
-  action="qmatrix"
+  action="green"
 
   while [[ $# -gt 0 ]]; do
     key="$1"
@@ -1214,7 +1026,7 @@ dvmc_qmatrix_parse_requirements() {
   done
 
   if [[ -z ${args['processing']+x} ]]; then
-    printf "missing required argument: PROCESSING\nusage: dvmc qmatrix PROCESSING [OPTIONS]\n" >&2
+    printf "missing required argument: PROCESSING\nusage: dvmc green PROCESSING [OPTIONS]\n" >&2
     exit 1
   fi
 
@@ -1404,9 +1216,7 @@ run() {
   case "$action" in
     "generate") dvmc_generate_command ;;
     "groundstate") dvmc_groundstate_command ;;
-    "excitations") dvmc_excitations_command ;;
-    "process-output") dvmc_process_output_command ;;
-    "qmatrix") dvmc_qmatrix_command ;;
+    "green") dvmc_green_command ;;
     "run") dvmc_run_command ;;
     "clean") dvmc_clean_command ;;
   esac
