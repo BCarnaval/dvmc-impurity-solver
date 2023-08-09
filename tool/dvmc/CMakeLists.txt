@@ -17,15 +17,12 @@ install(TARGETS dvmc_speedup DESTINATION $ENV{HOME}/.local/share/dvmc)
 set(SCRIPTS
     dvmc.py
     fij_sym.py
-    cluster.py
-    dos_analysis.py
     dvmc_spectrum.py
     dvmc_spectrum_eigh_w_sqrtS.py
     dvmc_spectrum_w_SVD.py
     dvmc_spectrum_w_cond_number.py
     init_groundstate.py
     init_params.py
-    makeDH4.py
     makeExcitation_from_hopping.py
     makeExcitation_from_hopping_only_t.py
     makeExcitation.py
