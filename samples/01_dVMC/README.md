@@ -31,19 +31,7 @@ dvmc generate params 3
 dvmc groundstate
 ```
 
-#### Run dVMC to get excitations
-
-```shell
-dvmc excitations
-```
-
-#### Merge binary files
-
-```shell
-dvmc process-output output/zvo_nCHAm_nAHCm_0
-```
-
-#### Get Q-matrix
+#### Get Q-matrix by computing Green's function
 
 ```shell
 dvmc qmatrix sqrt
