@@ -76,7 +76,7 @@ def main() -> None:
 
     # Setup dVMC solver through PyQCM
     pyqcm.solver = dvmc_solver
-    # pyqcm.model_instance(model)
+    pyqcm.model_instance(model)
 
     plot_results()
 
