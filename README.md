@@ -11,7 +11,7 @@ which is itself based on the original mVMC open source package
 [source](https://github.com/issp-center-dev/mVMC)
 and [arXiv:1711.11418](https://arxiv.org/abs/1711.11418).
 
-![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![Fortran](https://img.shields.io/badge/Fortran-%23734F96.svg?style=for-the-badge&logo=fortran&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
 
 ![LICENSE](https://img.shields.io/github/license/BCarnaval/DynamicalVMC?color=blue&style=for-the-badge) ![release](https://img.shields.io/github/v/tag/BCarnaval/DynamicalVMC?color=%23FF7F50&style=for-the-badge)
 
