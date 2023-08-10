@@ -212,7 +212,7 @@ Please email us at
 - <peter.rosenberg@usherbrooke.ca>
 - <antoine.de.lagrave@usherbrooke.ca>,
 
-if you have any question on the code. This complete the documentation of dVMC.
+if you have any question on the code. This completes the documentation of dVMC.
 
 # License
 
