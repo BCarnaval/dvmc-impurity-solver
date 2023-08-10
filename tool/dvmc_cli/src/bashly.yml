@@ -1,7 +1,7 @@
 name: dvmc
 help: Command line tool to perform dynamical variationnal Monte Carlo
   calculations
-version: 0.1.0
+version: 1.1.0
 
 environment_variables:
   - name: dvmc_scripts_location
