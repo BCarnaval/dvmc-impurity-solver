@@ -8,7 +8,7 @@
 # Modifying it manually is not recommended
 
 version_command() {
-  echo "$version"
+  cyan_bold "[~] $version, BCarnaval"
 }
 
 dvmc_usage() {
