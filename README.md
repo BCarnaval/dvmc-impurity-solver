@@ -121,15 +121,19 @@ compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
 
 # Installation
 
-To compile and install everything, follow these instructions from root directory:
+1. Clone the repository [dvmc-impurity-solver](https://github.com/BCarnaval/dvmc-impurity-solver) on your machine
 
-1. Making the conventional CMake working directory
+```shell
+git clone https://github.com/BCarnaval/dvmc-impurity-solver
+```
+
+2. Making the conventional CMake working directory
 
 ```shell
 mkdir build && cd build
 ```
 
-2. Telling CMake to use specified configuration file based on user's compiler and OS. All
+3. Telling CMake to use specified configuration file based on user's compiler and OS. All
    possible configurations can be found inside the `./config/` directory
 
 ```shell
@@ -144,19 +148,19 @@ cmake .. -DCONFIG=<chosen_config_file.cmake>
 
 to use a specifig configuration as explained above (see `./config/` directory).
 
-3. Compiling and linking the code with specified compiler settings
+4. Compiling and linking the code with specified compiler settings
 
 ```shell
 make
 ```
 
-4. Installing the binaries and dVMC CLI (Command Line Interface)
+5. Installing the binaries and dVMC CLI (Command Line Interface)
 
 ```shell
 make install
 ```
 
-5. Modifying `$PYTHONPATH` variable to make `dvmc.py` accessible as a module
+6. Modifying `$PYTHONPATH` variable to make `dvmc.py` accessible as a module
 
 ```shell
 export PYTHONPATH="$HOME/.local/share/dvmc:$PYTHONPATH"
