@@ -57,6 +57,12 @@ sudo apt install git build-essential gcc gfortran make cmake libblas-dev liblapa
 sudo apt install openmpi-bin openmpi-doc libopenmpi-dev checkinstall
 ```
 
+and on MacOS by using [Homebrew](https://brew.sh/) as package manager
+
+```shell
+xcode-select --install && brew install git cmake open-mpi openblas lapack
+```
+
 # Installation
 
 1. Clone the repository [dvmc-impurity-solver](https://github.com/BCarnaval/dvmc-impurity-solver) on your machine
