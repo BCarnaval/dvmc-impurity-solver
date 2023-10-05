@@ -1,15 +1,15 @@
-<div align="center">
 
 # dvmc-impurity-solver
 
 This package computes the Variational Monte Carlo ground state
-and its associated Green function. This package is an extension
-of the dVMC package published in
-[arxiv:1912.09960](https://arxiv.org/abs/1912.09960)
-and [PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023)
-which is itself based on the original mVMC open source package
-[source](https://github.com/issp-center-dev/mVMC)
-and [arXiv:1711.11418](https://arxiv.org/abs/1711.11418).
+and its associated Green function for the Hubbard model. Details 
+on the physics associated to this package can be found at:
+[arxiv.org:2307.15738](https://arxiv.org/abs/2307.15738).
+
+This package is an extension of the dVMC package published in
+[PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023) - ([arxiv:1912.09960](https://arxiv.org/abs/1912.09960)) which is itself based on the 
+original mVMC open source [mVMC package](https://dx.doi.org/10.17632/xhgyp6ncvt.1) from:
+[ComputPhysCommun.08.014](https://doi.org/10.1016/j.cpc.2018.08.014) - ([arXiv:1711.11418](https://arxiv.org/abs/1711.11418))
 
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![Fortran](https://img.shields.io/badge/Fortran-%23734F96.svg?style=for-the-badge&logo=fortran&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
 
@@ -17,107 +17,45 @@ and [arXiv:1711.11418](https://arxiv.org/abs/1711.11418).
 
 </div>
 
-It reuses most of the previous source code. Please refer to
-the documentation of mVMC in the open source package
-as most will not be covered here. Here, we will cover the
-difference and new functions not contained in the original mVMC
-and dVMC packages. This code is a direct extension of the dvmc code availabe in
-[PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023).
-It has essentially the same behavior but can now relax the
-constraint of translation invariance and periodic boundary condition.
-It also offers the possibility to include bath orbitals which
-are treated differently (no calcultion of the Green function
-on these orbitals).
-
-This is very important to be able to use this Hubbard model
-solution as an impurity solver that can be conjugated with
-CPT, CDMFT, etc.
+This package has essentially the same behavior as the code in [PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023) but can now relax the constraint of translation invariance and periodic boundary  condition. It also offers the possibility to include bath orbitals  which are treated differently (no calcultion of the Green function on these orbitals). This new feature is very important to be able to use this Hubbard impurity solver solution as an impurity solver that can be conjugated with CPT, CDMFT, etc.
 
 > #### Note
 >
 > The present authors (Maxime Charlebois, Peter Rosenberg and Antoine de Lagrave)
-> only work on these changes and not on the original mVMC
-> package. You can find the original `README` of both previous implementations
-> in the `./doc` directory.
+> only work on these changes and not on the original mVMC package. 
+> You can find the original `README` of both original mVMC and dVMC 
+> packages in the `./doc` directory.
 
 # Table of contents
 
-- [Requirements](#requirements)
-
-  - [Compilation tools](#compilation-tools)
-  - [Parallelization](#parallelization)
-  - [LAPACK and BLAS](#lapack-and-blas)
-  - [Python](#python)
-
+- [References](#references)
+- [Dependencies](#dependencies)
 - [Installation](#installation)
-
 - [Usage](#usage)
-
 - [Authors](#authors)
-
 - [License](#license)
 
-# Requirements
+# References
 
-For more details about the **installation** of required tools and libraries, please see `./doc/INSTALL_DEPENDENCIES.md` file.
-It contains support for both Linux (Ubuntu) and MacOS.
+You can look for the latest developments of this package at [github.com/BCarnaval/dvmc-impurity-solver](https://github.com/BCarnaval/dvmc-impurity-solver).
 
-## Compilation tools
+You are free to use this code as long as you respect the License terms. If you use it or learn from it, we ask that you cite the following article:
+[arxiv.org:2307.15738](https://arxiv.org/abs/2307.15738): CDMFT-dVMC article, to be published in PhysRevB,
 
-### C compiler
+and potentially these articles:
+[PhysRevB.106.245132](https://doi.org/10.1103/PhysRevB.106.245132) - ([arxiv:2209.08092](https://arxiv.org/abs/2209.08092)) : CPT-dVMC article.
+[PhysRevX.10.041023](https://doi.org/10.1103/PhysRevX.10.041023) - ([arxiv:1912.09960](https://arxiv.org/abs/1912.09960)) : original dVMC article and software library.
+[ComputPhysCommun.08.014](https://doi.org/10.1016/j.cpc.2018.08.014) - ([arXiv:1711.11418](https://arxiv.org/abs/1711.11418)): original VMC article and software library.
 
-You must have installed at least one of the following C compilers
+# Dependencies
 
-|                                      Tool/Library                                       | Version  |                                                                                            Description                                                                                            |
-| :-------------------------------------------------------------------------------------: | :------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|                               [gcc](https://gcc.gnu.org/)                               |  13.1.0  |                    The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...).                    |
-| [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) | 2021.9.0 |                                     This is a highly optimizing C (icc) and C++ (icpc) compiler. The standalone version has been superceded by Intel OneAPI.                                      |
-|                            [clang](https://clang.llvm.org/)                             |  13.0.0  | The Clang project provides a language front-end and tooling infrastructure for languages in the C language family (C, C++, Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project. |
+In summary it requires C and Fortran compilers, cmake, openmpi, lapack-blas, python3 and pyqcm. More details about **installation** of dependencies and **version** in `./doc/INSTALL_DEPENDENCIES.md`. It contains support for both Linux (Ubuntu) and MacOS. On Linux, most of dependencies appart from PyQCM can be installed using this simple command:
 
-### Fortran compiler
-
-You must have installed at least one of the following Fortran compilers
-
-|                                              Tool/Library                                               |  Version   |                                                                 Description                                                                 |
-| :-----------------------------------------------------------------------------------------------------: | :--------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
-| [ifort](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html#gs.3uuywf) | Not tested |                         The Intel Fortran compiler (ifort) is a highly optimizing Fortran compiler for Intel CPUs.                          |
-|                              [gfortran](https://gcc.gnu.org/wiki/GFortran)                              |   13.1.0   | Gfortran is the name of the GNU Fortran project, developing a free Fortran 95/2003/2008/2018 compiler for GCC, the GNU Compiler Collection. |
-
-### General tools
-
-|        Tool/Library         | Version |                                              Description                                              |
-| :-------------------------: | :-----: | :---------------------------------------------------------------------------------------------------: |
-| [CMake](https://cmake.org/) |  3.12   | CMake is an open-source, cross-platform family of tools designed to build, test and package software. |
-
-## Parallelization
-
-The program is designed to be executed using supercomputers and is optimized
-using parallel libraries such as [OpenMP](https://www.openmp.org/) and
-OpenMPI. OpenMP is a compiler dependency, so it does not need to be separately
-installed as it is included with the C/C++ compiler. However, this is not the
-case for OpenMPI, it must be installed separately
-
-|             Tool/Library             | Version |                                   Description                                   |
-| :----------------------------------: | :-----: | :-----------------------------------------------------------------------------: |
-| [OpenMPI](https://www.open-mpi.org/) |  4.1.5  | The Open MPI Project is an open source Message Passing Interface implementation |
-
-## LAPACK and BLAS
-
-|               Tool/Library               | Version (>=) |                                                                                                                  Description                                                                                                                   |
-| :--------------------------------------: | :----------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [LAPACK](https://www.netlib.org/lapack/) |     3.11     | LAPACK (Linear Algebra PACKage) is a software library for numerical computation that provides routines for solving linear algebra problems, such as linear system solving, eigenvalue and eigenvector computations, and matrix factorizations. |
-|   [BLAS](https://www.netlib.org/blas/)   |    0.3.23    |            BLAS (Basic Linear Algebra Subprograms), on the other hand, is a library of basic functions for linear algebra operations, such as matrix multiplication, vector operations, and discrete Fourier transform operations.             |
-
-## Python
-
-The interface tools of this project found inside `./tool/dvmc/` are written
-in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
-compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
-
-|                         Tool/Library                          | Version |                                                                                Description                                                                                |
-| :-----------------------------------------------------------: | :-----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|               [Python](https://www.python.org/)               |   3.7   |                               Python is a programming language that lets you work more quickly and integrate your systems more effectively.                               |
-| [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) |  2.2.1  | PyQCM is a python module that interfaces with a library written in C++ : qcm. This library provide a collection of functions that help implement quantum cluster methods. |
+```shell
+sudo apt update
+sudo apt install git build-essential gcc gfortran make cmake libblas-dev liblapack-dev
+sudo apt install openmpi-bin openmpi-doc libopenmpi-dev checkinstall
+```
 
 # Installation
 
@@ -148,19 +86,13 @@ cmake .. -DCONFIG=<chosen_config_file.cmake>
 
 to use a specifig configuration as explained above (see `./config/` directory).
 
-4. Compiling and linking the code with specified compiler settings
-
-```shell
-make
-```
-
-5. Installing the binaries and dVMC CLI (Command Line Interface)
+4. Compiling and linking the code with specified compiler settings and installing the binaries and dVMC CLI 
 
 ```shell
 make install
 ```
 
-6. Modifying `$PYTHONPATH` variable to make `dvmc.py` accessible as a module
+5. Modifying `$PYTHONPATH` variable to make `dvmc.py` accessible as a module
 
 ```shell
 export PYTHONPATH="$HOME/.local/share/dvmc:$PYTHONPATH"
@@ -169,9 +101,9 @@ export PYTHONPATH="$HOME/.local/share/dvmc:$PYTHONPATH"
 (Note: Add this last line to your `.bashrc` to make dVMC always accessible)
 
 It is recommended to consult the original mVMC documentation to learn
-more about dependencies and parameters names and idea. Note however that
-most of the cases in mVMC are not covered by the present code, as
-stated above.
+more about dependencies and parameters names. Note however that
+most of the cases present in the originale mVMC documentation are 
+not covered by the present code.
 
 # Usage
 
@@ -200,19 +132,17 @@ openned, you must add the previous line to the `$HOME/.bashrc` file.
 
 Detailed usage is not covered here. Instead many examples can be found
 in the `./samples/` subdirectory. The easiest way to understand how to
-use it is to run these examples. Go there to read the `README.md` and run the
-few examples.
+use it is to run these examples. Go there to read the `README.md` of the 
+examples that increase in complexity from `01` to `05`.
 
 # Authors
 
+All changes from the original [mVMC package](https://dx.doi.org/10.17632/xhgyp6ncvt.1) were done by
 **Maxime Charlebois**, **Peter Rosenberg** and **Antoine de Lagrave**.
-Please email us at
-
+Please email us if you have any question on this version of the code.
 - <maxime.charlebois@uqtr.ca>
 - <peter.rosenberg@usherbrooke.ca>
 - <antoine.de.lagrave@usherbrooke.ca>,
-
-if you have any question on the code. This completes the documentation of dVMC.
 
 # License
 

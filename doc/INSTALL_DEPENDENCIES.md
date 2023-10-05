@@ -1,13 +1,78 @@
+
 # Detailed dependencies documentation
 
 # Table of Contents
 
+- [Summary and versions](#summary-and-versions)
 - [Package Manager](#package-manager)
 - [Git](#git)
 - [Compilers](#compilers)
 - [Parallelization](#parallelization)
 - [LAPACK and BLAS](#lapack-and-blas)
 - [PyQCM](#pyqcm)
+
+
+# Summary and versions
+
+Here is a list of all the dependencies, and the version known to work for compilation. Note that more recent versions can also work, but it is not guaranteed.
+
+## Compilation tools
+
+### C compiler
+
+You must have installed at least one of the following C compilers
+
+|                                      Tool/Library                                       | Version  |                                                                                            Description                                                                                            |
+| :-------------------------------------------------------------------------------------: | :------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                               [gcc](https://gcc.gnu.org/)                               |  13.1.0  |                    The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...).                    |
+| [icc](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html) | 2021.9.0 |                                     This is a highly optimizing C (icc) and C++ (icpc) compiler. The standalone version has been superceded by Intel OneAPI.                                      |
+|                            [clang](https://clang.llvm.org/)                             |  13.0.0  | The Clang project provides a language front-end and tooling infrastructure for languages in the C language family (C, C++, Objective C/C++, OpenCL, CUDA, and RenderScript) for the LLVM project. |
+
+### Fortran compiler
+
+You must have installed at least one of the following Fortran compilers
+
+|                                              Tool/Library                                               |  Version   |                                                                 Description                                                                 |
+| :-----------------------------------------------------------------------------------------------------: | :--------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
+| [ifort](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html#gs.3uuywf) | Not tested |                         The Intel Fortran compiler (ifort) is a highly optimizing Fortran compiler for Intel CPUs.                          |
+|                              [gfortran](https://gcc.gnu.org/wiki/GFortran)                              |   13.1.0   | Gfortran is the name of the GNU Fortran project, developing a free Fortran 95/2003/2008/2018 compiler for GCC, the GNU Compiler Collection. |
+
+### General tools
+
+|        Tool/Library         | Version |                                              Description                                              |
+| :-------------------------: | :-----: | :---------------------------------------------------------------------------------------------------: |
+| [CMake](https://cmake.org/) |  3.12   | CMake is an open-source, cross-platform family of tools designed to build, test and package software. |
+
+## Parallelization
+
+The program is designed to be executed using supercomputers and is optimized
+using parallel libraries such as [OpenMP](https://www.openmp.org/) and
+OpenMPI. OpenMP is a compiler dependency, so it does not need to be separately
+installed as it is included with the C/C++ compiler. However, this is not the
+case for OpenMPI, it must be installed separately
+
+|             Tool/Library             | Version |                                   Description                                   |
+| :----------------------------------: | :-----: | :-----------------------------------------------------------------------------: |
+| [OpenMPI](https://www.open-mpi.org/) |  4.1.5  | The Open MPI Project is an open source Message Passing Interface implementation |
+
+## LAPACK and BLAS
+
+|               Tool/Library               | Version (>=) |                                                                                                                  Description                                                                                                                   |
+| :--------------------------------------: | :----------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [LAPACK](https://www.netlib.org/lapack/) |     3.11     | LAPACK (Linear Algebra PACKage) is a software library for numerical computation that provides routines for solving linear algebra problems, such as linear system solving, eigenvalue and eigenvector computations, and matrix factorizations. |
+|   [BLAS](https://www.netlib.org/blas/)   |    0.3.23    |            BLAS (Basic Linear Algebra Subprograms), on the other hand, is a library of basic functions for linear algebra operations, such as matrix multiplication, vector operations, and discrete Fourier transform operations.             |
+
+## Python
+
+The interface tools of this project found inside `./tool/dvmc/` are written
+in Python 3. The latest **stable** version for Python 3 is 3.10.4 and is totally
+compatible with [PyQCM](#pyqcm) which needs a Python version >= 3.7.
+
+|                         Tool/Library                          | Version |                                                                                Description                                                                                |
+| :-----------------------------------------------------------: | :-----: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|               [Python](https://www.python.org/)               |   3.7   |                               Python is a programming language that lets you work more quickly and integrate your systems more effectively.                               |
+| [PyQCM](https://bitbucket.org/dsenechQCM/qcm_wed/src/master/) |  2.2.1  | PyQCM is a python module that interfaces with a library written in C++ : qcm. This library provide a collection of functions that help implement quantum cluster methods. |
+
 
 # Package Manager
 
@@ -201,7 +266,7 @@ sudo apt install wget libncursesw5-dev libssl-dev libsqlite3-dev tk-dev \
 libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 ```
 
-Then install Python and its package manager `pip` (which is not included by default in the `apt` installation):
+If necessary, install Python and its package manager `pip` (which is not included by default in the `apt` installation):
 
 ```shell
 sudo apt install python3.10 python3-pip
@@ -227,7 +292,7 @@ Then go to the project directory and proceed with the installation:
 cd ./qcm_wed && git checkout 97610a0128e015fbbfbfa2f6de2aa1c6096c8f6b
 ```
 
-Next, you need to compile the library. Conventionally, with `CMake`, you proceed in a `build` directory:
+Note that many versions after this specific commit will also work, but we are sure that it is compatible with this commit number. Next, you need to compile the library. Conventionally, with `CMake`, you proceed in a `build` directory:
 
 ```shell
 mkdir build && cd build
@@ -237,9 +302,7 @@ In this directory, you configure the compilation options to use high-performance
 
 ```shell
 cmake .. -DDOWNLOAD_CUBA=1
-...
 cmake --build .
-...
 cp ./qcm* ../pyqcm/.
 ```
 
@@ -250,8 +313,8 @@ cd .. && export PYTHONPATH="$(pwd):$PYTHONPATH"
 ```
 
 This way, Python scripts executed with the default Python interpreter (excluding virtual environments) will be able to access and recognize the PyQCM modules.
-You can also add this line directly to your `.bashrc` with proper path to `qcm_wed` directory so PyQCM is always accessible within your global Python installation
+You can also add this line directly to your `.bashrc` with proper path to `qcm_wed` directory so PyQCM is always accessible within your global Python installation. If you are in the directory of `qcm_wed`, you can run the command:
 
 ```shell
-echo 'export PYTHONPATH="<insert_path_to_qcm_wed>:$PYTHONPATH"' >> $HOME/.bashrc
+echo 'export PYTHONPATH='$(pwd):$PYTHONPATH >> $HOME/.bashrc
 ```
