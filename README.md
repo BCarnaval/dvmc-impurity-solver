@@ -1,4 +1,5 @@
 
+
 # dvmc-impurity-solver
 
 This package computes the Variational Monte Carlo ground state
@@ -49,19 +50,21 @@ and potentially these articles:
 
 # Dependencies
 
-In summary it requires C and Fortran compilers, cmake, openmpi, lapack-blas, python3 and pyqcm. More details about **installation** of dependencies and **version** in `./doc/INSTALL_DEPENDENCIES.md`. It contains support for both Linux (Ubuntu) and MacOS. On Linux, most of dependencies appart from PyQCM can be installed using this simple command:
+In summary it requires C and Fortran compilers, cmake, openmpi, lapack-blas, python3 and pyqcm. Most of dependencies can be installed using these simple commands:
 
+### Linux (Ubuntu)
 ```shell
 sudo apt update
 sudo apt install git build-essential gcc gfortran make cmake libblas-dev liblapack-dev
 sudo apt install openmpi-bin openmpi-doc libopenmpi-dev checkinstall
 ```
 
-and on MacOS by using [Homebrew](https://brew.sh/) as package manager
-
-```shell
-xcode-select --install && brew install git cmake open-mpi openblas lapack
+### MacOS
+```shell  
+xcode-select --install
+brew install git cmake open-mpi openblas lapack
 ```
+After that, a compatible version of PyQCM must be installed according to the procedure detailed at the end of `./doc/INSTALL_DEPENDENCIES.md`. More information about the **installation procedures** and **compatible versions** of dependencies are detailed in this file.
 
 # Installation
 
@@ -74,7 +77,8 @@ git clone https://github.com/BCarnaval/dvmc-impurity-solver
 2. Making the conventional CMake working directory
 
 ```shell
-cd dvmc-impurity-solver && mkdir build && cd build
+cd dvmc-impurity-solver
+mkdir build && cd build
 ```
 
 3. Telling CMake to use specified configuration file based on user's compiler and OS. All
