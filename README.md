@@ -74,7 +74,7 @@ git clone https://github.com/BCarnaval/dvmc-impurity-solver
 2. Making the conventional CMake working directory
 
 ```shell
-mkdir build && cd build
+cd dvmc-impurity-solver && mkdir build && cd build
 ```
 
 3. Telling CMake to use specified configuration file based on user's compiler and OS. All
