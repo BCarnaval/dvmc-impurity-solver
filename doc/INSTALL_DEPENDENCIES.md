@@ -289,10 +289,10 @@ git clone https://bitbucket.org/dsenechQCM/qcm_wed.git
 Then go to the project directory and proceed with the installation:
 
 ```shell
-cd ./qcm_wed && git checkout 97610a0128e015fbbfbfa2f6de2aa1c6096c8f6b
+cd ./qcm_wed && git checkout v2.2.1
 ```
 
-Note that many versions after this specific commit will also work, but we are sure that it is compatible with this commit number. Next, you need to compile the library. Conventionally, with `CMake`, you proceed in a `build` directory:
+Note that versions more recent that v2.2.1 will probably also work. Next, you need to compile the library. Conventionally, with `CMake`, you proceed in a `build` directory:
 
 ```shell
 mkdir build && cd build
@@ -316,5 +316,5 @@ This way, Python scripts executed with the default Python interpreter (excluding
 You can also add this line directly to your `.bashrc` with proper path to `qcm_wed` directory so PyQCM is always accessible within your global Python installation. If you are in the directory of `qcm_wed`, you can run the command:
 
 ```shell
-echo 'export PYTHONPATH='$(pwd):$PYTHONPATH >> $HOME/.bashrc
+echo 'export PYTHONPATH="$(pwd):$PYTHONPATH" >> $HOME/.bashrc
 ```
