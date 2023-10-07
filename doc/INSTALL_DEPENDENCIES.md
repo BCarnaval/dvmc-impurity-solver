@@ -316,5 +316,5 @@ This way, Python scripts executed with the default Python interpreter (excluding
 You can also add this line directly to your `.bashrc` with proper path to `qcm_wed` directory so PyQCM is always accessible within your global Python installation. If you are in the directory of `qcm_wed`, you can run the command:
 
 ```shell
-echo 'export PYTHONPATH="$(pwd):$PYTHONPATH" >> $HOME/.bashrc
+echo 'export PYTHONPATH="$HOME'${PWD/#$HOME/}':$PYTHONPATH"' >> $HOME/.bashrc
 ```
