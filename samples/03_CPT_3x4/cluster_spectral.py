@@ -118,9 +118,11 @@ def main() -> None:
 
     # Setup dVMC solver through PyQCM
     pyqcm.solver = dvmc_solver
-    pyqcm.model_instance(model)
+    model_instance = pyqcm.model_instance(model)
 
     plot_results()
+    # Computing Fermi surface
+    model_instance.mdc(nk=200, file='fermi_surface.pdf', sym='RXY')
 
     return
 

@@ -1,13 +1,17 @@
+
 <div align="center">
 
 # CPT-dVMC calculation sample
 
 </div>
 
-This directory contains a direct application of the dVMC software usage to
-compute the ground state of a small 3x4 cluster then using the Q-matrix
-representation in cluster perturbation theory (CPT) to output the cluster
-spectral function of the system by calling PyQCM library.
+This directory contains the minimal code to reproduce the results of
+Fig. 3a) and the third pannel of Fig. 5 of [arxiv:2209.08092](https://arxiv.org/abs/2209.08092) using PyQCM.
+
+It computes the ground state, density of states and Fermi surface of 
+a small 3x4 cluster then using the Q-matrix representation in cluster 
+perturbation theory (CPT) to output the cluster spectral function 
+of the system by calling PyQCM library.
 
 > ### Note
 >

@@ -4,12 +4,9 @@
 
 </div>
 
-This directory contains a direct application of the dVMC software to
-compute the ground state of a 1D cluster of 2 sites with 4 bath sites then using
-the Q-matrix representation in cluster dynamical mean field theory (CDMFT)
-from PyQCM library.
-
-It roughly reproduces the figure 2 of the [article](https://arxiv.org/abs/2307.15738) but with less statistics and sampling (see expected/ directory).
+This directory contains the minimal code to reproduce one point of 
+It reproduces the point (mu,n) = (2.0,1.0) of the Fig. 2 of [arxiv:2307.15738](https://arxiv.org/abs/2307.15738) 
+using PyQCM.
 
 ## Content
 
