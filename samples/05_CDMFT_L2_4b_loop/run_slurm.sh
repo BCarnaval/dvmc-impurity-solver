@@ -30,6 +30,7 @@ main () {
 
     # Execute the calculations
     python3 general_bath_1D.py
+    # python3 plot_output.py
 }
 
 main

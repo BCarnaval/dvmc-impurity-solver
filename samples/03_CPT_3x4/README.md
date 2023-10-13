@@ -6,7 +6,8 @@
 </div>
 
 This directory contains the minimal code to reproduce the results of
-Fig. 3a) and the third pannel of Fig. 5 of [arxiv:2209.08092](https://arxiv.org/abs/2209.08092) using PyQCM.
+Fig. 3a) and the third pannel of Fig. 5 of [arxiv:2209.08092](https://arxiv.org/abs/2209.08092) 
+([PhysRevB.106.245132](https://doi.org/10.1103/PhysRevB.106.245132)) using PyQCM.
 
 It computes the ground state, density of states and Fermi surface of 
 a small 3x4 cluster then using the Q-matrix representation in cluster 

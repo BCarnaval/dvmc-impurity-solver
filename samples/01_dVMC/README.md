@@ -6,7 +6,7 @@
 </div>
 
 This directory contains the minimal code to reproduce the left pannel
-of Fig. 5 of [arxiv:2209.08092](https://arxiv.org/abs/2209.08092) using command line interface.
+of Fig. 5 of [arxiv:2209.08092](https://arxiv.org/abs/2209.08092) ([PhysRevB.106.245132](https://doi.org/10.1103/PhysRevB.106.245132)) using command line interface.
 
 It is a direct application of the dVMC software usage to compute the 
 ground state of a small 2x2 cluster then the Q-matrix representation

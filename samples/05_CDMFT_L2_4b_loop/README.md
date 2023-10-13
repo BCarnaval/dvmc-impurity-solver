@@ -10,10 +10,12 @@ Note that in Fig. 2, the last cdmft iterations were averaged in order
 to reach better precision.
 
 This sample is meant to be executed by a supercomputer using `run_slurm.sh` shell
-script as the job submission script. It roughly reproduces the figure 2 of the [article](https://arxiv.org/abs/2307.15738)
-but with less statistics and sampling (see `expected/` directory). There is also an averaging shortcut in the
-production of `./expected/ave_mu.pdf` figure compared to the original paper. Here, we used the last value outputed
-from CDMFT iterations instead of avering on those iterations.
+script as the job submission script. The script "plot_output.py" requires the module "pandas",
+which can be installed with:
+
+```shell
+pip3 pandas
+```
 
 > ### Note
 >
@@ -28,6 +30,10 @@ from CDMFT iterations instead of avering on those iterations.
 
 - `run_slurm.sh`: [SLURM](https://slurm.schedmd.com/sbatch.html) job submission bash script.
 
+- `plot_output.py` : Python3 script to reproduce `ave_mu.pdf` from the results. Requires the "pandas" module.
+
+- `exact_Lieb-Wu.tsv` : Exact solution reference from Lieb and Wu.
+
 - `expected/`: Directory containing expected results from the CDMFT-dVMC calculations.
 
 ## Usage
@@ -39,6 +45,7 @@ the `general_bath_1D.py` script using Python 3 (with proper PyQCM installation)
 
 ```shell
 python3 general_bath_1D.py
+python3 plot_output.py
 ```
 
 ## Post processing
@@ -49,3 +56,4 @@ use the `dvmc` command line interface
 ```shell
 dvmc clean --help
 ```
+

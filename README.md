@@ -50,7 +50,7 @@ and potentially these articles:
 
 # Dependencies
 
-In summary it requires C and Fortran compilers, cmake, openmpi, lapack-blas, python3 and pyqcm. Most of dependencies can be installed using these simple commands:
+In summary it requires C and Fortran compilers, cmake, openmpi, lapack-blas, python3 and pyqcm. Most of dependencies can be installed on a personal computer using these simple commands:
 
 ### Linux (Ubuntu)
 ```shell
@@ -64,7 +64,7 @@ sudo apt install openmpi-bin openmpi-doc libopenmpi-dev checkinstall
 xcode-select --install
 brew install git cmake open-mpi openblas lapack
 ```
-After that, a compatible version of PyQCM must be installed according to the procedure detailed at the end of `./doc/INSTALL_DEPENDENCIES.md`. More information about the **installation procedures** and **compatible versions** of dependencies are detailed in this file.
+After that, PyQCM v2.2.1 must be installed. Please rfer to the procedure detailed at the end of `./doc/INSTALL_DEPENDENCIES.md`. More information about the **installation procedures** and **compatible versions** of dependencies are detailed in this file.
 
 # Installation
 

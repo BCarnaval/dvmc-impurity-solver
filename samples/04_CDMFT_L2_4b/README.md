@@ -5,8 +5,8 @@
 </div>
 
 This directory contains the minimal code to reproduce one point of 
-It reproduces the point (mu,n) = (2.0,1.0) of the Fig. 2 of [arxiv:2307.15738](https://arxiv.org/abs/2307.15738) 
-using PyQCM.
+It reproduces one point of (mu,n) = (2.0,1.0) of the Fig. 2 of 
+[arxiv:2307.15738](https://arxiv.org/abs/2307.15738) using PyQCM.
 
 ## Content
 
