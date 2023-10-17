@@ -6,27 +6,23 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00-04:00           # time (DD-HH:MM)
 
+module reset
+module add python/3.11.5
+module add scipy-stack/2023a
+module add mkl
+module add imkl
+module add intel
 
 main () {
+
     # Setting env variables
     export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
     export DVMC_MPI_PROC=${SLURM_NTASKS}
 
     # Setting working directory
-    RUNDIR="/home/${USER}/scratch/${SLURM_JOB_NAME}_${SLURM_JOB_ID}"
-
-    if [[ -d ${RUNDIR} ]]; then
-        rm -rf ${RUNDIR}
-        mkdir ${RUNDIR}
-    else
-        mkdir ${RUNDIR}
-    fi
-
-    cd ${RUNDIR}
-
-    # Copy files to working directory
-    cp ${SLURM_SUBMIT_DIR}/params .
-    cp ${SLURM_SUBMIT_DIR}/general_bath_1D.py .
+    RUNDIR="${SLURM_SUBMIT_DIR}"
+    echo $RUNDIR
+    cd $RUNDIR
 
     # Execute the calculations
     python3 general_bath_1D.py

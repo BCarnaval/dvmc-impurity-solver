@@ -51,7 +51,7 @@ def compute_spectral_weight(model_inst: pyqcm.model_instance,
     return w, A
 
 
-def plot_results() -> None:
+def plot_results(model) -> None:
     """Plots the cluster spectral functions for both ED and
     dVMC impurity solver.
     """
@@ -96,6 +96,9 @@ def plot_results() -> None:
 
 
 def main() -> None:
+    
+    skip_calculations = False  # True to just plot from the qmatrix.def
+    
     # Reading parameters as dictionnary
     params = dict(np.genfromtxt('./params', encoding='utf8', dtype=None))
 
@@ -117,13 +120,13 @@ def main() -> None:
     f.close()
 
     # Setup dVMC solver through PyQCM
-    pyqcm.solver = dvmc_solver
-    model_instance = pyqcm.model_instance(model)
-
-    plot_results()
-    # Computing Fermi surface
-    model_instance.mdc(nk=200, file='fermi_surface.pdf', sym='RXY')
-
+    if not skip_calculations:  # we assume that the solution has been obtained before
+        pyqcm.solver = dvmc_solver
+        model_instance = pyqcm.model_instance(model)
+    
+    # plot the results
+    plot_results(model)
+    
     return
 
 

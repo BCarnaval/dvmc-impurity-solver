@@ -143,7 +143,7 @@ openned, you must add the previous line to the `$HOME/.bashrc` file.
 Detailed usage is not covered here. Instead many examples can be found
 in the `./samples/` subdirectory. The easiest way to understand how to
 use it is to run these examples. Go there to read the `README.md` of the 
-examples that increase in complexity from `01` to `05`.
+examples that increase in complexity from `01` to `06`.
 
 # Authors
 
