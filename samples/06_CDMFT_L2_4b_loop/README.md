@@ -24,7 +24,7 @@ pip3 pandas
 
 ## Content
 
-- `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances.
+- `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances and calculate a loop of many CDFMT (for many sets of parameters).
 
 - `params`: Global dVMC solver input parameter file.
 

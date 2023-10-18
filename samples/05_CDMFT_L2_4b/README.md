@@ -10,7 +10,7 @@ It reproduces one point of (mu,n) = (2.0,1.0) of the Fig. 2 of
 
 ## Content
 
-- `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances.
+- `general_bath_1D.py`: Defines 1D lattice models using PyQCM library instances and calculate CDFMT for one set of parameters.
 
 - `params`: Global dVMC solver input parameter file.
 
