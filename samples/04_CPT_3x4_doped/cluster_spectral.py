@@ -23,7 +23,6 @@ def plot_FS() -> None:
         qmatrix.close()
 
     model_dvmc.read(dvmc_sol, 0)
-    #w_dvmc, A_dvmc = compute_spectral_weight(model_dvmc,15.0, 0.1)
 
     # compute Fermi energy
     Ne = int(params['nelec'])
@@ -36,7 +35,7 @@ def plot_FS() -> None:
     frequencies    = data[:,0]
     cumulative_dos = data[:,2]
     
-    # find the chemical potential corresponding to this specific mu.
+    # find the chemical potential corresponding to the specific doping
     mu = np.interp(0.5*(float(Ne)/float(N)),cumulative_dos,frequencies)
 
     # Computing Fermi surface
@@ -47,7 +46,7 @@ def plot_FS() -> None:
 
 def main() -> None:
     
-    skip_calculations = True
+    skip_calculations = False
     # Reading parameters as dictionnary
     params = dict(np.genfromtxt('./params', encoding='utf8', dtype=None))
 

@@ -15,6 +15,8 @@ perturbation theory (CPT).
 >
 > It takes approximately 40 minutes to run [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
 > supercomputer using 64 MPI processes with 1 CPU per task and 1G of memory.
+> It is important to sample sufficiently (with many MPI processes) in order
+> to obtain a Fermi surface comparable to the expected result file.
 
 ## Content
 

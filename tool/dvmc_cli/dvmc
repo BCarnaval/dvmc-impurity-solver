@@ -690,7 +690,7 @@ dvmc_clean_command() {
     fi
 
     # Defining trash files
-    TRASH=$(find . -maxdepth 1 -type f -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec" -o -name "*.pdf" )
+    TRASH=$(find . -maxdepth 1 -type f -name "*.def" -o -name "*.dat" -o -name "*.npy" -o -name "sec" -o -name "*.pdf" -o -name "*.tsv")
     if [[ -d ./output ]]; then
       OUTPUT_TRASH=$(find ./output -type d)
     else
@@ -702,7 +702,7 @@ dvmc_clean_command() {
     if [[ -z "${TRASH}" ]]; then
       yellow_bold "[!] Nothing to clean in current directory."
     else
-      green_bold "[@] Removing .def, .dat, .npy, and .pdf generated files..."
+      green_bold "[@] Removing .def, .dat, .npy, .pdf and .tsv generated files..."
       rm -fv ${TRASH}
     fi
 

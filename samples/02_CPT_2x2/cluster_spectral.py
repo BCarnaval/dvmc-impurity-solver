@@ -37,6 +37,9 @@ def main() -> None:
     model_instance.cluster_spectral_function(
         wmax=15, eta=0.1, file='cluster_spectral.pdf')
 
+    # Computing DOS at w=0
+    model_instance.plot_DoS(w=15, file='dos.pdf')
+
     # Computing Fermi surface
     model_instance.mdc(nk=200, file='fermi_surface.pdf', sym='RXY')
 

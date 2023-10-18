@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def main() -> None:
     # Read data from text file using pandas
-    data_exact = pd.read_csv("./exact_Lieb-Wu.tsv", sep="\t", header=0)
+    data_exact = pd.read_csv("./expected/ref/exact_Lieb-Wu.tsv", sep="\t", header=0)
     data_dvmc = pd.read_csv("./cdmft.tsv", sep='\t', header=0)
 
     # Plot average density as a function of chemical potential

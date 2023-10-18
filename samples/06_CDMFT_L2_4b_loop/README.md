@@ -32,9 +32,7 @@ pip3 pandas
 
 - `plot_output.py` : Python3 script to reproduce `ave_mu.pdf` from the results. Requires the "pandas" module.
 
-- `exact_Lieb-Wu.tsv` : Exact solution reference from Lieb and Wu.
-
-- `expected/`: Directory containing expected results from the CDMFT-dVMC calculations.
+- `expected/`: Directory containing expected results from the CDMFT-dVMC calculations. It also contains the ref sudirectory with the `exact_Lieb-Wu.tsv` solution.
 
 ## Usage
 

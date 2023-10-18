@@ -11,7 +11,7 @@ of Fig. 5 of [arxiv:2209.08092](https://arxiv.org/abs/2209.08092) ([PhysRevB.106
 It is a direct application of the dVMC software usage to
 compute the ground state of a small 2x2 cluster then using the Q-matrix
 representation in cluster perturbation theory (CPT) to output the cluster
-spectral function of the system by calling PyQCM.
+spectral function, fermi surface and dos of the system by calling PyQCM.
 
 This model is the same as the example contained in sample `01_dVMC`, but with
 more options due to the PyQCM machinery (fermi_surface and spectrum).

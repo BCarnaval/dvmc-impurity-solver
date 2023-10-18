@@ -4,7 +4,7 @@
 #SBATCH --mem-per-cpu=4G
 #SBATCH --ntasks=32
 #SBATCH --cpus-per-task=1
-#SBATCH --time=00-04:00           # time (DD-HH:MM)
+#SBATCH --time=00-10:00           # time (DD-HH:MM)
 
 module reset
 module add python/3.11.5
@@ -26,6 +26,8 @@ main () {
 
     # Execute the calculations
     python3 general_bath_1D.py
+    
+    # You need to run manually:
     # python3 plot_output.py
 }
 
