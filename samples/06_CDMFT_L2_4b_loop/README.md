@@ -4,8 +4,8 @@
 
 </div>
 
-This directory contains the minimal code to reproduce one point of 
-It reproduces the results in Fig. 2 of [arxiv:2307.15738](https://arxiv.org/abs/2307.15738) using PyQCM. 
+This directory contains the minimal code to reproduce the results 
+in Fig. 2 of [arxiv:2307.15738](https://arxiv.org/abs/2307.15738) using PyQCM. 
 Note that in Fig. 2, the last cdmft iterations were averaged in order 
 to reach better precision.
 
