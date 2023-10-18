@@ -6,13 +6,13 @@
 </div>
 
 This directory contains the minimal code to reproduce the results of
-the third pannel of Fig. 5 of [arxiv:2209.08092v1](https://arxiv.org/abs/2209.08092v1) 
+the third panel of Fig. 5 of [arxiv:2209.08092v1](https://arxiv.org/abs/2209.08092v1) 
 (Fig. 3 of [PhysRevB.106.245132](https://doi.org/10.1103/PhysRevB.106.245132)) using PyQCM.
 
 It computes the ground state and local dos of a small 3x4 cluster 
 then using the Q-matrix representation in cluster perturbation 
 theory (CPT) to output the cluster spectral function (fermi 
-surface) of the system by calling PyQCM library.
+surface) of the system by calling the PyQCM library.
 
 > ### Note
 >
